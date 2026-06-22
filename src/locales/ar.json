@@ -1,0 +1,748 @@
+{
+    "app": {
+        "title": "كود ماستر",
+        "description": "كود ماستر هو منصتك المتكاملة لإدارة وتعديل مستندات PDF. دمج، تقسيم، ضغط، حماية، وترجمة مستنداتك باحترافية كاملة وبثوانٍ معدودة باستخدام الذكاء الاصطناعي.",
+        "heroTitle": "أدوات PDF احترافية: دمج وتعديل وتحويل ذكي وسريع",
+        "features": {
+            "fast": "سريع وسهل",
+            "fastDesc": "عالِج ملفاتك في ثوانٍ باستخدام واجهتنا البديهية",
+            "secure": "آمن",
+            "secureDesc": "ملفاتك محمية بتشفير متقدم",
+            "cloud": "مبني على السحابة",
+            "cloudDesc": "ادخل إلى أدواتك من أي مكان وفي أي وقت"
+        },
+        "whyChoose": "لماذا تختار كود ماستر؟",
+        "nav": {
+            "home": "الرئيسية",
+            "about": "عن الموقع",
+            "contact": "اتصل بنا",
+            "tools": "الأدوات",
+            "signIn": "تسجيل الدخول",
+            "dashboard": "لوحة التحكم",
+            "logout": "تسجيل الخروج",
+            "proSuite": "مجموعة الأدوات الاحترافية",
+            "intelligenceSuite": "مجموعة الأدوات الذكية"
+        },
+        "hero": {
+            "getStarted": "ابدأ الآن مجاناً",
+            "viewTools": "عرض جميع الأدوات",
+            "powerTools": "أدوات احترافية",
+            "suiteTitle": "مجموعة أدوات PDF المؤسسية",
+            "suiteDesc": "أدوات حديثة محسنة للسرعة والدقة العالية.",
+            "workflowTitle": "هل أنت مستعد لتحويل آلية عملك؟",
+            "joinUsers": "انضم لآلاف المستخدمين حول العالم",
+            "optimizeNow": "ابدأ التحسين الآن — مجاناً"
+        },
+        "categories": {
+            "intelligence": {
+                "title": "مجموعة الأدوات الذكية",
+                "desc": "أدوات مدعومة بالخوارزميات العصبية للاستخراج العميق للبيانات وتحليلها."
+            },
+            "optimize": {
+                "title": "عنقود التحسين",
+                "desc": "خوارزميات عالية السرعة للدمج والتقسيم والضغط."
+            },
+            "edit": {
+                "title": "مجموعة الدقة",
+                "desc": "محررات متقدمة للتعديلات الهيكلية والتحكم في التخطيط."
+            },
+            "security": {
+                "title": "طبقة الأمان",
+                "desc": "تشفير بمستوى المؤسسات وبروتوكولات إخفاء الهوية والخصوصية."
+            },
+            "convert": {
+                "title": "محرك التحويل",
+                "desc": "تحويل عالي الدقة بين مختلف تنسيقات المستندات."
+            }
+        }
+    },
+    "about": {
+        "mission": "بروتوكول مهمتنا",
+        "pioneering": "رائدون في نهضة المستندات.",
+        "missionDesc": "نحن لا نعالج الملفات فحسب؛ بل نقوم بتحسين الإنتاجية البشرية من خلال دمج الهندسة عالية الدقة مع الذكاء التنبؤي.",
+        "neuralCore": "اللب العصبي",
+        "neuralDesc": "خوارزميات معالجة متقدمة على جانب العميل تتفوق على البدائل السحابية بنسبة 400٪ في المهام الحساسة للتأخير.",
+        "quantumSecurity": "الأمن الكمي",
+        "quantumDesc": "يضمن التنفيذ على الجهاز عدم لمس أي بت من بياناتك لخوادمنا الخارجية.",
+        "globalPresence": "تواجد عالمي",
+        "globalDesc": "نحن ندعم أكثر من 20 لغة مع تخطيطات واجهة مستخدم تراعي الثقافة لتجربة مستندات بلا حدود حقاً.",
+        "engineeredFor": "صُمم للنخبة.",
+        "engineeredDesc": "يتكون فريقنا من مهندسي برمجيات ومصممي منتجات متخصصين مكرسين لهدف واحد: جعل إدارة ملفات PDF تشبه السحر. من محرك العرض عالي الدقة إلى منطق الضغط الخاص بنا، يتم تحسين كل سطر من الأكواد للأداء.",
+        "uptime": "وقت تشغيل التحسين",
+        "processed": "الكتل المعالجة"
+    },
+    "contact": {
+        "connection": "اتصال عالمي",
+        "future": "لنبنِ المستقبل معاً.",
+        "futureDesc": "لديك متطلبات خاصة؟ وحدتنا الهندسية المتخصصة مستعدة للمساعدة في دمج المؤسسات واسعة النطاق.",
+        "secureChannel": "قناة آمنة",
+        "directLine": "خط مباشر",
+        "hqCluster": "المقر الرئيسي",
+        "identityLabel": "الهوية (الأسم)",
+        "emailLabel": "النقطة الرقمية (البريد)",
+        "subjectLabel": "الموضوع",
+        "enterpriseOption": "تكامل المؤسسات",
+        "supportOption": "الدعم الفني",
+        "partnershipOption": "بروتوكول الشراكة",
+        "generalOption": "استفسار عام",
+        "messageLabel": "بيانات الإرسال (الرسالة)",
+        "messagePlaceholder": "صف مهمتك...",
+        "sending": "جاري البدء...",
+        "send": "إرسال",
+        "success": "تم استلام الإرسال. سيتصل بك فريقنا قريباً."
+    },
+    "privacy": {
+        "title": "سياسة الخصوصية",
+        "lastUpdated": "آخر تحديث",
+        "collectTitle": "المعلومات التي نجمعها",
+        "collectDesc": "نحن نجمع المعلومات التي تقدمها لنا مباشرة عند استخدام خدماتنا.",
+        "useTitle": "كيف نستخدم معلوماتك",
+        "useDesc": "نستخدم المعلومات التي نجمعها لتوفير خدماتنا وصيانتها وتحسينها.",
+        "securityTitle": "الأمان",
+        "securityDesc": "نتخذ تدابير معقولة للمساعدة في حماية معلوماتك من الفقدان والسرقة وسوء الاستخدام والوصول غير المصرح به."
+    },
+    "terms": {
+        "title": "شروط الخدمة",
+        "section1Title": "1. الشروط",
+        "section1Desc": "من خلال الوصول إلى أدوات PDF، فإنك توافق على الالتزام بشروط الخدمة هذه وتوافق على أنك مسؤول عن الامتثال لأي قوانين محلية معمول بها.",
+        "section2Title": "2. ترخيص الاستخدام",
+        "section2Desc": "يتم منح الإذن لاستخدام أدوات PDF مؤقتاً للمشاهدة العابرة الشخصية وغير التجارية فقط."
+    },
+    "aiChat": {
+        "welcome": "**أهلاً بك في منصة تنظيم البيانات الذكية.** \n\nيمكنك الآن:\n1. كتابة معلومات مباشرة هنا وسأقوم بترتيبها لك.\n2. إرفاق ملف (PDF) وسأقوم بتحليله بالكامل والإجابة على أسئلتك حوله.\n3. طلب تصدير أي بيانات مستخرجة إلى ملفات Word أو Excel.\n\nكيف يمكنني مساعدتك اليوم؟",
+        "extracting": "جاري استخراج البيانات من الملف...",
+        "noText": "لم يتم العثور على نص قابل للقراءة في الملف.",
+        "indexSuccess": "تمت فهرسة الملف بنجاح. الذكاء الاصطناعي الآن جاهز للتحليل.",
+        "readFail": "فشل في قراءة الملف.",
+        "attachedAnalyze": "لقد قمت بإرفاق الملف \"{{name}}\"، يرجى تحليله والإجابة عما أطلبه.",
+        "noApiKey": "⚠️ **خطأ: مفتاح OpenAI غير موجود.** \n\nيرجى إضافة المفتاح في ملف .env ليتمكن النظام من تحليل بياناتك.",
+        "extractedAndOrganized": "📊 **تم استخراج البيانات وتنظيمها في الجدول أدناه.**",
+        "apiError": "خطأ في الاتصال بالذكاء الاصطناعي.",
+        "excelExport": "تم تصدير Excel.",
+        "wordExport": "تم تصدير Word.",
+        "processingCenter": "مركز معالجة البيانات",
+        "actionsAvailable": "الإجراءات المتاحة",
+        "exportExcel": "تصدير إلى Excel",
+        "exportWord": "تصدير إلى Word",
+        "systemStatus": "حالة النظام",
+        "engine": "المحرك",
+        "fileIndexing": "فهرسة الملف",
+        "activeExtracted": "نشط ومستخرج",
+        "waitingFile": "في انتظار ملف",
+        "security": "الأمان",
+        "sslActive": "تشفير SSL نشط",
+        "intelligentAnalyst": "محلل البيانات الذكي",
+        "indexing": "جاري الفهرسة...",
+        "readyToAnalyze": "جاهز للتحليل",
+        "placeholder": "أرسل بياناتك أو اسأل عن الملف المرفق...",
+        "ready": "جاهز",
+        "reading": "جاري القراءة...",
+        "table": {
+            "name": "الأسم/البيان",
+            "entity": "الجهة",
+            "role": "المنصب/النوع",
+            "details": "الإيميل/التفاصيل"
+        }
+    },
+    "organizer": {
+        "mode": "وضع تنظيم وإعادة ترتيب الصفحات",
+        "processing": "جاري المعالجة...",
+        "applyChanges": "تطبيق التغييرات",
+        "analyzing": "جاري تحليل الهيكل...",
+        "originalPage": "الصفحة الأصلية {{num}}",
+        "hint": "{{count}} صفحات • تلميح: اسحب وأفلت البطاقات لإعادة الترتيب",
+        "cannotDelete": "لا يمكن حذف جميع الصفحات!",
+        "errorSaving": "خطأ أثناء حفظ المستند",
+        "rotateLeft": "تدوير لليسار",
+        "rotateRight": "تدوير لليمين",
+        "rotateAllLeft": "تدوير الكل لليسار",
+        "rotateAllRight": "تدوير الكل لليمين",
+        "deletePage": "حذف الصفحة"
+    },
+    "editor": {
+        "signatureLoaded": "تم تحميل التوقيع. اضغط في أي مكان لوضعه.",
+        "enterContent": "أدخل المحتوى:",
+        "exportSuccess": "تم تصدير المستند بنجاح!",
+        "critError": "خطأ حرج أثناء إنهاء PDF.",
+        "finalize": "تحميل الملف",
+        "exportResult": "تصدير النتيجة",
+        "workspaceTools": "أدوات العمل",
+        "textContent": "محتوى نصي",
+        "textDesc": "أضف عناوين أو نصوصاً مخصصة",
+        "visualSignature": "توقيع مرئي",
+        "signatureDesc": "رفع توقيع PNG/JPG",
+        "privacyMask": "قناع الخصوصية",
+        "maskDesc": "إخفاء الأقسام بشكل دائم",
+        "securityStamp": "ختم أمني",
+        "stampDesc": "تطبيق علامة مائية عالمية",
+        "boundaryCrop": "قص الحدود",
+        "cropDesc": "ضبط عرض الصفحة",
+        "configuration": "الإعدادات",
+        "topMargin": "الهامش العلوي",
+        "bottomMargin": "الهامش السفلي",
+        "leftMargin": "الهامش الأيسر",
+        "rightMargin": "الهامش الأيمن",
+        "colorPalette": "لوحة الألوان",
+        "fontDimension": "حجم الخط",
+        "boundingWidth": "عرض الإطار %",
+        "boundingHeight": "ارتفاع الإطار %",
+        "purgeElement": "حذف العنصر",
+        "highDefRender": "عرض عالي الدقة",
+        "highFidelityRender": "عرض عالي الدقة",
+        "deciphering": "فك تشفير البيانات الوصفية لـ PDF...",
+        "pageIndex": "رقم الصفحة",
+        "adjustProjection": "ضبط العرض",
+        "active": "نشط",
+        "pageSize": "حجم الصفحة",
+        "orientation": "الاتجاه",
+        "margins": "الهوامش",
+        "layout": "تخطيط الصفحة",
+        "portraitShort": "عمودي",
+        "landscapeShort": "أفقي",
+        "fitToImage": "ملاءمة للصورة",
+        "portrait": "عمودي",
+        "landscape": "أفقي",
+        "none": "بدون",
+        "small": "صغير",
+        "big": "كبير",
+        "pageSizeA4": "A4 (دولي)",
+        "pageSizeLetter": "Letter (رسالة)",
+        "pageSizeLegal": "Legal (قانوني)",
+        "marginNone": "0 بكسل",
+        "marginSmall": "عادي",
+        "marginBig": "كبير",
+        "addMoreImages": "إضافة صور",
+        "imageQuality": "جودة الصورة",
+        "lowFileSize": "حجم صغير",
+        "highDef": "دقة عالية",
+        "betaFeature": "ميزة تجريبية",
+        "betaDesc": "تتم عملية الاستخراج بالكامل في متصفحك. قد لا يتم تحويل التخطيطات المعقدة بشكل مثالي.",
+        "conversionMode": "وضع التحويل",
+        "visualExact": "مرئي (صور مطابقة)",
+        "editableText": "قابل للتعديل (نصوص)",
+        "slideQuality": "جودة الشرائح",
+        "standard": "قياسي",
+        "ultraHd": "دقة فائقة",
+        "readyToConvert": "جاهز للتحويل",
+        "readyDesc": "المستند {{name}} جاهز للاستخراج.",
+        "processing": "جاري المعالجة...",
+        "ocrMode": "نظام التعرف الضوئي (OCR احترافي)",
+        "ocrStandard": "قياسي (ملفات نصية)",
+        "ocrPro": "OCR (ملفات مصورة)",
+        "ocrStandardDesc": "الأسرع. يحول النصوص القابلة للنسخ من PDF مباشرة.",
+        "ocrProDesc": "استخراج النصوص من الصور باستخدام AI. يستغرق وقتاً أطول.",
+        "exactCopy": "نسخة طبق الأصل (صور)",
+        "exactCopyDesc": "يدرج الصفحات كصور لضمان التطابق التام (غير قابل للتعديل).",
+        "language": "لغة المستند",
+        "textGrouping": "تنسيق النص",
+        "smartParagraphs": "فقرات ذكية"
+    },
+    "signTool": {
+        "options": "خيارات التوقيع",
+        "simple": "التوقيع البسيط",
+        "digital": "التوقيع الرقمي",
+        "signers": "الموقّعون",
+        "requiredFields": "الحقول المطلوبة",
+        "optionalFields": "الحقول الاختيارية",
+        "send": "الإرسال للتوقيع",
+        "signature": "التوقيع",
+        "initials": "الأحرف الأولى",
+        "date": "التاريخ",
+        "text": "نص",
+        "draw": "ارسم",
+        "type": "اكتب",
+        "upload": "رفع",
+        "clear": "مسح",
+        "apply": "تطبيق"
+    },
+    "watermarkTool": {
+        "options": "خيارات العلامة المائية",
+        "placeImage": "وضع صورة",
+        "placeText": "وضع نص",
+        "textLabel": "النص:",
+        "formatting": "تنسيق النص:",
+        "position": "الموقع:",
+        "mosaic": "فسيفساء",
+        "addWatermark": "إضافة العلامة المائية",
+        "transparency": "الشفافية",
+        "rotation": "التدوير",
+        "layer": "الطبقة",
+        "overContent": "فوق المحتوى",
+        "underContent": "تحت المحتوى",
+        "pages": "الصفحات",
+        "allPages": "كل الصفحات",
+        "selectImage": "اختر صورة العلامة المائية"
+    },
+    "splitTool": {
+        "options": "التقسيم",
+        "range": "النطاق",
+        "pages": "الصفحات",
+        "size": "الحجم",
+        "rangeMode": "وضع النطاق:",
+        "customRange": "نطاق مخصص",
+        "fixedRange": "نطاق ثابت",
+        "rangeLabel": "النطاق",
+        "fromPage": "من صفحة",
+        "toPage": "إلى",
+        "addRange": "إضافة نطاق",
+        "splitPdf": "تقسيم PDF",
+        "mergeRanges": "دمج كل النطاقات في ملف PDF واحد",
+        "extractAll": "استخراج كل الصفحات"
+    },
+    "auth": {
+        "loginTitle": "مرحباً بعودتك",
+        "loginSubtitle": "الرجاء إدخال بياناتك لتسجيل الدخول",
+        "signupTitle": "إنشاء حساب جديد",
+        "signupSubtitle": "ابدأ رحلتك معنا اليوم",
+        "networkError": "فشل الاتصال. يرجى التحقق من الإنترنت أو حالة مشروع Supabase.",
+        "name": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "submit": "تسجيل الدخول",
+        "submitSignup": "إنشاء الحساب",
+        "googleLogin": "المتابعة باستخدام Google",
+        "or": "أو المتابعة عبر",
+        "noAccount": "ليس لديك حساب؟",
+        "hasAccount": "لديك حساب بالفعل؟",
+        "signUp": "إنشاء حساب",
+        "signIn": "تسجيل الدخول",
+        "error": "فشل المصادقة",
+        "passwordMismatch": "كلمات المرور غير متطابقة",
+        "accountCreated": "تم إنشاء الحساب بنجاح",
+        "success": "تم تسجيل الدخول بنجاح",
+        "secureAccess": "وصول آمن",
+        "welcomePro": "مرحباً بك في المجموعة الاحترافية",
+        "loginDesc": "الوصول إلى أدوات PDF عالية الدقة وأمان بمستوى المؤسسات داخل منصة ذكية واحدة.",
+        "encryption": "تشفير على مستوى العتاد",
+        "privacyPriority": "خصوصيتك هي أولويتنا الهندسية الأساسية.",
+        "verifying": "جاري التحقق...",
+        "onboarding": "تهيئة النظام",
+        "joinElite": "انضم إلى أقوى محرك PDF",
+        "signupDesc": "أنشئ حسابك لفتح الميزات المتقدمة وتخزين سحابي غير محدود وأدوات الذكاء الاصطناعي.",
+        "securityTitle": "أمن المؤسسات",
+        "securityDesc": "حماية بمستوى عسكري لكل مستند.",
+        "processing": "جاري المعالجة..."
+    },
+    "upload": {
+        "ready": "جاهز للاستلام",
+        "release": "أفلت الملف الآن للمعالجة",
+        "dragDrop": "اسحب وأفلت ملفات الـ PDF هنا",
+        "selectFiles": "اختر الملفات من جهازك",
+        "encrypted": "تشفير AES-256 محمي",
+        "atomic": "معالجة ذرية نهائية",
+        "activeQueue": "قائمة الانتظار النشطة",
+        "clearAll": "مسح الكل",
+        "dataBlock": "كتلة بيانات",
+        "processing": "جاري معالجة البيانات..."
+    },
+    "footer": {
+        "description": "نمكن الشركات بحلول برمجية متطورة، أنظمة حماية قوية، وإدارة خبيرة للتطبيقات.",
+        "systems": "الأنظمة",
+        "intelligence": "الذكاء الاصطناعي",
+        "support": "دعم المؤسسات",
+        "legal": "قانوني",
+        "terms": "البروتوكول (الشروط)",
+        "privacy": "سياسة التشفير",
+        "connectivity": "الاتصال",
+        "identity": "هوية النظام",
+        "live": "الخدمة متصلة",
+        "copyright": "مؤسسة أدوات برو. نُفذت بدقة.",
+        "engineered": "صُمم بـ للأداء العالي"
+    },
+    "toolPage": {
+        "engine": "محرك عالي الأداء",
+        "calculating": "جاري حساب البيانات...",
+        "commit": "تنفيذ عمليات {{title}}",
+        "start": "بدء التحسين",
+        "protocol": "بروتوكول المعالجة",
+        "step1": {
+            "label": "01 استيراد الملفات",
+            "desc": "اسحب الملفات إلى بوابة الاستيراد العصبية"
+        },
+        "step2": {
+            "label": "02 تحديد المعايير",
+            "desc": "تكوين البيانات الوصفية والمنطق الخاص بالأداة"
+        },
+        "step3": {
+            "label": "03 تنفيذ الأساس",
+            "desc": "تبدأ المعالجة الذرية داخل متصفحك"
+        },
+        "shieldTitle": "درع الحماية على الجهاز",
+        "shieldDesc": "تتم هذه العملية حصرياً على جهازك. لا تعبر أي بيانات من مستندك حدود شبكة مجموعتنا.",
+        "fidelityTitle": "نتائج عالية الدقة",
+        "fidelityDesc": "يحافظ محركنا على البيانات الوصفية الأصلية والسلامة الهيكلية بنسبة تصل إلى 99.9٪ لجميع التحويلات.",
+        "comingSoon": "هذه الأداة المتخصصة ستتوفر قريباً!",
+        "selectFile": "يرجى اختيار ملف واحد على الأقل للمتابعة."
+    },
+    "supabase": {
+        "initRequired": "مطلوب تهيئة النظام",
+        "critException": "استثناء حرج",
+        "syncEngine": "يرجى مزامنة محركك العصبي من خلال توفير بيانات اعتماد بروتوكول Supabase. أضف معلمات مشروعك إلى مجموعة .env المشفرة.",
+        "protocolBuffer": "هيكل مخزن البروتوكول",
+        "restart": "أعد تشغيل عقدة المجموعة الرئيسية بعد الالتزام.",
+        "urlMissing": "VITE_SUPABASE_URL مفقود",
+        "urlHttps": "يجب أن يبدأ VITE_SUPABASE_URL بـ https://",
+        "urlInvalid": "يجب أن يحتوي VITE_SUPABASE_URL على .supabase.co",
+        "keyMissing": "VITE_SUPABASE_ANON_KEY مفقود"
+    },
+    "tools": {
+        "merge": {
+            "title": "دمج PDF",
+            "description": "دمج عدة ملفات PDF في مستند واحد"
+        },
+        "split": {
+            "title": "تقسيم PDF",
+            "description": "استخراج صفحات من ملف PDF الخاص بك",
+            "largeFile": "جاري معالجة ملف كبير، قد يستغرق ذلك لحظة...",
+            "splitSuccess": "تم تقسيم PDF بنجاح! تم تحميل أرشيف ZIP.",
+            "splitError": "فشل تقسيم PDF. قد يكون الملف محمياً أو تالفاً."
+        },
+        "compress": {
+            "title": "ضغط PDF",
+            "description": "تقليل حجم ملف PDF مع الحفاظ على الجودة",
+            "neuralOptimizer": "محسن عصبي متقدم",
+            "extremeCompression": "ضغط فائق",
+            "extremeDesc": "أقصى تقليل للحجم (تطهير البيانات الوصفية).",
+            "recommended": "موصى به",
+            "balancedDesc": "توازن مثالي بين الجودة والحجم.",
+            "basic": "أساسي",
+            "basicDesc": "تنظيف هيكل المستند فقط.",
+            "optimizingVectors": "تحسين النواقل...",
+            "applyingHeuristics": "تطبيق استدلالات {{level}}",
+            "complete": "اكتمل التحسين",
+            "originalSize": "الحجم الأصلي",
+            "optimizedSize": "الحجم بعد التحسين",
+            "processAnother": "معالجة ملف آخر",
+            "viewDocument": "عرض المستند",
+            "instantProcessing": "معالجة فورية",
+            "instantDesc": "تم التحسين في متصفحك دون تأخير سحابي.",
+            "privacyFirst": "الخصوصية أولاً",
+            "privacyDesc": "ملفاتك لا تغادر جهازك أبداً.",
+            "smartCleanup": "تنظيف ذكي",
+            "cleanupDesc": "يزيل البيانات الوصفية المتضخمة والمسارات المخفية."
+        },
+        "convert": {
+            "title": "PDF إلى صورة",
+            "description": "تحويل صفحات PDF إلى صور",
+            "aiEngine": "محرك السحاب الذكي إصدار 2.0",
+            "aiEngineDesc": "تستخدم هذه الأداة محرك التحويل العصبي الخاص بنا والذي يخضع حالياً لضغط كبير. نقوم بمعالجة الملفات الصغيرة محلياً مع إبقاء المستندات المعقدة الكبيرة في قائمة الانتظار السحابية.",
+            "ultraFast": "فائق السرعة",
+            "encrypted": "مشفر",
+            "betaMessage": "تحويل ملفات Office المستند إلى السحابة حالياً في المرحلة التجريبية. يتم استخدام التبديل المحلي...",
+            "optimizing": "يتم تحسين هذا المحرك المتخصص لجهازك.",
+            "alternativeMethod": "خيار آخر",
+            "enterUrl": "تحويل من رابط"
+        },
+        "pdfToWord": {
+            "title": "PDF إلى Word",
+            "description": "تحويل PDF إلى مستند Word قابل للتعديل"
+        },
+        "protect": {
+            "title": "حماية PDF",
+            "description": "إضافة كلمة مرور لحماية الملف"
+        },
+        "watermark": {
+            "title": "علامة مائية",
+            "description": "إضافة نص مائي على صفحات الملف"
+        },
+        "unlock": {
+            "title": "فتح PDF",
+            "description": "إزالة الحماية بكلمة مرور من PDF"
+        },
+        "rotate": {
+            "title": "تدوير PDF",
+            "description": "تدوير صفحات PDF الخاصة بك"
+        },
+        "imageToPdf": {
+            "title": "صورة إلى PDF",
+            "description": "تحويل الصور إلى تنسيق PDF"
+        },
+        "sign": {
+            "title": "توقيع PDF",
+            "description": "إضافة توقيع إلى مستند PDF الخاص بك"
+        },
+        "pageNumbers": {
+            "title": "أرقام الصفحات",
+            "description": "إدراج أرقام الصفحات في ملف PDF"
+        },
+        "organize": {
+            "title": "ترتيب الصفحات",
+            "description": "رتب، احذف، وقم بتدوير صفحات الملف"
+        },
+        "pdfToPowerPoint": {
+            "title": "PDF إلى PowerPoint",
+            "description": "تحويل ملف PDF إلى عرض تقديمي قابل للتعديل"
+        },
+        "pdfToExcel": {
+            "title": "PDF إلى Excel",
+            "description": "تحويل بيانات PDF إلى جداول Excel"
+        },
+        "wordToPdf": {
+            "title": "Word إلى PDF",
+            "description": "تحويل ملفات Word إلى PDF"
+        },
+        "powerPointToPdf": {
+            "title": "PowerPoint إلى PDF",
+            "description": "تحويل عروض PowerPoint إلى PDF"
+        },
+        "excelToPdf": {
+            "title": "Excel إلى PDF",
+            "description": "تحويل جداول Excel إلى PDF"
+        },
+        "pdfToJpg": {
+            "title": "PDF إلى JPG",
+            "description": "تحويل صفحات PDF إلى صور JPG"
+        },
+        "jpgToPdf": {
+            "title": "JPG إلى PDF",
+            "description": "تحويل صور JPG إلى ملف PDF"
+        },
+        "htmlToPdf": {
+            "title": "موقع إلى PDF",
+            "description": "تحويل صفحات الويب إلى مستند PDF",
+            "screenSize": "حجم الشاشة",
+            "onePage": "صفحة واحدة طويلة",
+            "blockAds": "محاولة حظر الإعلانات",
+            "removeOverlays": "إزالة النوافذ المتداخلة",
+            "desktop": "سطح المكتب (1352px)",
+            "desktopLarge": "شاشة كبيرة (1920px)",
+            "mobile": "جوال (360px)",
+            "tablet": "جهاز لوحي (768px)",
+            "convertButton": "تحويل إلى PDF",
+            "websiteUrl": "رابط الموقع الإلكتروني",
+            "htmlSettings": "إعدادات صفحة HTML",
+            "status": {
+                "connecting": "الاتصال بالخادم",
+                "connectingSub": "جاري تأمين الاتصال...",
+                "smartRouting": "توجيه ذكي",
+                "smartRoutingSub": "البحث عن أسرع بوابة...",
+                "fetching": "جلب المحتوى",
+                "fetchingSub": "تحميل هيكل الصفحة...",
+                "processingCss": "معالجة الأصول",
+                "processingCssSub": "تضمين الصور والتنسيقات...",
+                "preparing": "إنهاء PDF",
+                "preparingSub": "تجهيز المستند النهائي..."
+            }
+        },
+        "pdfToPdfa": {
+            "title": "PDF إلى PDF/A",
+            "description": "تحويل PDF إلى صيغة الأرشفة طويلة الأمد"
+        },
+        "edit": {
+            "title": "تعديل PDF",
+            "description": "تحرير النصوص والصور والأشكال والكتابة اليدوية"
+        },
+        "crop": {
+            "title": "قص PDF",
+            "description": "قص حدود الصفحات أو اختيار مناطق معينة"
+        },
+        "repair": {
+            "title": "إصلاح PDF",
+            "description": "إصلاح ملفات PDF التالفة"
+        },
+        "redact": {
+            "title": "تنقيح PDF",
+            "description": "إخفاء نصوص ورسومات حساسة"
+        },
+        "aiChat": {
+            "title": "منظم بيانات الموظفين",
+            "description": "استخرج بيانات الموظفين والشركات وصدرها لملفات Word و Excel"
+        },
+        "config": {
+            "title": "إعدادات الأداة",
+            "passwordLabel": "مفتاح الأمان (كلمة المرور)",
+            "passwordPlaceholder": "أدخل كلمة مرور قوية",
+            "placement": "استراتيجية وضع الأرقام",
+            "top": "أعلى الصفحة",
+            "bottom": "أسفل الصفحة",
+            "cancel": "إلغاء",
+            "finalize": "إكمال المعالجة"
+        },
+        "examGenerator": {
+            "title": "منشئ الاختبارات",
+            "description": "إنشاء اختبارات من أي محتوى باستخدام الذكاء الاصطناعي"
+        },
+        "translatePdf": {
+            "title": "ترجمة PDF",
+            "description": "ترجمة ملفات PDF بين اللغتين العربية والإنجليزية مع الحفاظ على التخطيط والتنسيق",
+            "sourceLang": "اللغة المصدر",
+            "targetLang": "اللغة الهدف",
+            "autoDetect": "التعرف التلقائي",
+            "english": "الإنجليزية (English)",
+            "arabic": "العربية (Arabic)",
+            "translateButton": "ترجمة الملف",
+            "translating": "جاري الترجمة...",
+            "downloadButton": "تحميل الملف المترجم",
+            "engineSelect": "محرك الذكاء الاصطناعي",
+            "gemini": "جيمناي (Gemini - موصى به)",
+            "openai": "أوبن إيه آي (OpenAI GPT)",
+            "geminiKeyLabel": "مفتاح Gemini API (اختياري إذا تم تعيينه في .env)",
+            "geminiKeyPlaceholder": "AIzaSy...",
+            "openaiKeyLabel": "مفتاح OpenAI API (اختياري إذا تم تعيينه في .env)",
+            "openaiKeyPlaceholder": "sk-...",
+            "apiKeyMissing": "يرجى إدخال مفتاح API للمحرك المحدد لبدء الترجمة.",
+            "extractingText": "جاري استخراج النص من PDF...",
+            "renderingPage": "جاري معالجة الصفحة {{page}} وتحويلها لصورة...",
+            "translatingPage": "جاري ترجمة الصفحة {{current}} من {{total}}...",
+            "compilingPdf": "جاري إنشاء وتنسيق ملف PDF...",
+            "translationSuccess": "تمت ترجمة ملف PDF بنجاح!",
+            "layoutSettings": "إعدادات التنسيق والتخطيط",
+            "fontSize": "حجم الخط",
+            "lineHeight": "ارتفاع السطر",
+            "normal": "طبيعي",
+            "large": "كبير",
+            "small": "صغير",
+            "previewTitle": "معاينة الملف المترجم",
+            "useProxy": "اتصال البروكسي (Proxy)",
+            "useProxyDesc": "يمرر الطلبات عبر وكيل لتخطي حظر الشبكة المحلية (مستحسن للشرق الأوسط والدول المحظورة).",
+            "rateLimitWait": "تم الوصول إلى حد المعدل. جاري الانتظار {{seconds}} ثانية قبل إعادة المحاولة..."
+        }
+    },
+    "examGenerator": {
+        "uploadTitle": "رفع المحتوى",
+        "uploadDesc": "اختر كيف تريد تقديم المواد الدراسية الخاصة بك",
+        "pasteText": "لصق نص",
+        "uploadFile": "رفع ملف",
+        "studyMaterial": "المواد الدراسية",
+        "placeholder": "الصق المواد الدراسية هنا... كلما زاد المحتوى كلما كان الاختبار أفضل.",
+        "uploadLabel": "رفع مستند",
+        "dragDrop": "انقر للرفع أو اسحب وأفلت",
+        "formats": "PDF, DOCX, TXT (الحد الأقصى 50 ميجابايت)",
+        "selectFile": "اختر ملفاً",
+        "configTitle": "إعدادات الاختبار",
+        "configDesc": "تخصيص إعدادات الاختبار الخاص بك",
+        "questionTypes": "أنواع الأسئلة",
+        "mcq": "اختيار من متعدد",
+        "trueFalse": "صواب/خطأ",
+        "shortAnswer": "إجابة قصيرة",
+        "essay": "مقالي",
+        "difficulty": "مستوى الصعوبة",
+        "easy": "سهل",
+        "medium": "متوسط",
+        "hard": "صعب",
+        "numQuestions": "عدد الأسئلة",
+        "generateBtn": "إنشاء الاختبار",
+        "generating": "جاري إنشاء الاختبار...",
+        "characters": "أحرف",
+        "kb": "كيلوبايت",
+        "resultsTitle": "نتائج الاختبار",
+        "download": "تنزيل",
+        "newExam": "اختبار جديد",
+        "correctAnswer": "الإجابة الصحيحة",
+        "explanation": "الشرح",
+        "evidence": "الدليل من النص",
+        "sourceSummary": "ملخص المصدر",
+        "dashboardTitle": "لوحة التحكم",
+        "createExam": "إنشاء اختبار",
+        "history": "السجل",
+        "examHistory": "سجل الاختبارات",
+        "examHistoryDesc": "عرض وتنزيل الاختبارات التي أنشأتها سابقاً.",
+        "noHistory": "لم يتم إنشاء أي اختبارات بعد.",
+        "date": "التاريخ",
+        "questions": "الأسئلة",
+        "view": "عرض",
+        "readingContent": "جاري قراءة المحتوى...",
+        "analyzing": "جاري تحليل المواد...",
+        "generatingQuestions": "جاري توليد الأسئلة...",
+        "validating": "جاري التحقق من الأسئلة...",
+        "initializing": "جاري البدء...",
+        "landing": {
+            "hero": {
+                "title": "إنشاء اختبارات بالذكاء الاصطناعي",
+                "subtitle": "حوّل موادك الدراسية إلى امتحانات كاملة خلال ثوانٍ",
+                "cta": "ابدأ الآن"
+            },
+            "preview": "معاينة الامتحان المولد",
+            "features": {
+                "title": "مزايا قوية",
+                "subtitle": "كل ما تحتاجه لإنشاء امتحانات احترافية",
+                "upload": {
+                    "title": "رفع سهل",
+                    "desc": "ارفع ملفات PDF أو Word أو الصق النص مباشرة"
+                },
+                "ai": {
+                    "title": "توليد بالذكاء الاصطناعي",
+                    "desc": "ذكاء متقدم يصنع أسئلة متنوعة عالية الجودة"
+                },
+                "formats": {
+                    "title": "عدة صيغ",
+                    "desc": "اختيارات متعددة، صح/خطأ، إجابة قصيرة، ومقالية"
+                },
+                "bilingual": {
+                    "title": "دعم ثنائي اللغة",
+                    "desc": "دعم كامل للعربية والإنجليزية"
+                },
+                "secure": {
+                    "title": "آمن وخاص",
+                    "desc": "بياناتك مشفرة ولا تتم مشاركتها"
+                },
+                "instant": {
+                    "title": "نتائج فورية",
+                    "desc": "توليد امتحان كامل خلال أقل من 30 ثانية"
+                }
+            },
+            "howItWorks": {
+                "title": "كيف يعمل"
+            },
+            "steps": {
+                "one": {
+                    "title": "ارفع المحتوى",
+                    "desc": "ارفع موادك الدراسية أو الصق النص"
+                },
+                "two": {
+                    "title": "اضبط الامتحان",
+                    "desc": "اختر أنواع الأسئلة ومستوى الصعوبة"
+                },
+                "three": {
+                    "title": "ولّد وحمّل",
+                    "desc": "احصل على الامتحان بصيغة PDF مع نموذج الإجابة"
+                }
+            },
+            "cta": {
+                "title": "جاهز لإنشاء أول امتحان؟",
+                "subtitle": "انضم لآلاف المعلمين الذين يوفرون الوقت باستخدام الذكاء الاصطناعي",
+                "button": "ابدأ التجربة المجانية"
+            }
+        },
+        "errors": {
+            "selectType": "اختر نوعاً واحداً على الأقل من الأسئلة.",
+            "fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (50 ميجابايت)."
+        }
+    },
+    "profile": {
+        "title": "الملف الشخصي للملف",
+        "personalInfo": "المعلومات الشخصية",
+        "email": "الهوية الرقمية (البريد)",
+        "joined": "تاريخ التفعيل",
+        "stats": "مقاييس النشاط",
+        "filesProcessed": "ملفات تم تحسينها",
+        "aiInteractions": "استفسارات عصبية",
+        "accountStatus": "حالة الحساب",
+        "verified": "عقدة موثقة",
+        "unverified": "في انتظار التوثيق",
+        "editProfile": "تحديث الهوية",
+        "saveChanges": "تثبيت التغييرات",
+        "logout": "إنهاء الجلسة",
+        "billing": "الفواتير والاشتراكات",
+        "paymentMethod": "طريقة الدفع",
+        "plan": "الخطة الحالية",
+        "proPlan": "الحزمة الهندسية الاحترافية",
+        "freePlan": "الوصول القياسي",
+        "upgrade": "الترقية للمستوى الاحترافي",
+        "manageBilling": "إدارة الاشتراك",
+        "cardNumber": "بطاقة تنتهي بـ",
+        "expiry": "تاريخ الانتهاء",
+        "addPayment": "إضافة طريقة دفع",
+        "fullName": "الاسم القانوني الكامل",
+        "avatar": "الصورة الشخصية",
+        "updateSuccess": "تم تحديث الهوية بنجاح",
+        "paymentSuccess": "تم تأمين طريقة الدفع"
+    },
+    "common": {
+        "loading": "جار التحميل...",
+        "error": "حدث خطأ",
+        "success": "تم بنجاح!",
+        "openTool": "فتح الأداة"
+    }
+}
