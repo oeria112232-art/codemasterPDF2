@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import {
   Minimize2,
@@ -20,6 +20,13 @@ export function CompressPage() {
   const [isCompressing, setIsCompressing] = useState(false);
   const [compressionLevel, setCompressionLevel] = useState<'recommended' | 'extreme' | 'basic'>('recommended');
   const [stats, setStats] = useState<{ original: number; compressed: number } | null>(null);
+  const [compressedBlobUrl, setCompressedBlobUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (compressedBlobUrl) URL.revokeObjectURL(compressedBlobUrl);
+    };
+  }, [compressedBlobUrl]);
 
   const handleCompress = async (files: File[]) => {
     if (files.length === 0) return;
@@ -30,9 +37,6 @@ export function CompressPage() {
     const originalSize = file.size;
 
     try {
-      // Simulate professional processing delay for "Neural Optimization" feel
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
       const arrayBuffer = await file.arrayBuffer();
 
       // Load source document
@@ -55,17 +59,30 @@ export function CompressPage() {
         compressedDoc.addPage(page);
       });
 
-      // Save with object streams and compression
-      // Level adjustments (simulated logic for the UI experience, actual compression is limited client-side)
-      const pdfBytes = await compressedDoc.save({
-        useObjectStreams: true,
-        addDefaultPage: false,
-      });
+      // Apply compression options based on selected level
+      const saveOptions: any = { addDefaultPage: false };
+      if (compressionLevel === 'extreme') {
+        saveOptions.useObjectStreams = true;
+        saveOptions.deflateQuality = 1;
+        compressedDoc.setTitle('');
+        compressedDoc.setSubject('');
+        compressedDoc.setKeywords([]);
+      } else if (compressionLevel === 'recommended') {
+        saveOptions.useObjectStreams = true;
+        saveOptions.deflateQuality = 5;
+      } else {
+        saveOptions.useObjectStreams = true;
+        saveOptions.deflateQuality = 9;
+      }
+
+      const pdfBytes = await compressedDoc.save(saveOptions);
 
       const compressedSize = pdfBytes.length;
       setStats({ original: originalSize, compressed: compressedSize });
 
       const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      setCompressedBlobUrl(blobUrl);
       saveAs(blob, `optimized_${file.name}`);
 
       if (compressedSize < originalSize) {
@@ -152,10 +169,10 @@ export function CompressPage() {
                 </div>
               </div>
               <div className="flex gap-4 max-w-md mx-auto">
-                <button onClick={() => setStats(null)} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                <button onClick={() => { if (compressedBlobUrl) URL.revokeObjectURL(compressedBlobUrl); setCompressedBlobUrl(null); setStats(null); }} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                   {t('tools.compress.processAnother')}
                 </button>
-                <button className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20">
+                <button onClick={() => compressedBlobUrl && window.open(compressedBlobUrl, '_blank')} className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20">
                   {t('tools.compress.viewDocument')}
                 </button>
               </div>

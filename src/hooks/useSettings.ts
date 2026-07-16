@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { ref, get, set } from 'firebase/database';
+import { database } from '../lib/firebase';
 
 export interface AppSetting {
     key: string;
@@ -13,24 +14,17 @@ export function useSettings() {
 
     const fetchSettings = async () => {
         try {
-            const { data, error } = await supabase
-                .from('app_settings')
-                .select('*');
-
-            if (error) {
-                console.error('Error fetching settings:', error);
-                return;
-            }
-
-            if (data) {
+            const snapshot = await get(ref(database, 'app_settings'));
+            if (snapshot.exists()) {
+                const data = snapshot.val();
                 const settingsMap: Record<string, string> = {};
-                data.forEach((item: AppSetting) => {
-                    settingsMap[item.key] = item.value;
+                Object.keys(data).forEach((key) => {
+                    settingsMap[key] = data[key].value || '';
                 });
                 setSettings(settingsMap);
             }
         } catch (err) {
-            console.error('Unexpected error fetching settings:', err);
+            console.error('Error fetching settings:', err);
         } finally {
             setLoading(false);
         }
@@ -41,14 +35,7 @@ export function useSettings() {
     }, []);
 
     const updateSetting = async (key: string, value: string) => {
-        const { error } = await supabase
-            .from('app_settings')
-            .update({ value })
-            .eq('key', key);
-
-        if (error) throw error;
-
-        // Update local state immediately
+        await set(ref(database, `app_settings/${key}`), { key, value });
         setSettings(prev => ({ ...prev, [key]: value }));
     };
 

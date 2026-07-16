@@ -86,7 +86,7 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
             }
         };
         loadPdf();
-    }, [file, onClose, showToast, t]);
+    }, [file, showToast, t]);
 
     const addItem = async (type: PageItem['type'], pageNum: number = 1) => {
         const id = Math.random().toString(36).substr(2, 9);

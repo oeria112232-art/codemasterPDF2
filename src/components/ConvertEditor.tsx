@@ -354,10 +354,6 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                         setWebMode('file');
                     }
                     setLoading(false);
-                } else if (['word-to-pdf', 'excel-to-pdf'].includes(toolType)) {
-                    // Removing old block if it existed, but using replacement to handle structure
-                    // Actually this block replaces the old logic entirely
-
                 } else {
                     setLoading(false);
                 }
@@ -368,7 +364,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             }
         };
         init();
-    }, [initialFiles, toolType, onClose, showToast, t]);
+    }, [initialFiles, toolType]);
 
     const handleDragStart = (e: React.DragEvent, index: number) => {
         e.dataTransfer.setData('index', index.toString());

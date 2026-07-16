@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import {
     Combine, Scissors, Minimize2, Edit3, Divide, RotateCw,
     FilePlus2, Crop, LifeBuoy, Lock, Unlock, FileBadge,
-    FileSignature, ShieldAlert, FileImage, Image, Code, BrainCircuit,
-    ArrowLeft, Sparkles, FileText, FileSpreadsheet, Presentation, FileType, Languages
+    FileSignature, ShieldAlert, FileImage, Image, Code,
+    ArrowLeft, Sparkles, FileText, FileSpreadsheet, Presentation, FileType
 } from 'lucide-react';
 import { ToolCard } from '../components/ToolCard';
 
@@ -13,13 +13,6 @@ export function CategoryPage() {
     const { t } = useTranslation();
 
     const categories: any = {
-        intelligence: {
-            title: t('app.categories.intelligence.title'),
-            description: t('app.categories.intelligence.desc'),
-            tools: [
-                { icon: BrainCircuit, title: t('tools.aiChat.title'), description: t('tools.aiChat.description'), path: '/ai-chat', color: 'bg-emerald-600' }
-            ]
-        },
         optimize: {
             title: t('app.categories.optimize.title'),
             description: t('app.categories.optimize.desc'),
@@ -64,8 +57,7 @@ export function CategoryPage() {
                 { icon: FileSpreadsheet, title: t('tools.pdfToExcel.title'), description: t('tools.pdfToExcel.description'), path: '/pdf-to-excel', color: 'bg-emerald-600' },
                 { icon: FileSpreadsheet, title: t('tools.excelToPdf.title'), description: t('tools.excelToPdf.description'), path: '/excel-to-pdf', color: 'bg-emerald-700' },
                 { icon: Presentation, title: t('tools.pdfToPowerPoint.title'), description: t('tools.pdfToPowerPoint.description'), path: '/pdf-to-powerpoint', color: 'bg-orange-600' },
-                { icon: Presentation, title: t('tools.powerPointToPdf.title'), description: t('tools.powerPointToPdf.description'), path: '/powerpoint-to-pdf', color: 'bg-orange-700' },
-                { icon: Languages, title: t('tools.translatePdf.title'), description: t('tools.translatePdf.description'), path: '/translate-pdf', color: 'bg-indigo-600' }
+                { icon: Presentation, title: t('tools.powerPointToPdf.title'), description: t('tools.powerPointToPdf.description'), path: '/powerpoint-to-pdf', color: 'bg-orange-700' }
             ]
         }
     };

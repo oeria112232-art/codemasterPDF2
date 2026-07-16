@@ -89,7 +89,10 @@ export function MergePage() {
       pdfDoc.getPages().forEach(p => p.setRotation(degrees(p.getRotation().angle + 90)));
       saveAs(new Blob([await pdfDoc.save() as any]), `rotated_${files[0].name}`);
       showToast(t('common.success'), 'success');
-    } catch { showToast(t('common.error'), 'error'); }
+    } catch (err: any) {
+      console.error('Rotate error:', err);
+      showToast('Failed to rotate PDF. The file may be corrupted.', 'error');
+    }
   };
 
   const executeConfiguredTool = async () => {
@@ -100,12 +103,16 @@ export function MergePage() {
 
   const handleProtect = async (files: File[]) => {
     if (!password) { showToast(t('tools.config.passwordPlaceholder'), 'error'); return; }
+    if (password.length < 4) { showToast('Password must be at least 4 characters', 'error'); return; }
     try {
       const pdfDoc = await PDFDocument.load(await files[0].arrayBuffer());
       (pdfDoc as any).encrypt({ userPassword: password, ownerPassword: password });
       saveAs(new Blob([await pdfDoc.save() as any]), `protected_${files[0].name}`);
       showToast(t('common.success'), 'success');
-    } catch { showToast(t('common.error'), 'error'); }
+    } catch (err: any) {
+      console.error('Protect error:', err);
+      showToast('Failed to protect PDF. The file may be corrupted.', 'error');
+    }
   };
 
   const handleUnlock = async (files: File[]) => {
@@ -113,7 +120,14 @@ export function MergePage() {
       const pdfDoc = await PDFDocument.load(await files[0].arrayBuffer(), { password } as any);
       saveAs(new Blob([await pdfDoc.save() as any]), `unlocked_${files[0].name}`);
       showToast(t('common.success'), 'success');
-    } catch { showToast(t('common.error'), 'error'); }
+    } catch (err: any) {
+      console.error('Unlock error:', err);
+      if (err.message?.includes('PasswordException') || err.message?.includes('password')) {
+        showToast('Wrong password. Please try again.', 'error');
+      } else {
+        showToast('Failed to unlock PDF. The file may be corrupted.', 'error');
+      }
+    }
   };
 
   const handlePageNumbers = async (files: File[]) => {
@@ -127,15 +141,22 @@ export function MergePage() {
       });
       saveAs(new Blob([await pdfDoc.save() as any]), `numbered_${files[0].name}`);
       showToast(t('common.success'), 'success');
-    } catch { showToast(t('common.error'), 'error'); }
+    } catch (err: any) {
+      console.error('Page numbers error:', err);
+      showToast('Failed to add page numbers.', 'error');
+    }
   };
 
   const handleRepair = async (files: File[]) => {
     try {
-      const pdfDoc = await PDFDocument.load(await files[0].arrayBuffer());
-      saveAs(new Blob([await pdfDoc.save() as any]), `repaired_${files[0].name}`);
+      const pdfDoc = await PDFDocument.load(await files[0].arrayBuffer(), { ignoreEncryption: true } as any);
+      const bytes = await pdfDoc.save({ useObjectStreams: true });
+      saveAs(new Blob([bytes as any]), `repaired_${files[0].name}`);
       showToast(t('common.success'), 'success');
-    } catch { showToast(t('common.error'), 'error'); }
+    } catch (err: any) {
+      console.error('Repair error:', err);
+      showToast('Could not repair this file. It may be too damaged.', 'error');
+    }
   };
 
   const getHandler = () => {

@@ -74,7 +74,7 @@ export function WatermarkEditor({ file, onClose }: WatermarkEditorProps) {
             }
         };
         loadPdf();
-    }, [file, onClose, showToast, t]);
+    }, [file, showToast, t]);
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -131,8 +131,8 @@ export function WatermarkEditor({ file, onClose }: WatermarkEditorProps) {
                 if (isMosaic) {
                     const stepX = width / 3;
                     const stepY = height / 3;
-                    for (let i = 0; i <= 3; i++) {
-                        for (let j = 0; j <= 3; j++) {
+                    for (let i = 0; i < 3; i++) {
+                        for (let j = 0; j < 3; j++) {
                             draw(i * stepX, j * stepY);
                         }
                     }

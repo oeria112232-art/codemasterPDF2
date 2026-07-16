@@ -2,6 +2,9 @@ import { Upload, X, FileText, Sparkles, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+const MAX_FILES = 20;
+
 interface FileUploadZoneProps {
   files: File[];
   onFilesChange: (files: File[]) => void;
@@ -12,22 +15,64 @@ interface FileUploadZoneProps {
 export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple = true }: FileUploadZoneProps) {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const validateAndAddFiles = (newFiles: File[]) => {
+    setError(null);
+
+    if (!multiple && newFiles.length > 1) {
+      setError('Only one file is allowed');
+      return;
+    }
+
+    if (!multiple) {
+      if (newFiles[0].size > MAX_FILE_SIZE) {
+        setError(`File too large (max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+        return;
+      }
+      onFilesChange([newFiles[0]]);
+      return;
+    }
+
+    const totalFiles = files.length + newFiles.length;
+    if (totalFiles > MAX_FILES) {
+      setError(`Maximum ${MAX_FILES} files allowed`);
+      return;
+    }
+
+    const validFiles: File[] = [];
+    const existingNames = new Set(files.map(f => f.name));
+
+    for (const f of newFiles) {
+      if (f.size > MAX_FILE_SIZE) {
+        setError(`"${f.name}" is too large (max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+        return;
+      }
+      if (existingNames.has(f.name)) {
+        setError(`"${f.name}" is already in the queue`);
+        continue;
+      }
+      existingNames.add(f.name);
+      validFiles.push(f);
+    }
+
+    if (validFiles.length === 0 && newFiles.length > 0) {
+      setError('All selected files are already in the queue');
+      return;
+    }
+
+    onFilesChange([...files, ...validFiles]);
+  };
 
   const handleFileSelect = (selectedFiles: FileList | null) => {
     if (!selectedFiles) return;
-
-    const newFiles = Array.from(selectedFiles);
-    if (!multiple) {
-      onFilesChange(newFiles);
-    } else {
-      onFilesChange([...files, ...newFiles]);
-    }
+    validateAndAddFiles(Array.from(selectedFiles));
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFileSelect(e.dataTransfer.files);
+    validateAndAddFiles(Array.from(e.dataTransfer.files));
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -40,6 +85,7 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
   };
 
   const removeFile = (index: number) => {
+    setError(null);
     onFilesChange(files.filter((_, i) => i !== index));
   };
 
@@ -94,11 +140,17 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
             <div className="w-[1px] h-3 bg-slate-400" />
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span className="text-[9px] font-black uppercase tracking-widest">{t('upload.atomic')}</span>
+              <span className="text-[9px] font-black uppercase tracking-widest">{MAX_FILE_SIZE / 1024 / 1024}MB MAX</span>
             </div>
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="mt-4 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 dark:text-rose-400 rounded-2xl text-xs font-bold text-center animate-in fade-in duration-200">
+          {error}
+        </div>
+      )}
 
       {files.length > 0 && (
         <div className="mt-12 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -107,7 +159,7 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
               {t('upload.activeQueue')} ({files.length})
             </h4>
             <button
-              onClick={() => onFilesChange([])}
+              onClick={() => { onFilesChange([]); setError(null); }}
               className="text-[9px] font-black text-rose-500 uppercase tracking-widest hover:underline"
             >
               {t('upload.clearAll')}

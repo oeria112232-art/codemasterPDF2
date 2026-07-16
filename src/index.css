@@ -135,6 +135,7 @@
         @apply bg-[#f8fafc] dark:bg-[#020617];
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     html[lang="ar"] body {

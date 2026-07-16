@@ -36,8 +36,15 @@ export function ToolPage({ icon: Icon, title, description, color, onProcess, hid
       setProcessing(true);
       await onProcess(files);
     } catch (error: any) {
-      console.error(error);
-      showToast(error.message || t('common.error'), 'error');
+      console.error('Tool processing error:', error);
+      const message = error?.message || t('common.error');
+      if (message.includes('password') || message.includes('encrypted')) {
+        showToast('This PDF is password-protected. Please unlock it first.', 'error');
+      } else if (message.includes('corrupt') || message.includes('invalid')) {
+        showToast('This file appears to be corrupted or invalid.', 'error');
+      } else {
+        showToast(message, 'error');
+      }
     } finally {
       setProcessing(false);
     }

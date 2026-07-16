@@ -33,10 +33,6 @@ export function ConvertPage() {
   const config = toolConfig[path] || toolConfig['pdf-to-jpg'];
 
   const handleProcess = async (files: File[]) => {
-    // Beta block removed to enable tools
-    if (['powerpoint-to-pdf'].includes(path)) {
-      showToast(t('tools.convert.betaMessage'), 'info');
-    }
     setActiveFiles(files);
   };
 

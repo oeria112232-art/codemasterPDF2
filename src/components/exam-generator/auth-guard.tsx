@@ -1,20 +1,16 @@
 
-
 import type React from "react"
 
-import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Auth disabled for tool integration
     setIsAuthenticated(true)
     setIsLoading(false)
-  }, [navigate])
+  }, [])
 
   if (isLoading) {
     return (

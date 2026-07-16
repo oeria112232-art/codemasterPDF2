@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { PDFDocument, degrees } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
+import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 
 interface PageOrganizerProps {
@@ -27,6 +28,7 @@ export function PageOrganizer({ file, toolType, onClose }: PageOrganizerProps) {
     const [pages, setPages] = useState<PageData[]>([]);
     const [isSaving, setIsSaving] = useState(false);
     const [zoom, setZoom] = useState(1);
+    const { showToast } = useToast();
 
     useEffect(() => {
         const loadThumbnails = async () => {
@@ -71,7 +73,7 @@ export function PageOrganizer({ file, toolType, onClose }: PageOrganizerProps) {
 
     const deletePage = (index: number) => {
         if (pages.length <= 1) {
-            alert(t('organizer.cannotDelete'));
+            showToast(t('organizer.cannotDelete'), 'warning');
             return;
         }
         setPages(pages.filter((_, i) => i !== index));
@@ -111,7 +113,7 @@ export function PageOrganizer({ file, toolType, onClose }: PageOrganizerProps) {
             onClose();
         } catch (err) {
             console.error(err);
-            alert(t('organizer.errorSaving'));
+            showToast(t('organizer.errorSaving'), 'error');
         } finally {
             setIsSaving(false);
         }

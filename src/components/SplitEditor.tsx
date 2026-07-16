@@ -68,7 +68,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
             }
         };
         loadPdf();
-    }, [file, onClose, showToast, t]);
+    }, [file]);
 
     const getThumbnail = useCallback(async (pageNum: number) => {
         if (!pdfProxy || thumbnails[pageNum]) return;

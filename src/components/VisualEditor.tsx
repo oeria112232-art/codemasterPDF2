@@ -5,12 +5,13 @@ import {
     ShieldAlert, Loader2, Trash2, Check,
     Undo2, Redo2, ZoomIn, ZoomOut, Move,
     Sparkles, Layers,
-    Maximize2
+    Maximize2, Settings2
 } from 'lucide-react';
 import { PDFDocument, rgb, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
+import { generateId } from '../lib/security';
 
 // Setup worker
 import pdfWorker from 'pdfjs-dist/build/pdf.worker?url';
@@ -90,7 +91,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
             }
         };
         loadPdf();
-    }, [file, onClose]);
+    }, [file]);
 
     // Handle Delete Key
     useEffect(() => {
@@ -119,7 +120,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
         if (selectedTool === 'edit') {
             // Add Text Mode
             const newItem: PageItem = {
-                id: Math.random().toString(36).substr(2, 9),
+                id: generateId(),
                 page: pageNum, x, y, type: 'text', content: '',
                 color: { r: 0, g: 0, b: 0 }, fontSize: 16
             };
@@ -128,7 +129,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
             setEditingId(newItem.id);
         } else if (selectedTool === 'redact') {
             const newItem: PageItem = {
-                id: Math.random().toString(36).substr(2, 9),
+                id: generateId(),
                 page: pageNum, x, y, type: 'redaction', w: 15, h: 5
             };
             pushHistory([...items, newItem]);
@@ -543,10 +544,3 @@ function DraggableItem({ item, zoom, active, isEditing, onSelect, updatePos, onE
     );
 }
 
-function Settings2(props: any) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-            <path d="M20 7h-9" /><path d="M14 17H5" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" />
-        </svg>
-    );
-}
