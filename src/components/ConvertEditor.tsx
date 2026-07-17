@@ -742,7 +742,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                     const drawnImages = new Set<string>();
 
                     for (let j = 0; j < opList.fnArray.length; j++) {
-                        if (opList.fnArray[j] === OPS.paintImageXObject || opList.fnArray[j] === OPS.paintJpegXObject) {
+                        if (opList.fnArray[j] === OPS.paintImageXObject) {
                             const imgName = opList.argsArray[j]?.[0];
                             if (!imgName || drawnImages.has(imgName)) continue;
                             drawnImages.add(imgName);
@@ -1149,80 +1149,6 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         saveAs(new Blob([pdfBytes as any], { type: 'application/pdf' }), `${file.name.replace(/\.[^/.]+$/, '')}.pdf`);
     };
 
-    const processPowerPointToPdf = async () => {
-        // Client-side PPTX -> PDF is extremely limited.
-        // We will extract text and slides overview if possible,
-        // but mainly we will provide a text-based PDF report of the presentation.
-        const file = initialFiles[0];
-        try {
-            const zip = new JSZip();
-            const content = await zip.loadAsync(file);
-            const slides: string[] = [];
-
-            // Find slide files
-            const slideFiles = Object.keys(content.files).filter(k => k.match(/ppt\/slides\/slide\d+\.xml/));
-            // Sort by number: ppt/slides/slide1.xml, slide2.xml...
-            slideFiles.sort((a, b) => {
-                const getNum = (s: string) => {
-                    const m = s.match(/slide(\d+)\.xml/);
-                    return m ? parseInt(m[1]) : 0;
-                };
-                return getNum(a) - getNum(b);
-            });
-
-            if (slideFiles.length === 0) throw new Error("No slides found in PowerPoint file");
-
-            for (const slidePath of slideFiles) {
-                const slideXml = await content.files[slidePath].async('string');
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(slideXml, 'application/xml');
-                // Extract all text (<a:t>)
-                const textNodes = doc.getElementsByTagName('a:t');
-                let slideText = '';
-                for (let i = 0; i < textNodes.length; i++) {
-                    slideText += textNodes[i].textContent + ' ';
-                }
-                slides.push(slideText.trim());
-            }
-
-            // Generate PDF
-            const pdfDoc = await PDFDocument.create();
-            const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-            for (let i = 0; i < slides.length; i++) {
-                const page = pdfDoc.addPage([595, 842]);
-                const { height } = page.getSize();
-                const fontSize = 12;
-
-                page.drawText(`Slide ${i + 1}`, { x: 50, y: height - 50, size: 18, font });
-                // Simple word wrap
-                const text = slides[i] || '(No text content)';
-                const words = text.split(' ');
-                let x = 50;
-                let y = height - 80;
-
-                let line = '';
-                for (const word of words) {
-                    if (line.length + word.length > 80) {
-                        page.drawText(line, { x, y, size: fontSize, font });
-                        y -= 20;
-                        line = word + ' ';
-                    } else {
-                        line += word + ' ';
-                    }
-                }
-                if (line) page.drawText(line, { x, y, size: fontSize, font });
-            }
-
-            const pdfBytes = await pdfDoc.save();
-            saveAs(new Blob([pdfBytes as any]), `${file.name.replace(/\.[^/.]+$/, "")}.pdf`);
-
-        } catch (e) {
-            console.error(e);
-            throw new Error("Failed to parse PowerPoint file");
-        }
-    };
-
     const handleProcess = async () => {
         setProcessing(true);
         setProgress(10);
@@ -1231,7 +1157,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             else if (toolType === 'pdf-to-excel') await processPdfToExcel();
             else if (toolType === 'pdf-to-powerpoint') await processPdfToPowerPoint();
             else if (['word-to-pdf', 'excel-to-pdf'].includes(toolType)) await processOfficeToPdf();
-            else if (toolType === 'powerpoint-to-pdf') await processPowerPointToPdf();
+            else if (toolType === 'powerpoint-to-pdf') await processOfficeToPdf();
             else if (toolType === 'html-to-pdf') {
                 // ... Existing HTML logic ...
                 const iframe = document.createElement('iframe');

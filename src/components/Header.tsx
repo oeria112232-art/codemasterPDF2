@@ -8,7 +8,7 @@ import {
   Combine, Scissors, Minimize2, Edit3,
   RotateCw, Crop, Lock, Unlock,
   FileBadge, FileSignature, FileImage, Image,
-  FileSpreadsheet, Presentation
+  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows
 } from 'lucide-react';
 
 export function Header() {
@@ -63,6 +63,13 @@ export function Header() {
         { icon: FileSpreadsheet, label: t('tools.excelToPdf.title'), path: '/excel-to-pdf' },
         { icon: Presentation, label: t('tools.powerPointToPdf.title'), path: '/powerpoint-to-pdf' },
       ]
+    },
+    {
+      title: "Intelligence",
+      tools: [
+        { icon: MessageSquare, label: "PDF Chat", path: '/pdf-to-chat' },
+        { icon: GitCompareArrows, label: "PDF Compare", path: '/pdf-to-compare' },
+      ]
     }
   ];
 
@@ -107,11 +114,11 @@ export function Header() {
                 rounded-xl shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 p-6 transition-all duration-200 
                 ${menuOpen ? 'opacity-100 visible translate-y-2' : 'opacity-0 invisible translate-y-1'}
               `}>
-                <div className="grid grid-cols-4 gap-6">
+                <div className="grid grid-cols-5 gap-6">
                   {categories.map((cat, i) => (
                     <div key={i} className="space-y-3">
                       <Link
-                        to={`/tools/${['optimize', 'security', 'edit', 'convert'][i]}`}
+                        to={`/tools/${['optimize', 'security', 'edit', 'convert', 'intelligence'][i]}`}
                         className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                       >
                         {cat.title}
@@ -137,6 +144,8 @@ export function Header() {
             </div>
             <NavLink to="/about" label={t('app.nav.about')} />
             <NavLink to="/contact" label={t('app.nav.contact')} />
+            <NavLink to="/pricing" label="Pricing" />
+            {user && <NavLink to="/dashboard" label="Dashboard" />}
           </nav>
 
           <div className="lg:hidden flex items-center gap-3">

@@ -13,6 +13,9 @@ import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
+import * as pdfjsLib from 'pdfjs-dist';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 export function CompressPage() {
   const { t } = useTranslation();
@@ -38,45 +41,19 @@ export function CompressPage() {
 
     try {
       const arrayBuffer = await file.arrayBuffer();
+      const sourceDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true } as any);
 
-      // Load source document
-      const sourceDoc = await PDFDocument.load(arrayBuffer);
+      let compressedDoc: PDFDocument;
 
-      // Create a fresh document for optimization (removes unused objects/metadata leftovers)
-      const compressedDoc = await PDFDocument.create();
-
-      // Copy metadata but clean it
-      compressedDoc.setTitle(sourceDoc.getTitle() || '');
-      compressedDoc.setAuthor(''); // Removing author metadata helps privacy & size
-      compressedDoc.setProducer('PDF Tools Pro Optimizer');
-      compressedDoc.setCreator('PDF Tools Pro');
-
-      // Port over pages
-      const pageIndices = sourceDoc.getPageIndices();
-      const copiedPages = await compressedDoc.copyPages(sourceDoc, pageIndices);
-
-      copiedPages.forEach((page) => {
-        compressedDoc.addPage(page);
-      });
-
-      // Apply compression options based on selected level
-      const saveOptions: any = { addDefaultPage: false };
       if (compressionLevel === 'extreme') {
-        saveOptions.useObjectStreams = true;
-        saveOptions.deflateQuality = 1;
-        compressedDoc.setTitle('');
-        compressedDoc.setSubject('');
-        compressedDoc.setKeywords([]);
+        compressedDoc = await compressExtreme(sourceDoc);
       } else if (compressionLevel === 'recommended') {
-        saveOptions.useObjectStreams = true;
-        saveOptions.deflateQuality = 5;
+        compressedDoc = await compressRecommended(sourceDoc);
       } else {
-        saveOptions.useObjectStreams = true;
-        saveOptions.deflateQuality = 9;
+        compressedDoc = await compressBasic(sourceDoc);
       }
 
-      const pdfBytes = await compressedDoc.save(saveOptions);
-
+      const pdfBytes = await compressedDoc.save({ useObjectStreams: true });
       const compressedSize = pdfBytes.length;
       setStats({ original: originalSize, compressed: compressedSize });
 
@@ -86,7 +63,8 @@ export function CompressPage() {
       saveAs(blob, `optimized_${file.name}`);
 
       if (compressedSize < originalSize) {
-        showToast(`${t('common.success')} ${((originalSize - compressedSize) / 1024).toFixed(1)} KB`, 'success');
+        const pct = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+        showToast(`${t('common.success')} — ${pct}% smaller`, 'success');
       } else {
         showToast(t('common.success'), 'success');
       }
@@ -96,6 +74,98 @@ export function CompressPage() {
     } finally {
       setIsCompressing(false);
     }
+  };
+
+  const compressExtreme = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const compressedDoc = await PDFDocument.create();
+    compressedDoc.setTitle('');
+    compressedDoc.setAuthor('');
+    compressedDoc.setSubject('');
+    compressedDoc.setKeywords([]);
+    compressedDoc.setProducer('CodeMaster PDF Optimizer');
+    compressedDoc.setCreator('CodeMaster');
+
+    const pageIndices = sourceDoc.getPageIndices();
+    const copiedPages = await compressedDoc.copyPages(sourceDoc, pageIndices);
+    copiedPages.forEach(page => compressedDoc.addPage(page));
+
+    try {
+      const arrayBuffer = await sourceDoc.save();
+      const pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+      for (let i = 0; i < compressedDoc.getPageCount(); i++) {
+        const page = compressedDoc.getPage(i);
+        const jsPage = await pdfDoc.getPage(i + 1);
+        const ops = await jsPage.getOperatorList();
+        const hasImages = ops.fnArray.some(
+          (fn: number) => fn === pdfjsLib.OPS.paintImageXObject
+        );
+        if (hasImages) {
+          const vp = jsPage.getViewport({ scale: 0.5 });
+          const canvas = new OffscreenCanvas(vp.width, vp.height);
+          const ctx = canvas.getContext('2d')!;
+          await jsPage.render({ canvasContext: ctx as any, viewport: vp }).promise;
+          const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.3 });
+          const buf = await blob.arrayBuffer();
+          const img = await compressedDoc.embedJpg(new Uint8Array(buf));
+          const { width, height } = page.getSize();
+          page.drawImage(img, { x: 0, y: 0, width, height });
+        }
+      }
+    } catch {}
+
+    return compressedDoc;
+  };
+
+  const compressRecommended = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const compressedDoc = await PDFDocument.create();
+    compressedDoc.setTitle(sourceDoc.getTitle() || '');
+    compressedDoc.setAuthor('');
+    compressedDoc.setProducer('CodeMaster PDF Optimizer');
+    compressedDoc.setCreator('CodeMaster');
+
+    const pageIndices = sourceDoc.getPageIndices();
+    const copiedPages = await compressedDoc.copyPages(sourceDoc, pageIndices);
+    copiedPages.forEach(page => compressedDoc.addPage(page));
+
+    try {
+      const arrayBuffer = await sourceDoc.save();
+      const pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+      for (let i = 0; i < compressedDoc.getPageCount(); i++) {
+        const page = compressedDoc.getPage(i);
+        const jsPage = await pdfDoc.getPage(i + 1);
+        const ops = await jsPage.getOperatorList();
+        const hasImages = ops.fnArray.some(
+          (fn: number) => fn === pdfjsLib.OPS.paintImageXObject
+        );
+        if (hasImages) {
+          const vp = jsPage.getViewport({ scale: 0.75 });
+          const canvas = new OffscreenCanvas(vp.width, vp.height);
+          const ctx = canvas.getContext('2d')!;
+          await jsPage.render({ canvasContext: ctx as any, viewport: vp }).promise;
+          const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.6 });
+          const buf = await blob.arrayBuffer();
+          const img = await compressedDoc.embedJpg(new Uint8Array(buf));
+          const { width, height } = page.getSize();
+          page.drawImage(img, { x: 0, y: 0, width, height });
+        }
+      }
+    } catch {}
+
+    return compressedDoc;
+  };
+
+  const compressBasic = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const compressedDoc = await PDFDocument.create();
+    compressedDoc.setTitle(sourceDoc.getTitle() || '');
+    compressedDoc.setAuthor(sourceDoc.getAuthor() || '');
+    compressedDoc.setProducer('CodeMaster PDF Optimizer');
+    compressedDoc.setCreator('CodeMaster');
+
+    const pageIndices = sourceDoc.getPageIndices();
+    const copiedPages = await compressedDoc.copyPages(sourceDoc, pageIndices);
+    copiedPages.forEach(page => compressedDoc.addPage(page));
+
+    return compressedDoc;
   };
 
   return (

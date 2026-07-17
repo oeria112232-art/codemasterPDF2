@@ -2,7 +2,8 @@ import {
   Combine, Scissors, Minimize2, FileImage, Lock, Unlock,
   RotateCw, Image, FileBadge, FilePlus2, FileSignature, Divide,
   Edit3, Crop, LifeBuoy, ShieldAlert, Sparkles, Zap, ShieldCheck, Globe,
-  FileText, FileSpreadsheet, Presentation, FileType
+  FileText, FileSpreadsheet, Presentation, FileType,
+  MessageSquare, GitCompareArrows
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
@@ -61,6 +62,15 @@ export function Home() {
         { icon: Presentation, title: t('tools.pdfToPowerPoint.title'), description: t('tools.pdfToPowerPoint.description'), path: '/pdf-to-powerpoint', color: 'bg-orange-600' },
         { icon: Presentation, title: t('tools.powerPointToPdf.title'), description: t('tools.powerPointToPdf.description'), path: '/powerpoint-to-pdf', color: 'bg-orange-700' }
       ]
+    },
+    {
+      id: "intelligence",
+      title: "Intelligence Suite",
+      description: "AI-powered tools for document analysis and smart processing",
+      tools: [
+        { icon: MessageSquare, title: "PDF Chat", description: "Ask questions about your PDF using AI", path: '/pdf-to-chat', color: 'bg-blue-500' },
+        { icon: GitCompareArrows, title: "PDF Compare", description: "Compare two PDFs and see all differences", path: '/pdf-to-compare', color: 'bg-purple-500' },
+      ]
     }
   ];
 
@@ -90,8 +100,8 @@ export function Home() {
       </section>
 
       <section id="tools-grid" className="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
-        {categories.map((cat, catIdx) => (
-          <div key={cat.id}>
+        {categories.map((cat) => (
+          <div key={cat.id} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-3">
               <div>
                 <p className="text-indigo-600 dark:text-indigo-400 font-semibold text-xs uppercase tracking-wider mb-2">{cat.title}</p>
