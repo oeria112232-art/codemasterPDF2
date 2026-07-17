@@ -492,12 +492,13 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
         // Proxy Definitions
         const proxies = {
+            netlify: (u: string) => `/.netlify/functions/proxy?url=${encodeURIComponent(u)}`,
             corsproxy: (u: string) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
             allorigins: (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
             codetabs: (u: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`
         };
 
-        let bestProxy = proxies.corsproxy; // Default
+        let bestProxy = proxies.netlify; // Default
 
         const handleSuccess = async (html: string) => {
             if (!html || html.trim().length < 100) throw new Error('Empty response');
@@ -551,6 +552,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             };
 
             const winner = await raceToSuccess([
+                raceProxy('netlify', proxies.netlify),
                 raceProxy('corsproxy', proxies.corsproxy),
                 raceProxy('allorigins', proxies.allorigins),
                 raceProxy('codetabs', proxies.codetabs)
