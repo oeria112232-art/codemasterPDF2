@@ -1,15 +1,56 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Combine, Scissors, Minimize2, FileImage, Lock, Unlock,
   RotateCw, Image, FileBadge, FilePlus2, FileSignature, Divide,
   Edit3, Crop, LifeBuoy, ShieldAlert, Sparkles, Zap, ShieldCheck, Globe,
   FileText, FileSpreadsheet, Presentation, FileType,
-  MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert
+  MessageSquare, GitCompareArrows, Layers, ArrowRight, Star,
+  ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
 
+const STATS = [
+  { value: '10M+', label: 'Files Processed', icon: FileText },
+  { value: '500K+', label: 'Active Users', icon: Users },
+  { value: '28+', label: 'PDF Tools', icon: Zap },
+  { value: '99.9%', label: 'Uptime', icon: TrendingUp },
+];
+
+const TESTIMONIALS = [
+  { name: 'Sarah Chen', role: 'Product Manager at Google', text: 'CodeMaster replaced 5 different PDF tools for our team. The AI chat feature is a game-changer.', rating: 5 },
+  { name: 'Ahmed Hassan', role: 'Legal Consultant', text: 'The Contract Analyzer saves me hours every week. It identifies risks I would have missed.', rating: 5 },
+  { name: 'Maria Rodriguez', role: 'University Professor', text: 'My students use PDF Chat to understand research papers. It\'s like having a study buddy built in.', rating: 5 },
+];
+
+const COMPARISON = [
+  { feature: 'PDF Processing', codemaster: true, adobe: true, smallpdf: true },
+  { feature: 'AI Chat with PDF', codemaster: true, adobe: false, smallpdf: false },
+  { feature: 'Contract Analysis', codemaster: true, adobe: false, smallpdf: false },
+  { feature: 'Batch Processing', codemaster: true, adobe: true, smallpdf: true },
+  { feature: 'Client-side Processing', codemaster: true, adobe: false, smallpdf: false },
+  { feature: 'Free Tier Available', codemaster: true, adobe: false, smallpdf: true },
+  { feature: 'Open Source Backend', codemaster: true, adobe: false, smallpdf: false },
+];
+
 export function Home() {
   const { t } = useTranslation();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const target = 10000000;
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) { setCount(target); clearInterval(timer); }
+      else setCount(Math.floor(current));
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, []);
 
   const categories = [
     {
@@ -78,38 +119,74 @@ export function Home() {
   ];
 
   return (
-    <div className="bg-[#f8fafc] dark:bg-[#020617] transition-colors duration-300">
-      <section className="relative pt-16 md:pt-24 pb-10 md:pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800/50 text-indigo-600 dark:text-indigo-400 text-xs font-medium mb-6">
+    <div className="bg-[#f8fafc] dark:bg-[#020617] transition-colors duration-300 overflow-hidden">
+
+      {/* HERO */}
+      <section className="relative pt-20 md:pt-32 pb-20 md:pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800/50 text-indigo-600 dark:text-indigo-400 text-xs font-medium mb-8">
             <Sparkles className="w-3.5 h-3.5" />
             {t('app.hero.powerTools')}
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-slate-900 dark:text-white mb-5 tracking-tight leading-[1.1] px-2">
+
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter leading-[0.95] px-2">
             {t('app.heroTitle').split(' ').map((word, i) => (
               <span key={i} className={i > 4 ? "text-indigo-600" : ""}>{word} </span>
             ))}
           </h1>
-          <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 font-normal leading-relaxed px-4">
+
+          <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 font-medium leading-relaxed px-4">
             {t('app.description')}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            <button className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all hover:shadow-xl hover:shadow-indigo-600/30 active:scale-[0.98]" onClick={() => document.getElementById('tools-grid')?.scrollIntoView({ behavior: 'smooth' })}>
-              {t('app.hero.getStarted')}
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            <Link to="/signup" className="px-10 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-sm shadow-xl shadow-indigo-600/20 transition-all hover:shadow-2xl hover:shadow-indigo-600/30 active:scale-[0.98] flex items-center gap-2">
+              {t('app.hero.getStarted')} <ArrowRight className="w-4 h-4" />
+            </Link>
+            <button className="px-10 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl font-bold text-sm border border-slate-200 dark:border-slate-800 transition-all flex items-center gap-2"
+              onClick={() => document.getElementById('tools-grid')?.scrollIntoView({ behavior: 'smooth' })}>
+              {t('app.hero.viewTools')} <ChevronRight className="w-4 h-4" />
             </button>
+          </div>
+
+          {/* STATS */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {STATS.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 shadow-sm">
+                  <div className="w-10 h-10 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-3 mx-auto">
+                    <Icon className="w-5 h-5 text-indigo-500" />
+                  </div>
+                  <p className="text-2xl font-black text-slate-900 dark:text-white">
+                    {i === 0 ? `${(count / 1000000).toFixed(0)}M+` : stat.value}
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{stat.label}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section id="tools-grid" className="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
+      {/* TOOLS GRID */}
+      <section id="tools-grid" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 space-y-20 md:space-y-28">
         {categories.map((cat) => (
-          <div key={cat.id} className="mb-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-3">
+          <div key={cat.id}>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-12 gap-3">
               <div>
                 <p className="text-indigo-600 dark:text-indigo-400 font-semibold text-xs uppercase tracking-wider mb-2">{cat.title}</p>
-                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight">{cat.description}</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{cat.description}</h2>
               </div>
+              {cat.id === 'intelligence' && (
+                <Link to="/dashboard" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1 transition-colors">
+                  View All <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
@@ -128,8 +205,13 @@ export function Home() {
         ))}
       </section>
 
-      <section className="py-16 md:py-24 bg-slate-100/50 dark:bg-slate-900/30 border-y border-slate-200/80 dark:border-slate-800/80">
+      {/* FEATURES */}
+      <section className="py-20 md:py-28 bg-slate-100/50 dark:bg-slate-900/30 border-y border-slate-200/80 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Why CodeMaster?</h2>
+            <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">Everything you need for professional PDF management, powered by AI</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14">
             <FeatureItem icon={Zap} title={t('app.features.fast')} desc={t('app.features.fastDesc')} />
             <FeatureItem icon={ShieldCheck} title={t('app.features.secure')} desc={t('app.features.secureDesc')} />
@@ -138,12 +220,74 @@ export function Home() {
         </div>
       </section>
 
-      <section className="py-20 md:py-32 text-center relative overflow-hidden px-6">
-        <h2 className="text-3xl md:text-5xl font-semibold text-slate-900 dark:text-white mb-6 tracking-tight">{t('app.hero.workflowTitle')}</h2>
-        <p className="text-slate-500 dark:text-slate-400 font-medium mb-10 text-sm">{t('app.hero.joinUsers')}</p>
-        <button className="px-8 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium text-sm shadow-lg transition-all hover:shadow-xl active:scale-[0.98]">
-          {t('app.hero.optimizeNow')}
-        </button>
+      {/* COMPARISON TABLE */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">How We Compare</h2>
+            <p className="text-slate-500 dark:text-slate-400">See why professionals choose CodeMaster</p>
+          </div>
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-xl">
+            <div className="grid grid-cols-4 text-xs font-black uppercase tracking-widest">
+              <div className="p-4 text-slate-400">Feature</div>
+              <div className="p-4 text-center text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10">CodeMaster</div>
+              <div className="p-4 text-center text-slate-400">Adobe</div>
+              <div className="p-4 text-center text-slate-400">Smallpdf</div>
+            </div>
+            {COMPARISON.map((row, i) => (
+              <div key={i} className={`grid grid-cols-4 text-sm border-t border-slate-100 dark:border-slate-800 ${i % 2 === 0 ? 'bg-slate-50/50 dark:bg-slate-800/20' : ''}`}>
+                <div className="p-4 font-medium text-slate-700 dark:text-slate-300">{row.feature}</div>
+                <div className="p-4 text-center bg-indigo-50/50 dark:bg-indigo-900/5">
+                  {row.codemaster ? <CheckCircle2 className="w-5 h-5 text-indigo-500 mx-auto" /> : <span className="text-slate-300">-</span>}
+                </div>
+                <div className="p-4 text-center">
+                  {row.adobe ? <CheckCircle2 className="w-5 h-5 text-slate-300 mx-auto" /> : <span className="text-slate-300">-</span>}
+                </div>
+                <div className="p-4 text-center">
+                  {row.smallpdf ? <CheckCircle2 className="w-5 h-5 text-slate-300 mx-auto" /> : <span className="text-slate-300">-</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-20 md:py-28 bg-slate-100/50 dark:bg-slate-900/30 border-y border-slate-200/80 dark:border-slate-800/80">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Loved by Professionals</h2>
+            <p className="text-slate-500 dark:text-slate-400">Join thousands of satisfied users worldwide</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((testimonial, i) => (
+              <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: testimonial.rating }).map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 italic">"{testimonial.text}"</p>
+                <div>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">{testimonial.name}</p>
+                  <p className="text-[10px] text-slate-400">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 md:py-36 text-center relative overflow-hidden px-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent" />
+        <div className="relative">
+          <h2 className="text-3xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">{t('app.hero.workflowTitle')}</h2>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mb-10 text-sm max-w-md mx-auto">{t('app.hero.joinUsers')}</p>
+          <Link to="/signup" className="px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-sm shadow-lg transition-all hover:shadow-xl active:scale-[0.98] inline-flex items-center gap-2">
+            {t('app.hero.optimizeNow')} <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
     </div>
   );
@@ -152,11 +296,11 @@ export function Home() {
 function FeatureItem({ icon: Icon, title, desc }: any) {
   return (
     <div className="group flex flex-col items-start gap-4">
-      <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 flex items-center justify-center transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:ring-0 group-hover:shadow-lg group-hover:shadow-indigo-600/20">
-        <Icon className="w-5 h-5" />
+      <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-2xl shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 flex items-center justify-center transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:ring-0 group-hover:shadow-lg group-hover:shadow-indigo-600/20">
+        <Icon className="w-6 h-6" />
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1.5">{title}</h3>
+        <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">{title}</h3>
         <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{desc}</p>
       </div>
     </div>

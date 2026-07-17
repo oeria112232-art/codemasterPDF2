@@ -11,7 +11,6 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Loader2 } from 'lucide-react';
 
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
-const MergePage = lazy(() => import('./pages/MergePage').then(module => ({ default: module.MergePage })));
 const CompressPage = lazy(() => import('./pages/CompressPage').then(module => ({ default: module.CompressPage })));
 const ConvertPage = lazy(() => import('./pages/ConvertPage').then(module => ({ default: module.ConvertPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
@@ -33,6 +32,20 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage').then(module => 
 const BatchProcessPage = lazy(() => import('./pages/BatchProcessPage').then(module => ({ default: module.BatchProcessPage })));
 const AiSummarizePage = lazy(() => import('./pages/AiSummarizePage').then(module => ({ default: module.AiSummarizePage })));
 const ContractAnalyzerPage = lazy(() => import('./pages/ContractAnalyzerPage').then(module => ({ default: module.ContractAnalyzerPage })));
+
+const MergeToolPage = lazy(() => import('./pages/MergeToolPage').then(module => ({ default: module.MergeToolPage })));
+const SplitToolPage = lazy(() => import('./pages/SplitToolPage').then(module => ({ default: module.SplitToolPage })));
+const ProtectToolPage = lazy(() => import('./pages/ProtectToolPage').then(module => ({ default: module.ProtectToolPage })));
+const UnlockToolPage = lazy(() => import('./pages/UnlockToolPage').then(module => ({ default: module.UnlockToolPage })));
+const RotateToolPage = lazy(() => import('./pages/RotateToolPage').then(module => ({ default: module.RotateToolPage })));
+const PageNumbersToolPage = lazy(() => import('./pages/PageNumbersToolPage').then(module => ({ default: module.PageNumbersToolPage })));
+const RepairToolPage = lazy(() => import('./pages/RepairToolPage').then(module => ({ default: module.RepairToolPage })));
+const OrganizeToolPage = lazy(() => import('./pages/OrganizeToolPage').then(module => ({ default: module.OrganizeToolPage })));
+const EditToolPage = lazy(() => import('./pages/EditToolPage').then(module => ({ default: module.EditToolPage })));
+const CropToolPage = lazy(() => import('./pages/CropToolPage').then(module => ({ default: module.CropToolPage })));
+const RedactToolPage = lazy(() => import('./pages/RedactToolPage').then(module => ({ default: module.RedactToolPage })));
+const SignToolPage = lazy(() => import('./pages/SignToolPage').then(module => ({ default: module.SignToolPage })));
+const WatermarkToolPage = lazy(() => import('./pages/WatermarkToolPage').then(module => ({ default: module.WatermarkToolPage })));
 import { AdminLayout } from './components/AdminLayout';
 
 function PageLoader() {
@@ -70,10 +83,28 @@ function App() {
 
                   <Route element={<ProtectedRoute />}>
                     <Route path="/tools/:id" element={<CategoryPage />} />
-                    <Route path="/merge" element={<MergePage />} />
-                    <Route path="/split" element={<MergePage />} />
+
+                    {/* Optimization Tools */}
+                    <Route path="/merge" element={<MergeToolPage />} />
+                    <Route path="/split" element={<SplitToolPage />} />
                     <Route path="/compress" element={<CompressPage />} />
-                    <Route path="/watermark" element={<MergePage />} />
+
+                    {/* Edit Tools */}
+                    <Route path="/edit" element={<EditToolPage />} />
+                    <Route path="/organize" element={<OrganizeToolPage />} />
+                    <Route path="/rotate" element={<RotateToolPage />} />
+                    <Route path="/page-numbers" element={<PageNumbersToolPage />} />
+                    <Route path="/crop" element={<CropToolPage />} />
+                    <Route path="/repair" element={<RepairToolPage />} />
+
+                    {/* Security Tools */}
+                    <Route path="/protect" element={<ProtectToolPage />} />
+                    <Route path="/unlock" element={<UnlockToolPage />} />
+                    <Route path="/watermark" element={<WatermarkToolPage />} />
+                    <Route path="/sign" element={<SignToolPage />} />
+                    <Route path="/redact" element={<RedactToolPage />} />
+
+                    {/* Convert Tools */}
                     <Route path="/pdf-to-jpg" element={<ConvertPage />} />
                     <Route path="/jpg-to-pdf" element={<ConvertPage />} />
                     <Route path="/html-to-pdf" element={<ConvertPage />} />
@@ -83,16 +114,8 @@ function App() {
                     <Route path="/word-to-pdf" element={<ConvertPage />} />
                     <Route path="/excel-to-pdf" element={<ConvertPage />} />
                     <Route path="/powerpoint-to-pdf" element={<ConvertPage />} />
-                    <Route path="/protect" element={<MergePage />} />
-                    <Route path="/unlock" element={<MergePage />} />
-                    <Route path="/rotate" element={<MergePage />} />
-                    <Route path="/page-numbers" element={<MergePage />} />
-                    <Route path="/sign" element={<MergePage />} />
-                    <Route path="/organize" element={<MergePage />} />
-                    <Route path="/edit" element={<MergePage />} />
-                    <Route path="/crop" element={<MergePage />} />
-                    <Route path="/repair" element={<MergePage />} />
-                    <Route path="/redact" element={<MergePage />} />
+
+                    {/* Intelligence Tools */}
                     <Route path="/pdf-to-chat" element={<PdfChatPage />} />
                     <Route path="/pdf-to-compare" element={<PdfComparePage />} />
                     <Route path="/batch-process" element={<BatchProcessPage />} />

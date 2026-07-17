@@ -49,6 +49,10 @@
             "convert": {
                 "title": "Conversion Engine",
                 "desc": "High-fidelity translation between document formats."
+            },
+            "intelligence": {
+                "title": "Intelligence Suite",
+                "desc": "AI-powered tools for document analysis and smart processing"
             }
         }
     },
@@ -499,6 +503,26 @@
         "examGenerator": {
             "title": "Exam Generator",
             "description": "Create exams from any content with AI"
+        },
+        "pdfChat": {
+            "title": "PDF Chat",
+            "description": "Ask questions about your PDF using AI"
+        },
+        "pdfCompare": {
+            "title": "PDF Compare",
+            "description": "Compare two PDF files and see all differences"
+        },
+        "batchProcess": {
+            "title": "Batch Process",
+            "description": "Process multiple PDF files at once"
+        },
+        "aiSummarize": {
+            "title": "AI Summarize",
+            "description": "Summarize any PDF with AI in seconds"
+        },
+        "contractAnalyzer": {
+            "title": "Contract Analyzer",
+            "description": "Analyze contracts with AI for risks and obligations"
         }
     },
     "examGenerator": {
