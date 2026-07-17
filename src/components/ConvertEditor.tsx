@@ -6,18 +6,18 @@ import {
 } from 'lucide-react';
 import { PDFDocument, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
-import { Document as DocxDocument, Packer, Paragraph, TextRun, PageBreak, ImageRun } from 'docx';
-import * as XLSX from 'xlsx';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
-// @ts-ignore
-import mammoth from 'mammoth';
-import Tesseract from 'tesseract.js';
-// @ts-ignore
-import PptxGenJS from 'pptxgenjs';
-// @ts-ignore
-import html2pdf from 'html2pdf.js';
+
+// Lazy-loaded heavy dependencies — loaded on demand to keep initial chunk small
+const lazyMammoth = async () => (await import('mammoth')).default;
+const lazyJszip = async () => (await import('jszip')).default;
+const lazyXlsx = async () => await import('xlsx');
+const lazyDocx = async () => await import('docx');
+const lazyTesseract = async () => await import('tesseract.js');
+const lazyPptxGenJS = async () => (await import('pptxgenjs')).default;
+const lazyHtml2pdf = async () => (await import('html2pdf.js')).default;
+
 // Setup worker - use .js copy to avoid MIME type issues on hosting
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
@@ -226,6 +226,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                     if (initialFiles.length > 0) {
                         const buffer = await initialFiles[0].arrayBuffer();
                         if (toolType === 'word-to-pdf') {
+                            const mammoth = await lazyMammoth();
                             const res = await mammoth.convertToHtml({ arrayBuffer: buffer });
                             const isArabic = /[\u0600-\u06FF]/.test(res.value);
                             setHtmlContent(`
@@ -244,6 +245,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                             `);
                         } else if (toolType === 'powerpoint-to-pdf') {
                             try {
+                                const JSZip = await lazyJszip();
                                 const zip = await JSZip.loadAsync(buffer);
                                 // Case insensitive search for slides
                                 const slideFiles = Object.keys(zip.files).filter(f => f.match(/ppt\/slides\/slide\d+\.xml/i));
@@ -347,6 +349,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                             }
                         } else {
                             // Excel
+                            const XLSX = await lazyXlsx();
                             const wb = XLSX.read(buffer, { type: 'array' });
                             const ws = wb.Sheets[wb.SheetNames[0]];
                             setHtmlContent(XLSX.utils.sheet_to_html(ws));
@@ -578,7 +581,8 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToWord = async () => {
         if (!pdfProxy) return;
-        const paragraphs: Paragraph[] = [];
+        const { Document: DocxDocument, Packer, Paragraph, TextRun, PageBreak, ImageRun } = await lazyDocx();
+        const paragraphs: InstanceType<typeof Paragraph>[] = [];
         let totalTextFound = false;
 
         for (let i = 1; i <= pdfProxy.numPages; i++) {
@@ -610,6 +614,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                 await page.render({ canvasContext: ctx, viewport, canvas }).promise;
 
                 try {
+                    const Tesseract = await lazyTesseract();
                     const { data: { text } } = await Tesseract.recognize(canvas, conversionSettings.ocrLanguage, {
                         logger: m => {
                             if (m.status === 'recognizing text') {
@@ -810,6 +815,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToExcel = async () => {
         if (!pdfProxy) return;
+        const XLSX = await lazyXlsx();
         const workbook = XLSX.utils.book_new();
 
         for (let i = 1; i <= pdfProxy.numPages; i++) {
@@ -893,7 +899,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToPowerPoint = async () => {
         if (!pdfProxy) throw new Error('PDF not loaded');
-        // @ts-ignore
+        const PptxGenJS = await lazyPptxGenJS();
         const pptx = new PptxGenJS();
 
         // Dynamic Layout based on first page
@@ -972,6 +978,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         const pdfDoc = await PDFDocument.create();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
         const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+        let mammothLib: any = null, XLSXLib: any = null, JSZipLib: any = null;
 
         let pageW = 595.28, pageH = 841.89;
         const size = conversionSettings.pageSize || 'a4';
@@ -1027,7 +1034,8 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         pdfDoc.addPage([pageW, pageH]);
 
         if (toolType === 'word-to-pdf') {
-            const result = await mammoth.convertToHtml({ arrayBuffer: buffer });
+            mammothLib = mammothLib || await lazyMammoth();
+            const result = await mammothLib.convertToHtml({ arrayBuffer: buffer });
             const parser = new DOMParser();
             const doc = parser.parseFromString(result.value, 'text/html');
 
@@ -1071,11 +1079,12 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             }
 
         } else if (toolType === 'excel-to-pdf') {
-            const wb = XLSX.read(buffer, { type: 'array' });
+            XLSXLib = XLSXLib || await lazyXlsx();
+            const wb = XLSXLib.read(buffer, { type: 'array' });
 
             for (let si = 0; si < wb.SheetNames.length; si++) {
                 const ws = wb.Sheets[wb.SheetNames[si]];
-                const data = XLSX.utils.sheet_to_json<string[]>(ws, { header: 1 });
+                const data = XLSXLib.utils.sheet_to_json<string[]>(ws, { header: 1 });
                 if (data.length === 0) continue;
 
                 if (si > 0) { currentPage++; yPos = pageH - marginPt; pdfDoc.addPage([pageW, pageH]); }
@@ -1121,7 +1130,8 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             }
 
         } else if (toolType === 'powerpoint-to-pdf') {
-            const zip = await JSZip.loadAsync(buffer);
+            JSZipLib = JSZipLib || await lazyJszip();
+            const zip = await JSZipLib.loadAsync(buffer);
             const slideFiles = Object.keys(zip.files).filter(f => f.match(/ppt\/slides\/slide\d+\.xml/i));
             slideFiles.sort((a, b) => {
                 const na = parseInt(a.match(/slide(\d+)\.xml/i)![1]);
@@ -1209,6 +1219,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                         jsPDF: { unit: 'mm' as const, format: format, orientation: orientation },
                         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
                     };
+                    const html2pdf = await lazyHtml2pdf();
                     await html2pdf().set(opt).from(body).save();
                 }
                 document.body.removeChild(iframe);
@@ -1256,6 +1267,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                     await page.render({ canvasContext: ctx, viewport, canvas }).promise;
                     canvas.toBlob((blob) => { if (blob) saveAs(blob, `${initialFiles[0].name.replace('.pdf', '')}.jpg`); }, 'image/jpeg', jpgSettings.quality);
                 } else {
+                    const JSZip = await lazyJszip();
                     const zip = new JSZip();
                     for (let i = 1; i <= pdfProxy.numPages; i++) {
                         const page = await pdfProxy.getPage(i);
