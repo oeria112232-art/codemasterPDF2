@@ -3,7 +3,7 @@ import {
   RotateCw, Image, FileBadge, FilePlus2, FileSignature, Divide,
   Edit3, Crop, LifeBuoy, ShieldAlert, Sparkles, Zap, ShieldCheck, Globe,
   FileText, FileSpreadsheet, Presentation, FileType,
-  MessageSquare, GitCompareArrows
+  MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
@@ -70,6 +70,9 @@ export function Home() {
       tools: [
         { icon: MessageSquare, title: "PDF Chat", description: "Ask questions about your PDF using AI", path: '/pdf-to-chat', color: 'bg-blue-500' },
         { icon: GitCompareArrows, title: "PDF Compare", description: "Compare two PDFs and see all differences", path: '/pdf-to-compare', color: 'bg-purple-500' },
+        { icon: Layers, title: "Batch Process", description: "Process multiple PDFs at once", path: '/batch-process', color: 'bg-amber-500' },
+        { icon: Sparkles, title: "AI Summarize", description: "Summarize any PDF with AI", path: '/ai-summarize', color: 'bg-violet-500' },
+        { icon: ShieldAlert, title: "Contract Analyzer", description: "Analyze contracts with AI", path: '/contract-analyzer', color: 'bg-red-500' },
       ]
     }
   ];

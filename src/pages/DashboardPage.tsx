@@ -9,7 +9,7 @@ import {
   MessageSquare, GitCompareArrows, Sparkles, FileText,
   TrendingUp, Zap, Lock, Unlock, Scissors,
   Combine, Minimize2, Edit3, RotateCw, FileSignature,
-  ShieldAlert, Crop, LifeBuoy, FileBadge, FilePlus2, Divide
+  ShieldAlert, Crop, LifeBuoy, FileBadge, FilePlus2, Divide, Layers
 } from 'lucide-react';
 
 const TOOL_ICONS: Record<string, any> = {
@@ -19,7 +19,8 @@ const TOOL_ICONS: Record<string, any> = {
   'organize': Divide, 'edit': Edit3, 'crop': Crop,
   'repair': LifeBuoy, 'redact': ShieldAlert, 'pdf-to-word': FileText,
   'pdf-to-compare': GitCompareArrows, 'pdf-to-chat': MessageSquare,
-  'ai-summarize': Sparkles,
+  'ai-summarize': Sparkles, 'batch-process': Layers,
+  'contract-analyzer': ShieldAlert,
 };
 
 export function DashboardPage() {

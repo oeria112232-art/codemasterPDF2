@@ -8,7 +8,7 @@ import {
   Combine, Scissors, Minimize2, Edit3,
   RotateCw, Crop, Lock, Unlock,
   FileBadge, FileSignature, FileImage, Image,
-  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows
+  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert
 } from 'lucide-react';
 
 export function Header() {
@@ -69,6 +69,9 @@ export function Header() {
       tools: [
         { icon: MessageSquare, label: "PDF Chat", path: '/pdf-to-chat' },
         { icon: GitCompareArrows, label: "PDF Compare", path: '/pdf-to-compare' },
+        { icon: Layers, label: "Batch Process", path: '/batch-process' },
+        { icon: Sparkles, label: "AI Summarize", path: '/ai-summarize' },
+        { icon: ShieldAlert, label: "Contract Analyzer", path: '/contract-analyzer' },
       ]
     }
   ];

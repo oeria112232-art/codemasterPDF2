@@ -30,6 +30,9 @@ const PdfChatPage = lazy(() => import('./pages/PdfChatPage').then(module => ({ d
 const PdfComparePage = lazy(() => import('./pages/PdfComparePage').then(module => ({ default: module.PdfComparePage })));
 const PricingPage = lazy(() => import('./pages/PricingPage').then(module => ({ default: module.PricingPage })));
 const DashboardPage = lazy(() => import('./pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
+const BatchProcessPage = lazy(() => import('./pages/BatchProcessPage').then(module => ({ default: module.BatchProcessPage })));
+const AiSummarizePage = lazy(() => import('./pages/AiSummarizePage').then(module => ({ default: module.AiSummarizePage })));
+const ContractAnalyzerPage = lazy(() => import('./pages/ContractAnalyzerPage').then(module => ({ default: module.ContractAnalyzerPage })));
 import { AdminLayout } from './components/AdminLayout';
 
 function PageLoader() {
@@ -92,6 +95,9 @@ function App() {
                     <Route path="/redact" element={<MergePage />} />
                     <Route path="/pdf-to-chat" element={<PdfChatPage />} />
                     <Route path="/pdf-to-compare" element={<PdfComparePage />} />
+                    <Route path="/batch-process" element={<BatchProcessPage />} />
+                    <Route path="/ai-summarize" element={<AiSummarizePage />} />
+                    <Route path="/contract-analyzer" element={<ContractAnalyzerPage />} />
                   </Route>
 
                   <Route path="/exam-generator" element={<ExamLanding />} />
