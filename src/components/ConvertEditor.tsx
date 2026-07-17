@@ -969,174 +969,184 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
     const processOfficeToPdf = async () => {
         const file = initialFiles[0];
         const buffer = await file.arrayBuffer();
-        let html = '';
+        const pdfDoc = await PDFDocument.create();
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+        let pageW = 595.28, pageH = 841.89;
+        const size = conversionSettings.pageSize || 'a4';
+        const orient = conversionSettings.orientation || 'portrait';
+        if (size === 'letter') { pageW = 612; pageH = 792; }
+        if (size === 'legal') { pageW = 612; pageH = 1008; }
+        if (orient === 'landscape') { const tmp = pageW; pageW = pageH; pageH = tmp; }
+
+        const marginPt = conversionSettings.margin === 'none' ? 0 : conversionSettings.margin === 'big' ? 71 : 34;
+        const usableW = pageW - marginPt * 2;
+        const lineHeight = 14;
+        const fontSize = 11;
+
+        const addTextBlock = (text: string, isTitle: boolean = false, isBold: boolean = false) => {
+            if (!text.trim()) return;
+            const f = isBold ? boldFont : font;
+            const fs = isTitle ? 18 : fontSize;
+            const maxCharsPerLine = Math.floor(usableW / (fs * 0.5));
+            const words = text.split(/\s+/);
+            let lines: string[] = [];
+            let currentLine = '';
+
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxCharsPerLine) {
+                    if (currentLine.trim()) lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine += ' ' + word;
+                }
+            }
+            if (currentLine.trim()) lines.push(currentLine.trim());
+
+            for (const line of lines) {
+                if (currentPage > pdfDoc.getPageCount() - 1) {
+                    currentPage = pdfDoc.addPage([pageW, pageH]).pageNumber - 1;
+                    yPos = pageH - marginPt;
+                }
+                const page = pdfDoc.getPage(currentPage);
+                page.drawText(line, {
+                    x: marginPt,
+                    y: yPos,
+                    size: fs,
+                    font: f,
+                    color: isTitle ? undefined : undefined,
+                });
+                yPos -= fs + 6;
+            }
+            yPos -= isTitle ? 8 : 2;
+        };
+
+        let currentPage = 0;
+        let yPos = pageH - marginPt;
+        pdfDoc.addPage([pageW, pageH]);
 
         if (toolType === 'word-to-pdf') {
             const result = await mammoth.convertToHtml({ arrayBuffer: buffer });
-            const isArabic = /[\u0600-\u06FF]/.test(result.value);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(result.value, 'text/html');
 
-            html = `
-                <div class="word-content" dir="${isArabic ? 'rtl' : 'ltr'}" style="font-family: ${isArabic ? 'Arial, sans-serif' : "'Times New Roman', serif"}; line-height: 1.6; color: #000; padding: 0; text-align: ${isArabic ? 'right' : 'justify'};">
-                    <style>
-                        p { margin-bottom: 0.8em; text-align: inherit; }
-                        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; direction: inherit; }
-                        td, th { border: 1px solid #444; padding: 6px; vertical-align: top; }
-                        img { max-width: 100%; height: auto; display: block; margin: 10px auto; }
-                        h1, h2, h3, h4, h5, h6 { color: #2E74B5; margin-top: 1em; text-align: inherit; }
-                        ul, ol { margin-inline-start: 20px; }
-                        li { margin-bottom: 4px; }
-                    </style>
-                    ${result.value}
-                </div>
-            `;
+            const walkNode = (node: ChildNode) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const text = node.textContent || '';
+                    if (text.trim()) addTextBlock(text);
+                    return;
+                }
+                if (node.nodeType !== Node.ELEMENT_NODE) return;
+                const el = node as HTMLElement;
+                const tag = el.tagName.toLowerCase();
+
+                if (['h1','h2','h3','h4','h5','h6'].includes(tag)) {
+                    if (yPos < marginPt + 40) { currentPage++; yPos = pageH - marginPt; pdfDoc.addPage([pageW, pageH]); }
+                    addTextBlock(el.textContent || '', true, true);
+                } else if (tag === 'p') {
+                    const text = el.textContent || '';
+                    if (text.trim()) addTextBlock(text);
+                    yPos -= 4;
+                } else if (tag === 'li') {
+                    const text = el.textContent || '';
+                    if (text.trim()) addTextBlock('  •  ' + text);
+                } else if (tag === 'br') {
+                    yPos -= lineHeight;
+                } else if (tag === 'hr') {
+                    if (yPos < marginPt + 20) { currentPage++; yPos = pageH - marginPt; pdfDoc.addPage([pageW, pageH]); }
+                    const page = pdfDoc.getPage(currentPage);
+                    page.drawLine({ start: { x: marginPt, y: yPos }, end: { x: pageW - marginPt, y: yPos }, thickness: 1, color: { r: 0.8, g: 0.8, b: 0.8 } });
+                    yPos -= 12;
+                } else {
+                    for (const child of Array.from(el.childNodes)) {
+                        walkNode(child);
+                    }
+                }
+            };
+
+            for (const child of Array.from(doc.body.childNodes)) {
+                walkNode(child);
+                if (yPos > pageH - marginPt - 2) continue;
+            }
+
         } else if (toolType === 'excel-to-pdf') {
             const wb = XLSX.read(buffer, { type: 'array' });
-            const ws = wb.Sheets[wb.SheetNames[0]]; // First sheet only for now
-            const sheetHtml = XLSX.utils.sheet_to_html(ws);
-            html = `
-                <style>
-                    table { border-collapse: collapse; width: 100%; font-size: 11px; font-family: Arial, sans-serif; }
-                    td, th { border: 1px solid #ccc; padding: 6px; text-align: left; color: #333; }
-                    th { background-color: #f3f3f3; font-weight: bold; border-bottom: 2px solid #999; }
-                    tr:nth-child(even) { background-color: #fcfcfc; }
-                    .excel-content { padding: 20px; }
-                    h3 { color: #1f7244; border-bottom: 2px solid #1f7244; padding-bottom: 10px; margin-bottom: 20px; }
-                </style>
-                <div class="excel-content">
-                    <h3>${file.name.replace(/\.[^/.]+$/, "")}</h3>
-                    ${sheetHtml}
-                </div>
-            `;
+
+            for (let si = 0; si < wb.SheetNames.length; si++) {
+                const ws = wb.Sheets[wb.SheetNames[si]];
+                const data = XLSX.utils.sheet_to_json<string[]>(ws, { header: 1 });
+                if (data.length === 0) continue;
+
+                if (si > 0) { currentPage++; yPos = pageH - marginPt; pdfDoc.addPage([pageW, pageH]); }
+                addTextBlock(wb.SheetNames[si], true, true);
+                yPos -= 4;
+
+                const colWidths = Math.max(...data.map(r => r?.length || 0), 1);
+                const colW = usableW / colWidths;
+                const cellPad = 4;
+                const cellH = lineHeight + 4;
+
+                for (let r = 0; r < data.length; r++) {
+                    const row = data[r] || [];
+                    const neededH = cellH;
+                    if (yPos - neededH < marginPt) {
+                        currentPage++;
+                        yPos = pageH - marginPt;
+                        pdfDoc.addPage([pageW, pageH]);
+                    }
+
+                    const page = pdfDoc.getPage(currentPage);
+                    const isHeader = r === 0;
+
+                    for (let c = 0; c < colWidths; c++) {
+                        const x = marginPt + c * colW;
+                        const cellText = String(row[c] ?? '');
+                        const truncated = cellText.length > 30 ? cellText.substring(0, 27) + '...' : cellText;
+
+                        page.drawRectangle({
+                            x: x, y: yPos - neededH, width: colW, height: neededH,
+                            borderColor: { r: 0.8, g: 0.8, b: 0.8 }, borderWidth: 0.5,
+                            fill: isHeader ? { r: 0.95, g: 0.95, b: 0.95 } : undefined,
+                        });
+                        page.drawText(truncated, {
+                            x: x + cellPad, y: yPos - neededH + 4,
+                            size: isHeader ? 10 : 9,
+                            font: isHeader ? boldFont : font,
+                        });
+                    }
+                    yPos -= neededH;
+                }
+                yPos -= 16;
+            }
+
         } else if (toolType === 'powerpoint-to-pdf') {
             const zip = await JSZip.loadAsync(buffer);
-            const slideFiles = Object.keys(zip.files).filter(f => f.match(/ppt\/slides\/slide\d+\.xml/));
+            const slideFiles = Object.keys(zip.files).filter(f => f.match(/ppt\/slides\/slide\d+\.xml/i));
             slideFiles.sort((a, b) => {
-                const na = parseInt(a.match(/slide(\d+)\.xml/)![1]);
-                const nb = parseInt(b.match(/slide(\d+)\.xml/)![1]);
+                const na = parseInt(a.match(/slide(\d+)\.xml/i)![1]);
+                const nb = parseInt(b.match(/slide(\d+)\.xml/i)![1]);
                 return na - nb;
             });
-            let slidesHtml = '';
-            for (const file of slideFiles) {
-                const xml = await zip.file(file)!.async('string');
 
-                // Text
-                const texts = xml.match(/<a:t.*?>(.*?)<\/a:t>/g) || [];
+            for (let si = 0; si < slideFiles.length; si++) {
+                if (si > 0) { currentPage++; yPos = pageH - marginPt; pdfDoc.addPage([pageW, pageH]); }
+                const slideXml = await zip.file(slideFiles[si])!.async('string');
+                const texts = slideXml.match(/<a:t.*?>(.*?)<\/a:t>/g) || [];
                 const slideText = texts.map(t => t.replace(/<\/?a:t.*?>/g, '')).join(' ');
-                const isArabic = /[\u0600-\u06FF]/.test(slideText);
 
-                // Professional Image Parsing (Deep Scan)
-                let imagesHtml = '';
-                try {
-                    const fileName = file.split('/').pop();
-                    const relsFile = `ppt/slides/_rels/${fileName}.rels`;
-                    const relsXml = await zip.file(relsFile)?.async('string').catch(() => null);
-
-                    if (relsXml) {
-                        const relMap: any = {};
-                        const rels = relsXml.match(/<Relationship\s+[^>]*>/g) || [];
-                        rels.forEach(r => {
-                            const idMatch = r.match(/Id="([^"]+)"/);
-                            const targetMatch = r.match(/Target="([^"]+)"/);
-                            if (idMatch && targetMatch) relMap[idMatch[1]] = targetMatch[1];
-                        });
-
-                        // Find ALL image references (blip, imagedata, etc)
-                        // Captures r:embed="rId1" AND r:id="rId1"
-                        const rawXml = xml;
-                        const imgRefRegex = /(?:r:embed|r:id)="([^"]+)"/g;
-                        const foundIds = new Set<string>();
-                        let match;
-                        while ((match = imgRefRegex.exec(rawXml)) !== null) {
-                            foundIds.add(match[1]);
-                        }
-
-                        for (const rId of Array.from(foundIds)) {
-                            if (relMap[rId]) {
-                                const rawTarget = relMap[rId];
-                                // Check if target is image
-                                if (/\.(jpg|jpeg|png|gif|bmp|svg)$/i.test(rawTarget)) {
-                                    const targetName = rawTarget.split('/').pop();
-                                    const realPath = Object.keys(zip.files).find(f => f.endsWith(targetName));
-
-                                    if (realPath) {
-                                        const imgData = await zip.file(realPath)!.async('base64');
-                                        const ext = realPath.split('.').pop();
-                                        let mime = 'image/jpeg';
-                                        if (ext === 'png') mime = 'image/png';
-                                        if (ext === 'gif') mime = 'image/gif';
-                                        if (ext === 'svg') mime = 'image/svg+xml';
-
-                                        // Render with reasonable constraint
-                                        imagesHtml += `<img src="data:${mime};base64,${imgData}" style="max-width:100%; max-height:90vh; display:block; margin: 10px auto; object-fit: contain;" />`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.error('Deep scan error', e);
-                }
-
-                slidesHtml += `
-                    <div class="slide" style="page-break-after: always; padding: 40px; min-height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        ${imagesHtml}
-                        <div style="font-family: ${isArabic ? 'Arial' : 'sans-serif'}; direction: ${isArabic ? 'rtl' : 'ltr'}; font-size: 24px; text-align: center; color: #333; margin-top: 20px;">
-                             ${slideText}
-                        </div>
-                    </div>
-                `;
+                addTextBlock(`Slide ${si + 1}`, true, true);
+                if (slideText.trim()) addTextBlock(slideText);
+                yPos -= 20;
             }
-            html = slidesHtml;
-        } else {
-            throw new Error('Unsupported');
         }
 
-        // Render HTML to PDF
-        const element = document.createElement('div');
-        element.innerHTML = html;
-
-        // Professional Dynamic Layout
-        let pageW = 210; // A4 Portrait width
-        const size = conversionSettings.pageSize || 'a4';
-        const orient = conversionSettings.orientation || 'portrait';
-
-        // Calculate width in mm based on format
-        if (size === 'letter') pageW = 215.9;
-        if (size === 'legal') pageW = 215.9;
-
-        // Swap for landscape
-        if (orient === 'landscape') {
-            if (size === 'a4') pageW = 297;
-            else if (size === 'letter') pageW = 279.4;
-            else if (size === 'legal') pageW = 355.6;
+        if (pdfDoc.getPageCount() === 0 || yPos >= pageH - marginPt) {
+            throw new Error('No content found to convert');
         }
 
-        element.style.width = `${pageW}mm`;
-        // Dynamic Margins
-        const marginMap: any = { none: '0mm', small: '12mm', big: '25mm' };
-        element.style.padding = marginMap[conversionSettings.margin || 'small'] || '12mm';
-
-        element.style.backgroundColor = 'white';
-        element.style.boxSizing = 'border-box'; // Ensure padding is included in width
-
-        // Hide off-screen
-        element.style.position = 'fixed';
-        element.style.left = '-10000px';
-        element.style.top = '0';
-        document.body.appendChild(element);
-
-        try {
-            const scale = file.size > 5 * 1024 * 1024 ? 1 : 2; // Prevent crashes on large files
-            await html2pdf().set({
-                margin: 10,
-                filename: `${file.name.replace(/\.[^/.]+$/, "")}.pdf`,
-                image: { type: 'jpeg', quality: 0.95 },
-                html2canvas: { scale: scale, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: conversionSettings.pageSize || 'a4', orientation: conversionSettings.orientation as any || 'portrait' }
-            }).from(element).save();
-        } finally {
-            document.body.removeChild(element);
-        }
+        const pdfBytes = await pdfDoc.save();
+        saveAs(new Blob([pdfBytes as any], { type: 'application/pdf' }), `${file.name.replace(/\.[^/.]+$/, '')}.pdf`);
     };
 
     const processPowerPointToPdf = async () => {
