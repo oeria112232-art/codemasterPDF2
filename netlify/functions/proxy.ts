@@ -1,32 +1,37 @@
-export default async (request: Request) => {
+export const handler = async (event: any) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: corsHeaders });
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: corsHeaders, body: '' };
   }
 
   try {
-    const url = new URL(request.url);
-    const target = url.searchParams.get('url');
+    const params = new URLSearchParams(event.queryStringParameters || {});
+    const target = params.get('url');
 
     if (!target) {
-      return new Response(JSON.stringify({ error: 'Missing url parameter' }), {
-        status: 400,
+      return {
+        statusCode: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+        body: JSON.stringify({ error: 'Missing url parameter' }),
+      };
     }
 
     const parsed = new URL(target);
     if (!['http:', 'https:'].includes(parsed.protocol)) {
-      return new Response(JSON.stringify({ error: 'Only http/https allowed' }), {
-        status: 400,
+      return {
+        statusCode: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+        body: JSON.stringify({ error: 'Only http/https allowed' }),
+      };
     }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
     const res = await fetch(target, {
       headers: {
@@ -34,29 +39,27 @@ export default async (request: Request) => {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
       redirect: 'follow',
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+
+    clearTimeout(timeout);
 
     const contentType = res.headers.get('content-type') || 'text/html';
     const body = await res.text();
 
-    return new Response(body, {
-      status: res.status,
+    return {
+      statusCode: res.status,
       headers: {
         ...corsHeaders,
         'Content-Type': contentType,
-        'X-Proxy-Used': 'netlify-function',
       },
-    });
+      body: body,
+    };
   } catch (e: any) {
-    return new Response(JSON.stringify({ error: e.message || 'Proxy failed' }), {
-      status: 502,
+    return {
+      statusCode: 502,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+      body: JSON.stringify({ error: e.message || 'Proxy failed' }),
+    };
   }
-};
-
-export const config = {
-  path: "/proxy",
-  method: "GET",
 };
