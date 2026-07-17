@@ -18,8 +18,8 @@ import Tesseract from 'tesseract.js';
 import PptxGenJS from 'pptxgenjs';
 // @ts-ignore
 import html2pdf from 'html2pdf.js';
-import pdfWorker from 'pdfjs-dist/build/pdf.worker?url';
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Setup worker - use .js copy to avoid MIME type issues on hosting
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface ConvertEditorProps {
     files: File[];

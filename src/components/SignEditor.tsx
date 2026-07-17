@@ -12,9 +12,8 @@ import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
-// Setup worker
-import pdfWorker from 'pdfjs-dist/build/pdf.worker?url';
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Setup worker - use .js copy to avoid MIME type issues on hosting
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface PageItem {
     id: string;

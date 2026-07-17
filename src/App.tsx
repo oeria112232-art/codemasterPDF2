@@ -13,8 +13,6 @@ const Home = lazy(() => import('./pages/Home').then(module => ({ default: module
 const MergePage = lazy(() => import('./pages/MergePage').then(module => ({ default: module.MergePage })));
 const CompressPage = lazy(() => import('./pages/CompressPage').then(module => ({ default: module.CompressPage })));
 const ConvertPage = lazy(() => import('./pages/ConvertPage').then(module => ({ default: module.ConvertPage })));
-const TranslatePage = lazy(() => import('./pages/TranslatePage').then(module => ({ default: module.default })));
-const AIChatPage = lazy(() => import('./pages/AIChatPage').then(module => ({ default: module.default })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(module => ({ default: module.ContactPage })));
 const TermsPage = lazy(() => import('./pages/TermsPage').then(module => ({ default: module.TermsPage })));
@@ -84,8 +82,6 @@ function App() {
                   <Route path="/crop" element={<MergePage />} />
                   <Route path="/repair" element={<MergePage />} />
                   <Route path="/redact" element={<MergePage />} />
-                  <Route path="/translate-pdf" element={<TranslatePage />} />
-                  <Route path="/ai-chat" element={<AIChatPage />} />
                 </Route>
 
                 <Route path="/exam-generator" element={<ExamLanding />} />

@@ -13,9 +13,8 @@ import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 import { generateId } from '../lib/security';
 
-// Setup worker
-import pdfWorker from 'pdfjs-dist/build/pdf.worker?url';
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Setup worker - use .js copy to avoid MIME type issues on hosting
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface VisualEditorProps {
     file: File;

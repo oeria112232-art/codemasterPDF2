@@ -1,10 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import fs from 'fs';
 
-// https://vitejs.dev/config/
+function pdfWorkerCopy(): import('vite').Plugin {
+  return {
+    name: 'pdf-worker-copy',
+    generateBundle() {
+      const src = path.resolve(__dirname, 'node_modules/pdfjs-dist/build/pdf.worker.mjs');
+      const dest = path.resolve(__dirname, 'dist/pdf.worker.js');
+      if (fs.existsSync(src)) {
+        fs.copyFileSync(src, dest);
+      }
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), pdfWorkerCopy()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

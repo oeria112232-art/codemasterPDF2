@@ -9,9 +9,8 @@ import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 
-// Setup worker
-import pdfWorker from 'pdfjs-dist/build/pdf.worker?url';
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Setup worker - use .js copy to avoid MIME type issues on hosting
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface MergeFile {
     id: string;
