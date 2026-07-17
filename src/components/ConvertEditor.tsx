@@ -735,9 +735,63 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                         })]
                     }));
                 }
+
+                try {
+                    const OPS = pdfjsLib.OPS;
+                    const opList = await page.getOperatorList();
+                    const drawnImages = new Set<string>();
+
+                    for (let j = 0; j < opList.fnArray.length; j++) {
+                        if (opList.fnArray[j] === OPS.paintImageXObject || opList.fnArray[j] === OPS.paintJpegXObject) {
+                            const imgName = opList.argsArray[j]?.[0];
+                            if (!imgName || drawnImages.has(imgName)) continue;
+                            drawnImages.add(imgName);
+
+                            try {
+                                const imgData: any = await new Promise<void>((resolve) => {
+                                    (page as any).commonObjs.get(imgName, (data: any) => {
+                                        if (!data || !data.width || !data.height || data.width < 10 || data.height < 10) {
+                                            resolve();
+                                            return;
+                                        }
+                                        const canvas = document.createElement('canvas');
+                                        canvas.width = data.width;
+                                        canvas.height = data.height;
+                                        const ctx = canvas.getContext('2d')!;
+
+                                        if (data.bitmap) {
+                                            ctx.drawImage(data.bitmap, 0, 0);
+                                        } else if (data.data) {
+                                            ctx.putImageData(new ImageData(new Uint8ClampedArray(data.data), data.width, data.height), 0, 0);
+                                        } else {
+                                            resolve();
+                                            return;
+                                        }
+
+                                        const imgDataUrl = canvas.toDataURL('image/png');
+                                        const base64Data = imgDataUrl.split(',')[1];
+                                        if (base64Data && base64Data.length > 100) {
+                                            const scale = Math.min(600 / data.width, 600 / data.height, 1);
+                                            paragraphs.push(new Paragraph({
+                                                children: [new ImageRun({
+                                                    data: base64Data,
+                                                    transformation: {
+                                                        width: Math.round(data.width * scale),
+                                                        height: Math.round(data.height * scale)
+                                                    },
+                                                    type: 'png'
+                                                })],
+                                                spacing: { before: 120, after: 120 }
+                                            }));
+                                        }
+                                        resolve();
+                                    });
+                                });
+                            } catch (e) { /* skip */ }
+                        }
+                    }
+                } catch (e) { /* image extraction failed, text only */ }
             }
-
-
 
             if (i < pdfProxy.numPages) paragraphs.push(new Paragraph({ children: [new PageBreak()] }));
             setProgress(10 + (i / pdfProxy.numPages) * 80);
