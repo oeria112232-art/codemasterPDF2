@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSettings } from '../hooks/useSettings';
 import { Save, Loader2, ShieldAlert, CheckCircle } from 'lucide-react';
 import { useToast } from '../contexts/ToastContext';
 
 export function AdminDashboard() {
+    const { t } = useTranslation();
     const { settings, loading, updateSetting } = useSettings();
     const { showToast } = useToast();
     const [localSettings, setLocalSettings] = useState<Record<string, string>>({});
@@ -19,10 +21,10 @@ export function AdminDashboard() {
         setSavingKeys(prev => ({ ...prev, [key]: true }));
         try {
             await updateSetting(key, localSettings[key]);
-            showToast('Setting updated successfully', 'success');
+            showToast(t('admin.success'), 'success');
         } catch (error) {
             console.error(error);
-            showToast('Failed to update setting', 'error');
+            showToast(t('admin.error'), 'error');
         } finally {
             setSavingKeys(prev => ({ ...prev, [key]: false }));
         }
@@ -37,13 +39,13 @@ export function AdminDashboard() {
     }
 
     const fields = [
-        { key: 'phone', label: 'Phone Number', icon: '📞' },
-        { key: 'whatsapp', label: 'WhatsApp Number', icon: '💬' },
-        { key: 'email', label: 'Email Address', icon: '✉️' },
-        { key: 'location', label: 'Location', icon: '📍' },
-        { key: 'telegram', label: 'Telegram Username', icon: '✈️' },
-        { key: 'tiktok', label: 'TikTok Username', icon: '🎵' },
-        { key: 'instagram', label: 'Instagram Username', icon: '📸' },
+        { key: 'phone', label: t('admin.fields.phone'), icon: '📞' },
+        { key: 'whatsapp', label: t('admin.fields.whatsapp'), icon: '💬' },
+        { key: 'email', label: t('admin.fields.email'), icon: '✉️' },
+        { key: 'location', label: t('admin.fields.location'), icon: '📍' },
+        { key: 'telegram', label: t('admin.fields.telegram'), icon: '✈️' },
+        { key: 'tiktok', label: t('admin.fields.tiktok'), icon: '🎵' },
+        { key: 'instagram', label: t('admin.fields.instagram'), icon: '📸' },
     ];
 
     return (
@@ -51,13 +53,13 @@ export function AdminDashboard() {
             <div className="max-w-4xl mx-auto">
                 <div className="mb-12 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 text-red-600 font-bold uppercase text-xs tracking-widest mb-4">
-                        <ShieldAlert className="w-4 h-4" /> Admin Area
+                        <ShieldAlert className="w-4 h-4" /> {t('admin.badge')}
                     </div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-4">
-                        System Control Panel
+                        {t('admin.title')}
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400">
-                        Manage your global application settings from one secured location.
+                        {t('admin.description')}
                     </p>
                 </div>
 
@@ -76,7 +78,7 @@ export function AdminDashboard() {
                                     value={localSettings[field.key] || ''}
                                     onChange={(e) => setLocalSettings(prev => ({ ...prev, [field.key]: e.target.value }))}
                                     className="w-full bg-transparent text-lg font-medium text-slate-900 dark:text-white outline-none border-b border-transparent focus:border-indigo-500 transition-colors pb-1"
-                                    placeholder={`Enter ${field.label}...`}
+                                    placeholder={t('admin.placeholder', { field: field.label })}
                                 />
                             </div>
                             <button

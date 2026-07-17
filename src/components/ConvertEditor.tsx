@@ -36,6 +36,7 @@ interface ImageFile {
 
 // Sub-component for rendering PDF thumbnails
 const PdfPageThumbnail = ({ pageNum, pdfProxy, quality }: { pageNum: number, pdfProxy: pdfjsLib.PDFDocumentProxy, quality: number }) => {
+    const { t } = useTranslation();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [loading, setLoading] = useState(true);
 
@@ -89,7 +90,7 @@ const PdfPageThumbnail = ({ pageNum, pdfProxy, quality }: { pageNum: number, pdf
                 <button
                     onClick={handleDownload}
                     className="p-2 bg-white text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors shadow-lg transform translate-y-2 group-hover:translate-y-0 duration-200"
-                    title="Download this page"
+                    title={t('convertEditor.downloadPage')}
                 >
                     <Download className="w-5 h-5" />
                 </button>
@@ -159,10 +160,10 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
     const validateFile = (file: File) => {
         const maxSize = 50 * 1024 * 1024; // 50MB
         if (file.size > maxSize) {
-            throw new Error(t('errors.fileTooLarge') || 'File too large (Max 50MB)');
+            throw new Error(t('convertEditor.fileTooLarge'));
         }
         if (file.size === 0) {
-            throw new Error(t('errors.emptyFile') || 'File is empty');
+            throw new Error(t('convertEditor.fileEmpty'));
         }
     };
 
@@ -195,7 +196,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                             });
                         }
                     }
-                    if (loadedImages.length === 0) throw new Error('No valid images found');
+                    if (loadedImages.length === 0) throw new Error(t('convertEditor.noImages'));
                     setImages(loadedImages);
                     setLoading(false);
                 } else if (['pdf-to-jpg', 'pdf-to-word', 'pdf-to-excel', 'pdf-to-powerpoint'].includes(toolType)) {
@@ -209,7 +210,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                             if (pdfErr.name === 'PasswordException') {
                                 throw new Error(t('errors.passwordProtected') || 'PDF is password protected');
                             }
-                            throw new Error(t('errors.corruptPdf') || 'Failed to load PDF file');
+                            throw new Error(t('convertEditor.failedLoadPdf'));
                         }
                     }
                     setLoading(false);
@@ -250,7 +251,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                                 // Case insensitive search for slides
                                 const slideFiles = Object.keys(zip.files).filter(f => f.match(/ppt\/slides\/slide\d+\.xml/i));
 
-                                if (slideFiles.length === 0) throw new Error('No slides found');
+                                if (slideFiles.length === 0) throw new Error(t('convertEditor.noSlides'));
 
                                 slideFiles.sort((a, b) => {
                                     const na = parseInt(a.match(/slide(\d+)\.xml/i)![1]);
@@ -504,7 +505,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         let bestProxy = proxies.proxy; // Default
 
         const handleSuccess = async (html: string) => {
-            if (!html || html.trim().length < 100) throw new Error('Empty response');
+            if (!html || html.trim().length < 100) throw new Error(t('convertEditor.emptyResponse'));
 
             setLoadingStep(4); // Finalizing
             // Use the "best" proxy for all resources
@@ -544,11 +545,11 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             const raceToSuccess = (promises: Promise<{ name: string, text: string, fn: any }>[]) => {
                 return new Promise<{ name: string, text: string, fn: any }>((resolve, reject) => {
                     let failures = 0;
-                    if (promises.length === 0) reject(new Error('No proxies'));
+                    if (promises.length === 0) reject(new Error(t('convertEditor.noProxies')));
                     promises.forEach(p => {
                         p.then(resolve).catch(() => {
                             failures++;
-                            if (failures === promises.length) reject(new Error('All proxies failed'));
+                            if (failures === promises.length) reject(new Error(t('convertEditor.allProxiesFailed')));
                         });
                     });
                 });
@@ -569,7 +570,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
             console.error(e);
             showToast(t('editor.fetchFailed'), 'error');
             if (targetUrl.includes('microsoft') || targetUrl.includes('google') || targetUrl.includes('office')) {
-                showToast(t('editor.authLinkError') || 'Cannot convert authenticated pages (like Office 365). Try a public URL.', 'error');
+                showToast(t('convertEditor.authPages'), 'error');
             }
         } finally {
             setLoading(false);
@@ -803,7 +804,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         }
 
         if (!totalTextFound && !conversionSettings.ocrEnabled) {
-            showToast('Warning: No text found. This looks like a scanned file. Please enable OCR.', 'error');
+            showToast(t('convertEditor.noTextFound'), 'error');
         } else if (!totalTextFound && conversionSettings.ocrEnabled) {
             showToast('OCR Warning: No text recognized. Try checking the document language.', 'error');
         }
@@ -1152,7 +1153,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
         }
 
         if (pdfDoc.getPageCount() === 0 || yPos >= pageH - marginPt) {
-            throw new Error('No content found to convert');
+            throw new Error(t('convertEditor.noContent'));
         }
 
         const pdfBytes = await pdfDoc.save();
@@ -1191,7 +1192,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                 }
                 document.body.appendChild(iframe);
                 const doc = iframe.contentWindow?.document;
-                if (!doc) throw new Error('Iframe creation failed');
+                if (!doc) throw new Error(t('convertEditor.iframeFailed'));
                 doc.open(); doc.write(safeContent); doc.close();
                 await new Promise<void>((resolve) => {
                     if (iframe.contentWindow) iframe.contentWindow.onload = () => resolve();
@@ -1351,7 +1352,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                     <div className="h-8 w-[1px] bg-slate-200 mx-2" />
                     <div className="flex flex-col">
                         <h2 className="text-sm font-bold text-slate-900 truncate max-w-[300px]" dir="ltr">
-                            {toolType === 'html-to-pdf' ? (webMode === 'url' ? (webUrl || 'New HTML Conversion').replace(/^[\/\s]+/, '') : 'HTML Conversion') : (initialFiles[0]?.name || 'Conversion')}
+                            {toolType === 'html-to-pdf' ? (webMode === 'url' ? (webUrl || t('convertEditor.defaultNames.newHtml')).replace(/^[\/\s]+/, '') : t('convertEditor.defaultNames.html')) : (initialFiles[0]?.name || t('convertEditor.defaultNames.conversion'))}
                         </h2>
                         <span className="text-[10px] text-slate-400 font-medium">Pro Conversion Engine · {toolType.replace(/-/g, ' ').toUpperCase()}</span>
                     </div>

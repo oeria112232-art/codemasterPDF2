@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { PDFDocument, degrees, rgb, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { LucideIcon, Settings2, Check } from 'lucide-react';
@@ -150,14 +151,14 @@ export async function handleRotate(files: File[]) {
     pdfDoc.getPages().forEach(p => p.setRotation(degrees(p.getRotation().angle + 90)));
     saveAs(new Blob([await pdfDoc.save() as any]), `rotated_${files[0].name}`);
   } catch (err: any) {
-    throw new Error('Failed to rotate PDF');
+    throw new Error(i18n.t('toolPage.failedRotate'));
   }
 }
 
 export async function handleProtect(files: File[], options?: { password?: string }) {
   const pw = options?.password;
-  if (!pw) throw new Error('Password required');
-  if (pw.length < 4) throw new Error('Password must be at least 4 characters');
+  if (!pw) throw new Error(i18n.t('toolPage.passwordRequired'));
+  if (pw.length < 4) throw new Error(i18n.t('toolPage.passwordMinLength'));
   const pdfDoc = await PDFDocument.load(await files[0].arrayBuffer());
   (pdfDoc as any).encrypt({ userPassword: pw, ownerPassword: pw });
   saveAs(new Blob([await pdfDoc.save() as any]), `protected_${files[0].name}`);

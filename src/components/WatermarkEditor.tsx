@@ -360,6 +360,7 @@ function Slider({ label, icon: Icon, value, max, step = 1, min = 0, onChange, di
 }
 
 function PreviewElement({ mode, text, img, size, rotation, color, isBold }: any) {
+    const { t } = useTranslation();
     if (mode === 'image' && img) {
         return <img src={img} className="max-w-full max-h-full object-contain" style={{ transform: `rotate(${rotation}deg)`, width: size * 2 }} alt="Preview" />;
     }
@@ -373,7 +374,7 @@ function PreviewElement({ mode, text, img, size, rotation, color, isBold }: any)
                 fontWeight: isBold ? '900' : '500'
             }}
         >
-            {text || 'ONE PDF'}
+            {text || t('watermarkEditor.defaultText')}
         </span>
     );
 }

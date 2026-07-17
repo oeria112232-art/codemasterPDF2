@@ -24,7 +24,7 @@ const TOOL_ICONS: Record<string, any> = {
 };
 
 export function DashboardPage() {
-  useTranslation();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { credits } = useCredits();
   const navigate = useNavigate();
@@ -39,9 +39,9 @@ export function DashboardPage() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-10">
           <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
-            Welcome back, {user?.displayName || user?.email?.split('@')[0] || 'User'}
+            {t('dashboard.greeting', { name: user?.displayName || user?.email?.split('@')[0] || 'User' })}
           </h1>
-          <p className="text-slate-400 font-medium">Manage your account and tools</p>
+          <p className="text-slate-400 font-medium">{t('dashboard.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -50,7 +50,7 @@ export function DashboardPage() {
               <div className="w-10 h-10 bg-indigo-500/10 rounded-xl flex items-center justify-center">
                 <Coins className="w-5 h-5 text-indigo-500" />
               </div>
-              <p className="text-xs font-black uppercase tracking-widest text-slate-400">Credits</p>
+              <p className="text-xs font-black uppercase tracking-widest text-slate-400">{t('dashboard.cards.credits')}</p>
             </div>
             <p className="text-3xl font-black text-slate-900 dark:text-white">{credits.toLocaleString()}</p>
           </div>
@@ -59,7 +59,7 @@ export function DashboardPage() {
               <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
                 <Zap className="w-5 h-5 text-emerald-500" />
               </div>
-              <p className="text-xs font-black uppercase tracking-widest text-slate-400">Free Tools</p>
+              <p className="text-xs font-black uppercase tracking-widest text-slate-400">{t('dashboard.cards.freeTools')}</p>
             </div>
             <p className="text-3xl font-black text-slate-900 dark:text-white">{freeTools.length}</p>
           </div>
@@ -68,7 +68,7 @@ export function DashboardPage() {
               <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-purple-500" />
               </div>
-              <p className="text-xs font-black uppercase tracking-widest text-slate-400">Total Tools</p>
+              <p className="text-xs font-black uppercase tracking-widest text-slate-400">{t('dashboard.cards.totalTools')}</p>
             </div>
             <p className="text-3xl font-black text-slate-900 dark:text-white">{TOOL_COSTS.length}</p>
           </div>
@@ -76,9 +76,9 @@ export function DashboardPage() {
 
         <div className="flex gap-2 mb-8">
           {([
-            { id: 'overview', label: 'Overview' },
-            { id: 'tools', label: 'All Tools' },
-            { id: 'credits', label: 'Buy Credits' },
+            { id: 'overview', label: t('dashboard.tabs.overview') },
+            { id: 'tools', label: t('dashboard.tabs.allTools') },
+            { id: 'credits', label: t('dashboard.tabs.buyCredits') },
           ] as const).map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
@@ -93,7 +93,7 @@ export function DashboardPage() {
 
         {activeTab === 'overview' && (
           <div>
-            <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4">Free Tools</h2>
+            <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4">{t('dashboard.freeTools')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
               {freeTools.map((tc: ToolCost) => {
                 const Icon = TOOL_ICONS[tc.toolId] || FileText;
@@ -107,13 +107,13 @@ export function DashboardPage() {
                       <p className="text-sm font-bold text-slate-900 dark:text-white">{tc.name}</p>
                       <p className="text-[10px] text-slate-400">{tc.description}</p>
                     </div>
-                    <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 text-[10px] font-black uppercase rounded-full">Free</span>
+                    <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 text-[10px] font-black uppercase rounded-full">{t('dashboard.free')}</span>
                   </button>
                 );
               })}
             </div>
 
-            <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4">Popular Paid Tools</h2>
+            <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4">{t('dashboard.paidTools')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {topPaidTools.map((tc: ToolCost) => {
                 const Icon = TOOL_ICONS[tc.toolId] || FileText;
@@ -127,7 +127,7 @@ export function DashboardPage() {
                       <p className="text-sm font-bold text-slate-900 dark:text-white">{tc.name}</p>
                       <p className="text-[10px] text-slate-400">{tc.description}</p>
                     </div>
-                    <span className="px-3 py-1 bg-indigo-500/10 text-indigo-600 text-[10px] font-black rounded-full">{tc.credits} credits</span>
+                    <span className="px-3 py-1 bg-indigo-500/10 text-indigo-600 text-[10px] font-black rounded-full">{tc.credits} {t('pricing.credits')}</span>
                   </button>
                 );
               })}
@@ -152,7 +152,7 @@ export function DashboardPage() {
                   <span className={`px-3 py-1 text-[10px] font-black rounded-full ${
                     tc.isFree ? 'bg-emerald-500/10 text-emerald-600' : 'bg-indigo-500/10 text-indigo-600'
                   }`}>
-                    {tc.isFree ? 'Free' : `${tc.credits}c`}
+                    {tc.isFree ? t('dashboard.free') : `${tc.credits}c`}
                   </span>
                 </button>
               );
@@ -162,10 +162,10 @@ export function DashboardPage() {
 
         {activeTab === 'credits' && (
           <div className="text-center py-12">
-            <p className="text-slate-400 mb-6">You have <span className="text-indigo-600 font-black">{credits.toLocaleString()}</span> credits</p>
+            <p className="text-slate-400 mb-6">{t('dashboard.youHaveCredits', { credits: credits.toLocaleString() })}</p>
             <button onClick={() => navigate('/pricing')}
               className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-indigo-500/20">
-              Buy More Credits
+              {t('dashboard.buyMoreCredits')}
             </button>
           </div>
         )}

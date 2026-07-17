@@ -21,7 +21,7 @@ export function SignupPage() {
         e.preventDefault();
 
         if (!isFirebaseConfigured) {
-            showToast('Firebase is not configured. Please check environment variables.', 'error');
+            showToast(t('signupPage.firebaseNotConfigured'), 'error');
             return;
         }
 
@@ -31,7 +31,7 @@ export function SignupPage() {
         }
 
         if (password.length < 6) {
-            showToast(t('auth.passwordTooShort') || 'Password must be at least 6 characters', 'error');
+            showToast(t('signupPage.passwordTooShort'), 'error');
             return;
         }
 
@@ -45,11 +45,11 @@ export function SignupPage() {
             console.error('Signup error:', err);
             let message = err.message || t('auth.error');
             if (message.includes('email-already-in-use')) {
-                message = t('auth.emailAlreadyInUse') || 'An account with this email already exists';
+                message = t('signupPage.emailExists');
             } else if (message.includes('weak-password')) {
-                message = t('auth.weakPassword') || 'Password is too weak';
+                message = t('signupPage.passwordWeak');
             } else if (message.includes('network-request-failed')) {
-                message = t('auth.networkError') || 'Unable to connect to server.';
+                message = t('signupPage.connectionFailed');
             }
             showToast(message, 'error');
         } finally {

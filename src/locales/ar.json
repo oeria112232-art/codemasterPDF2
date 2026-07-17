@@ -337,7 +337,12 @@
         "fidelityTitle": "نتائج عالية الدقة",
         "fidelityDesc": "يحافظ محركنا على البيانات الوصفية الأصلية والسلامة الهيكلية بنسبة تصل إلى 99.9٪ لجميع التحويلات.",
         "comingSoon": "هذه الأداة المتخصصة ستتوفر قريباً!",
-        "selectFile": "يرجى اختيار ملف واحد على الأقل للمتابعة."
+        "selectFile": "يرجى اختيار ملف واحد على الأقل للمتابعة.",
+        "passwordProtected": "ملف PDF محمي بكلمة مرور. يرجى فك القفل أولاً.",
+        "corruptedFile": "يبدو أن هذا الملف تالف أو غير صالح.",
+        "failedRotate": "فشل تدوير PDF",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "passwordMinLength": "يجب أن تكون كلمة المرور 4 أحرف على الأقل"
     },
     "authRequired": {
         "title": "تسجيل الدخول مطلوب",
@@ -755,5 +760,393 @@
         "error": "حدث خطأ",
         "success": "تم بنجاح!",
         "openTool": "فتح الأداة"
+    },
+    "home": {
+        "stats": {
+            "filesProcessed": "ملفات تمت معالجتها",
+            "activeUsers": "مستخدمون نشطون",
+            "pdfTools": "أدوات PDF",
+            "uptime": "وقت التشغيل"
+        },
+        "testimonials": {
+            "title": "محبوب لدى المهنيين",
+            "subtitle": "انضم لآلاف المستخدمين الراضين حول العالم",
+            "items": [
+                {
+                    "name": "سارة تشين",
+                    "role": "مديرة منتجات في Google",
+                    "text": "استبدل CodeMaster 5 أدوات PDF مختلفة لفريقنا. ميزة الدردشة بالذكاء الاصطناعي غيرت قواعد اللعبة."
+                },
+                {
+                    "name": "محمد الراشد",
+                    "role": "مستشار قانوني",
+                    "text": "محلل العقود يوفر لي ساعات كل أسبوع. يحدد المخاطر التي كنت سأفوتها."
+                },
+                {
+                    "name": "د. إيميلي واتسون",
+                    "role": "أستاذة جامعية",
+                    "text": "طلابي يستخدمون محادثة PDF لفهم أوراق البحث. إنه مثل رفيق الدراسة المدمج."
+                }
+            ]
+        },
+        "comparison": {
+            "title": "كيف نقارن",
+            "subtitle": "اكتشف لماذا يختار المهنيون CodeMaster",
+            "headers": {
+                "feature": "الميزة",
+                "codemaster": "CodeMaster",
+                "adobe": "Adobe",
+                "smallpdf": "Smallpdf"
+            },
+            "features": {
+                "pdfProcessing": "معالجة PDF",
+                "aiChat": "دردشة بالذكاء الاصطناعي مع PDF",
+                "contractAnalysis": "تحليل العقود",
+                "batchProcessing": "معالجة جماعية",
+                "clientSide": "معالجة من جانب العميل",
+                "freeTier": "مجاني متاح",
+                "openSource": "مفتوح المصدر"
+            }
+        },
+        "whyCodeMaster": {
+            "title": "لماذا CodeMaster؟",
+            "subtitle": "كل ما تحتاجه لإدارة PDF احترافية، مدعوم بالذكاء الاصطناعي"
+        },
+        "viewAll": "عرض الكل",
+        "intelligenceSuite": {
+            "title": "مجموعة الذكاء الاصطناعي",
+            "subtitle": "أدوات مدعومة بالذكاء الاصطناعي لتحليل المستندات والمعالجة الذكية"
+        },
+        "intelligenceTools": {
+            "pdfChat": {
+                "title": "محادثة PDF",
+                "desc": "اسأل أي سؤال عن ملف PDF باستخدام الذكاء الاصطناعي"
+            },
+            "pdfCompare": {
+                "title": "مقارنة PDF",
+                "desc": "قارن بين ملفين PDF وشاهد جميع الفروقات"
+            },
+            "batchProcess": {
+                "title": "معالجة جماعية",
+                "desc": "معالجة عدة ملفات PDF في آن واحد"
+            },
+            "aiSummarize": {
+                "title": "تلخيص بالذكاء الاصطناعي",
+                "desc": "تلخيص أي ملف PDF بالذكاء الاصطناعي"
+            },
+            "contractAnalyzer": {
+                "title": "تحليل العقود",
+                "desc": "تحليل العقود بالذكاء الاصطناعي"
+            }
+        }
+    },
+    "pricing": {
+        "badge": "ادفع حسب الاستخدام",
+        "title": "أسعار بسيطة وشفافة",
+        "subtitle": "اشترِ رموزاً واستخدم ما تحتاجه فقط. بدون اشتراكات، بدون رسوم خفية.",
+        "balance": "رصيدك",
+        "credits": "رموز",
+        "plans": {
+            "free": {
+                "price": "مجاني",
+                "credits": "100 رمز",
+                "creditDesc": "رموز غير محدودة",
+                "feature1": "جميع الأدوات غير محدودة",
+                "feature2": "جميع أدوات PDF",
+                "feature3": "ميزات الذكاء الاصطناعي",
+                "feature4": "دعم ذو أولوية"
+            },
+            "currentPlan": "الخطة الحالية",
+            "processing": "جارٍ المعالجة...",
+            "buyNow": "اشترِ الآن"
+        },
+        "howItWorks": {
+            "title": "كيف تعمل الرموز",
+            "steps": {
+                "buy": {
+                    "title": "اشترِ رموزاً",
+                    "desc": "اختر الخطة المناسبة لاحتياجاتك"
+                },
+                "use": {
+                    "title": "استخدم الأدوات",
+                    "desc": "كل أداة تكلف رموزاً محددة"
+                },
+                "pay": {
+                    "title": "ادفع فقط لما تستخدمه",
+                    "desc": "بدون رسوم دورية، اشترِ المزيد عند الحاجة"
+                }
+            }
+        },
+        "errors": {
+            "signInRequired": "يرجى تسجيل الدخول لشراء الرموز",
+            "purchaseFailed": "فشل الشراء. يرجى المحاولة مرة أخرى."
+        },
+        "success": {
+            "purchased": "تم شراء خطة {{planId}}",
+            "creditsAdded": "تم شراء {{amount}} رمز بنجاح!"
+        }
+    },
+    "dashboard": {
+        "greeting": "مرحباً، {{name}}!",
+        "subtitle": "إدارة حسابك وأدواتك",
+        "cards": {
+            "credits": "الرموز",
+            "freeTools": "أدوات مجانية",
+            "totalTools": "إجمالي الأدوات"
+        },
+        "tabs": {
+            "overview": "نظرة عامة",
+            "allTools": "جميع الأدوات",
+            "buyCredits": "شراء رموز"
+        },
+        "freeTools": "أدوات مجانية",
+        "paidTools": "أدوات مدفوعة شائعة",
+        "free": "مجاني",
+        "buyMoreCredits": "شراء المزيد من الرموز",
+  "youHaveCredits": "لديك {{credits}} رمز"
+    },
+    "pdfChat": {
+        "badge": "مدعوم بالذكاء الاصطناعي",
+        "title": "محادثة PDF",
+        "subtitle": "ارفع ملف PDF واسأل أسئلة عن محتواه باستخدام الذكاء الاصطناعي",
+        "extracting": "جارٍ استخراج النص...",
+        "features": {
+            "naturalLanguage": "لغة طبيعية",
+            "naturalLanguageDesc": "اسأل أسئلة باللغة العربية أو الإنجليزية",
+            "aiAnalysis": "تحليل بالذكاء الاصطناعي",
+            "aiAnalysisDesc": "مدعوم من Google Gemini",
+            "freeTool": "أداة مجانية",
+            "freeToolDesc": "لا تتطلب رموز"
+        },
+        "characters": "حرف",
+        "placeholder": "اسأل سؤالاً عن ملف PDF...",
+        "errors": {
+            "aiNotConfigured": "الذكاء الاصطناعي غير مهيأ. يرجى تعيين متغير البيئة VITE_GEMINI_API_KEY.",
+            "failedToExtract": "فشل استخراج النص من PDF",
+            "processingError": "عذراً، حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى."
+        },
+        "success": {
+            "pdfLoaded": "تم تحميل PDF بنجاح",
+            "copied": "تم النسخ إلى الحافظة"
+        }
+    },
+    "pdfCompare": {
+        "badge": "أداة مجانية",
+        "title": "مقارنة PDF",
+        "subtitle": "قارن بين ملفي PDF وشاهد جميع الفروقات المميزة",
+        "docA": "المستند أ",
+        "docB": "المستند ب",
+        "remove": "إزالة",
+        "uploadPrompt": "انقر لرفع PDF",
+        "comparing": "جارٍ المقارنة...",
+        "compareDocs": "قارن المستندات",
+        "results": {
+            "title": "نتائج المقارنة",
+            "similarity": "التشابه",
+            "added": "مضاف",
+            "removed": "محذوف",
+            "unchanged": "بدون تغيير",
+            "all": "الكل",
+            "noDiffs": "لا توجد فروقات في هذا الفلتر"
+        },
+        "compareAgain": "قارن مرة أخرى",
+        "errors": {
+            "failed": "فشلت مقارنة ملفات PDF"
+        },
+        "success": {
+            "complete": "اكتملت المقارنة"
+        }
+    },
+    "batchProcess": {
+        "badge": "معالجة جماعية",
+        "title": "معالجة ملفات متعددة",
+        "subtitle": "ارفع عدة ملفات PDF وطبق نفس الإجراء على جميعها في آن واحد",
+        "filesCount": "ملفات ({{count}})",
+        "clearAll": "مسح الكل",
+        "dropzone": "انقر أو اسحب ملفات PDF هنا",
+        "multipleFiles": "ملفات متعددة مدعومة",
+        "addMore": "+ إضافة المزيد",
+        "processing": "جارٍ المعالجة...",
+        "downloadAll": "تحميل الكل",
+        "action": "الإجراء",
+        "actions": {
+            "compress": "ضغط الكل",
+            "merge": "دمج في ملف واحد",
+            "pageNumbers": "إضافة أرقام صفحات",
+            "rotateCW": "تدوير 90° يمين",
+            "rotateCCW": "تدوير 90° يسار"
+        },
+        "processCount": "معالجة {{count}} ملفات",
+        "cost": "التكلفة",
+        "costUnit": "رموز",
+        "costMerge": "رسوم ثابتة للدمج",
+        "costPerFile": "2 رمز لكل ملف",
+        "errors": {
+            "onlyPdf": "ملفات PDF فقط مقبولة. تم تخطي {{count}} ملفات.",
+            "unknownAction": "إجراء غير معروف",
+            "failed": "فشلت المعالجة الجماعية"
+        },
+        "success": {
+            "complete": "اكتملت المعالجة الجماعية"
+        }
+    },
+    "aiSummarize": {
+        "badge": "ذكاء اصطناعي • 50 رمز",
+        "title": "تلخيص بالذكاء الاصطناعي",
+        "subtitle": "ارفع ملف PDF واحصل على ملخص فوري بالذكاء الاصطناعي",
+        "extracting": "جارٍ استخراج النص...",
+        "modes": {
+            "brief": { "title": "ملخص موجز", "desc": "نظرة عامة في 2-3 جمل" },
+            "detailed": { "title": "ملخص تفصيلي", "desc": "ملخص فقرة كاملة" },
+            "keyPoints": { "title": "النقاط الرئيسية", "desc": "قائمة نقاط" },
+            "executive": { "title": "ملخص تنفيذي", "desc": "تقرير مهني" }
+        },
+        "summaryType": "نوع الملخص",
+        "generating": "جارٍ التوليد...",
+        "generate": "توليد الملخص",
+        "cost": "التكلفة",
+        "costUnit": "رموز",
+        "summary": "الملخص",
+        "copied": "تم النسخ إلى الحافظة",
+        "analyzing": "الذكاء الاصطناعي يحلل مستندك...",
+        "selectType": "اختر نوع الملخص واضغط توليد",
+        "errors": {
+            "aiNotConfigured": "الذكاء الاصطناعي غير مهيأ. حدد VITE_GEMINI_API_KEY.",
+            "failedExtract": "فشل استخراج النص",
+            "failedGenerate": "فشل توليد الملخص"
+        },
+        "success": {
+            "textExtracted": "تم استخراج نص PDF",
+            "generated": "تم توليد الملخص"
+        }
+    },
+    "contractAnalyzer": {
+        "badge": "ذكاء اصطناعي • 100 رمز",
+        "title": "تحليل العقود",
+        "subtitle": "ارفع عقد PDF واحصل على تحليل بالذكاء الاصطناعي لجميع الشروط والمخاطر والالتزامات",
+        "extracting": "جارٍ استخراج النص...",
+        "analysisTitle": "تحليل العقد",
+        "runAnalysis": "تشغيل التحليل الكامل",
+        "analysisInfo": "100 رمز • يحلل 6 مجالات حرجة",
+        "exportReport": "تصدير التقرير",
+        "analyzing": "جارٍ التحليل... ({{current}}/{{total}} أقسام مكتملة)",
+        "emptyState": "انقر على الأقسام على اليسار لعرض النتائج",
+        "sections": {
+            "overview": "نظرة عامة على العقد",
+            "obligations": "الالتزامات الرئيسية",
+            "financial": "الشروط المالية",
+            "risks": "تقييم المخاطر",
+            "deadlines": "المواعيد النهائية والمدة",
+            "termination": "شروط الإنهاء"
+        },
+        "errors": {
+            "aiNotConfigured": "الذكاء الاصطناعي غير مهيأ. حدد VITE_GEMINI_API_KEY.",
+            "failedExtract": "فشل استخراج النص",
+            "failedSection": "فشل تحليل هذا القسم.",
+            "failed": "فشل التحليل"
+        },
+        "success": {
+            "loaded": "تم تحميل العقد",
+            "complete": "اكتمل التحليل",
+            "copied": "تم النسخ"
+        }
+    },
+    "admin": {
+        "badge": "منطقة الإدارة",
+        "title": "لوحة التحكم",
+        "description": "إدارة إعدادات التطبيق العامة من مكان واحد آمن.",
+        "fields": {
+            "phone": "رقم الهاتف",
+            "whatsapp": "رقم واتساب",
+            "email": "البريد الإلكتروني",
+            "location": "الموقع",
+            "telegram": "اسم المستخدم في تيليجرام",
+            "tiktok": "اسم المستخدم في تيك توك",
+            "instagram": "اسم المستخدم في انستغرام"
+        },
+        "placeholder": "أدخل {{field}}...",
+        "success": "تم تحديث الإعداد بنجاح",
+        "error": "فشل تحديث الإعداد"
+    },
+    "convertEditor": {
+        "fileTooLarge": "الملف كبير جداً (الحد الأقصى 50 ميجا)",
+        "fileEmpty": "الملف فارغ",
+        "noImages": "لم يتم العثور على صور صالحة",
+        "failedLoadPdf": "فشل تحميل ملف PDF",
+        "noSlides": "لم يتم العثور على شرائح",
+        "emptyResponse": "استجابة فارغة",
+        "accessDenied": "تم رفض الوصول",
+        "notFound": "404 غير موجود",
+        "noProxies": "لا يوجد بروكسي",
+        "allProxiesFailed": "فشلت جميع البروكسي",
+        "authPages": "لا يمكن تحويل الصفحات المصادق عليها (مثل Office 365). جرّب رابط عام.",
+        "noTextFound": "تحذير: لم يتم العثور على نص. يبدو أن هذا ملف ممسوح. يرجى تفعيل OCR.",
+        "noContent": "لم يتم العثور على محتوى للتحويل",
+                          "iframeFailed":  "فشل إنشاء الإطار",
+                          "downloadPage": "تحميل هذه الصفحة",
+        "defaultNames": {
+            "newHtml": "تحويل HTML جديد",
+            "html": "تحويل HTML",
+            "conversion": "تحويل"
+        }
+    },
+    "fileUpload": {
+        "singleOnly": "ملف واحد فقط مسموح",
+        "tooLarge": "الملف كبير جداً (الحد الأقصى {{size}} ميجا)",
+        "maxFiles": "الحد الأقصى {{count}} ملفات",
+        "fileTooLarge": "\"{{name}}\" كبير جداً (الحد الأقصى {{size}} ميجا)",
+        "duplicate": "\"{{name}}\" موجود بالفعل في القائمة",
+        "allDuplicate": "جميع الملفات المحددة موجودة بالفعل في القائمة",
+        "maxSize": "100 ميجا حد أقصى"
+    },
+    "signEditor": {
+        "guestUser": "مستخدم ضيف",
+        "addSignature": "إضافة توقيع",
+        "manageSigners": "إدارة الموقعين",
+        "exportResult": "تصدير النتيجة",
+        "doubleClickEdit": "انقر مرتين للتعديل"
+    },
+    "visualEditor": {
+        "startTyping": "ابدأ الكتابة..."
+    },
+    "watermarkEditor": {
+        "defaultText": "واحد PDF"
+    },
+    "adminLayout": {
+        "verifying": "جارٍ التحقق من الوصول...",
+        "accessDenied": "تم رفض الوصول",
+        "noPermission": "ليس لديك صلاحية الوصول إلى هذه المنطقة. للمسؤولين فقط.",
+        "returnHome": "العودة للرئيسية"
+    },
+    "protectedRoute": {
+        "loading": "جارٍ التحميل..."
+    },
+    "contactPage": {
+        "whatsappLabel": "*طلب تواصل جديد*",
+        "nameLabel": "*الاسم:*",
+        "emailLabel": "*البريد:*",
+        "subjectLabel": "*الموضوع:*",
+        "messageLabel": "*الرسالة:*"
+    },
+    "loginPage": {
+        "firebaseNotConfigured": "Firebase غير مهيأ. يرجى التحقق من متغيرات البيئة.",
+        "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        "tooManyAttempts": "محاولات كثيرة جداً. يرجى المحاولة لاحقاً.",
+        "connectionFailed": "تعذر الاتصال بالخادم."
+    },
+    "signupPage": {
+        "firebaseNotConfigured": "Firebase غير مهيأ. يرجى التحقق من متغيرات البيئة.",
+        "passwordTooShort": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+        "emailExists": "يوجد حساب بهذا البريد الإلكتروني بالفعل",
+        "passwordWeak": "كلمة المرور ضعيفة جداً",
+        "connectionFailed": "تعذر الاتصال بالخادم."
+    },
+    "results": {
+        "titlePrefix": "العنوان: ",
+        "datePrefix": "التاريخ: ",
+        "difficultyPrefix": "الصعوبة: ",
+        "answerPrefix": "   الإجابة: ",
+        "explanationPrefix": "   التفسير: ",
+        "noData": "لم يتم العثور على بيانات أسئلة لهذا الامتحان."
     }
 }

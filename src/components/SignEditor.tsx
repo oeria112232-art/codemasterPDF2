@@ -268,7 +268,7 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
                                     {user?.email?.substring(0, 1).toUpperCase() || 'U'}
                                 </div>
                                 <div className="flex-1 overflow-hidden">
-                                    <p className="text-sm font-bold text-slate-800 truncate">{user?.email || 'Guest User'}</p>
+                                    <p className="text-sm font-bold text-slate-800 truncate">{user?.email || t('signEditor.guestUser')}</p>
                                     <p className="text-[10px] text-rose-400 font-bold uppercase tracking-widest">OWNER</p>
                                 </div>
                                 <Settings2 className="w-4 h-4 text-slate-300" />
@@ -303,9 +303,9 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
 
                 <main className="flex-1 bg-[#eef0f2] overflow-hidden flex relative">
                     <div className="absolute left-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3">
-                        <FloatingBtn icon={Plus} color="bg-rose-500 shadow-rose-200" onClick={() => addItem('signature')} tooltip="Add Signature" />
-                        <FloatingBtn icon={User} color="bg-indigo-500 shadow-indigo-200" tooltip="Manage Signers" />
-                        <FloatingBtn icon={Download} color="bg-slate-800 shadow-slate-200" onClick={handleSave} tooltip="Export Result" />
+                        <FloatingBtn icon={Plus} color="bg-rose-500 shadow-rose-200" onClick={() => addItem('signature')} tooltip={t('signEditor.addSignature')} />
+                        <FloatingBtn icon={User} color="bg-indigo-500 shadow-indigo-200" tooltip={t('signEditor.manageSigners')} />
+                        <FloatingBtn icon={Download} color="bg-slate-800 shadow-slate-200" onClick={handleSave} tooltip={t('signEditor.exportResult')} />
                     </div>
 
                     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-12 scroll-smooth flex flex-col items-center gap-12 custom-scrollbar">
@@ -437,6 +437,7 @@ function EditorPage({ pageNum, pdf, zoom, items, activeId, editingId, onSelect, 
 }
 
 function DraggableItem({ item, zoom, active, isEditing, onSelect, updateItem, onEditFinish }: any) {
+    const { t } = useTranslation();
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [isRotating, setIsRotating] = useState(false);
@@ -543,7 +544,7 @@ function DraggableItem({ item, zoom, active, isEditing, onSelect, updateItem, on
                             <span
                                 className="font-bold whitespace-nowrap overflow-hidden select-none"
                                 style={{ fontSize: (item.fontSize || 14) * zoom }}>
-                                {item.content || 'Double click to edit'}
+                                {item.content || t('signEditor.doubleClickEdit')}
                             </span>
                         )
                     )}

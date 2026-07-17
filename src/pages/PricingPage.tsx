@@ -4,11 +4,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { Check, Sparkles, Zap, Crown, Building2, Star } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PLAN_ICONS = [Star, Zap, Sparkles, Crown, Building2];
 const PLAN_COLORS = ['bg-slate-500', 'bg-blue-500', 'bg-indigo-600', 'bg-purple-600', 'bg-amber-500'];
 
 export function PricingPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { showToast } = useToast();
   const { credits, addCreditsToAccount } = useCredits();
@@ -16,15 +18,15 @@ export function PricingPage() {
 
   const handlePurchase = async (planId: string, creditAmount: number) => {
     if (!user) {
-      showToast('Please sign in to purchase credits', 'error');
+      showToast(t('pricing.errors.signInRequired'), 'error');
       return;
     }
     setPurchasing(planId);
     try {
-      await addCreditsToAccount(creditAmount, `Purchased ${planId} plan`);
-      showToast(`Successfully purchased ${creditAmount} credits!`, 'success');
+      await addCreditsToAccount(creditAmount, t('pricing.success.purchased', { planId }));
+      showToast(t('pricing.success.creditsAdded', { amount: creditAmount }), 'success');
     } catch {
-      showToast('Purchase failed. Please try again.', 'error');
+      showToast(t('pricing.errors.purchaseFailed'), 'error');
     } finally {
       setPurchasing(null);
     }
@@ -36,19 +38,19 @@ export function PricingPage() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 text-indigo-600 rounded-full mb-6">
             <Sparkles className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-[2px]">Pay Per Use</span>
+            <span className="text-[10px] font-black uppercase tracking-[2px]">{t('pricing.badge')}</span>
           </div>
           <h1 className="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
-            Simple, Transparent Pricing
+            {t('pricing.title')}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 font-medium text-lg max-w-2xl mx-auto">
-            Buy credits and use only what you need. No subscriptions, no hidden fees.
+            {t('pricing.subtitle')}
           </p>
           {user && (
             <div className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
               <span className="text-sm font-bold text-slate-600 dark:text-slate-300">
-                Your balance: <span className="text-indigo-600">{credits} credits</span>
+                {t('pricing.balance')} <span className="text-indigo-600">{credits} {t('pricing.credits')}</span>
               </span>
             </div>
           )}
@@ -74,31 +76,31 @@ export function PricingPage() {
                 </div>
                 <h3 className="text-lg font-black text-slate-900 dark:text-white mb-1">{plan.name}</h3>
                 <p className="text-3xl font-black text-slate-900 dark:text-white mb-1">
-                  {plan.price === 0 ? 'Free' : `$${plan.price}`}
+                  {plan.price === 0 ? t('pricing.plans.free.price') : `$${plan.price}`}
                 </p>
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">
-                  {plan.credits >= 999999 ? 'Unlimited credits' : `${plan.credits.toLocaleString()} credits`}
+                  {plan.credits >= 999999 ? t('pricing.plans.free.creditDesc') : `${plan.credits.toLocaleString()} ${t('pricing.credits')}`}
                 </p>
 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    {plan.credits >= 999999 ? 'All tools unlimited' : `${plan.credits} credits`}
+                    {plan.credits >= 999999 ? t('pricing.plans.free.feature1') : `${plan.credits} ${t('pricing.credits')}`}
                   </li>
                   <li className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                    All PDF tools
+                    {t('pricing.plans.free.feature2')}
                   </li>
                   {i >= 2 && (
                     <li className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                      AI features
+                      {t('pricing.plans.free.feature3')}
                     </li>
                   )}
                   {i >= 3 && (
                     <li className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                       <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                      Priority support
+                      {t('pricing.plans.free.feature4')}
                     </li>
                   )}
                 </ul>
@@ -112,7 +114,7 @@ export function PricingPage() {
                       : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                   } disabled:opacity-50`}
                 >
-                  {plan.price === 0 ? 'Current Plan' : purchasing === plan.id ? 'Processing...' : 'Buy Now'}
+                  {plan.price === 0 ? t('pricing.plans.currentPlan') : purchasing === plan.id ? t('pricing.plans.processing') : t('pricing.plans.buyNow')}
                 </button>
               </div>
             );
@@ -120,28 +122,28 @@ export function PricingPage() {
         </div>
 
         <div className="mt-16 text-center">
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-6">How Credits Work</h2>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-6">{t('pricing.howItWorks.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-xl font-black text-indigo-600">1</span>
               </div>
-              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">Buy Credits</h4>
-              <p className="text-xs text-slate-400">Choose a plan that fits your needs</p>
+              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">{t('pricing.howItWorks.steps.buy.title')}</h4>
+              <p className="text-xs text-slate-400">{t('pricing.howItWorks.steps.buy.desc')}</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-xl font-black text-indigo-600">2</span>
               </div>
-              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">Use Tools</h4>
-              <p className="text-xs text-slate-400">Each tool costs a specific number of credits</p>
+              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">{t('pricing.howItWorks.steps.use.title')}</h4>
+              <p className="text-xs text-slate-400">{t('pricing.howItWorks.steps.use.desc')}</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-xl font-black text-indigo-600">3</span>
               </div>
-              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">Pay Only for What You Use</h4>
-              <p className="text-xs text-slate-400">No recurring charges, buy more when needed</p>
+              <h4 className="text-sm font-black text-slate-900 dark:text-white mb-2">{t('pricing.howItWorks.steps.pay.title')}</h4>
+              <p className="text-xs text-slate-400">{t('pricing.howItWorks.steps.pay.desc')}</p>
             </div>
           </div>
         </div>

@@ -19,17 +19,8 @@ interface AnalysisSection {
   color: string;
 }
 
-const ANALYSIS_SECTIONS: { id: string; title: string; icon: any; prompt: string; color: string }[] = [
-  { id: 'overview', title: 'Contract Overview', icon: FileText, prompt: 'Provide a brief overview of what this contract is about, who the parties are, and the main purpose.', color: 'text-blue-500' },
-  { id: 'obligations', title: 'Key Obligations', icon: Scale, prompt: 'List the key obligations and responsibilities of each party in this contract.', color: 'text-indigo-500' },
-  { id: 'financial', title: 'Financial Terms', icon: DollarSign, prompt: 'Extract all financial terms: payments, penalties, fees, deadlines, amounts.', color: 'text-emerald-500' },
-  { id: 'risks', title: 'Risk Assessment', icon: AlertTriangle, prompt: 'Identify potential risks, unfavorable clauses, or areas of concern in this contract.', color: 'text-red-500' },
-  { id: 'deadlines', title: 'Deadlines & Duration', icon: Clock, prompt: 'Extract all dates, deadlines, durations, renewal terms, and time-sensitive information.', color: 'text-amber-500' },
-  { id: 'termination', title: 'Termination Clauses', icon: Users, prompt: 'Extract all termination conditions, notice periods, and exit clauses.', color: 'text-purple-500' },
-];
-
 export function ContractAnalyzerPage() {
-  useTranslation();
+  const { t } = useTranslation();
   const { showToast } = useToast();
   const { spendCredits } = useCredits();
   const [pdfText, setPdfText] = useState('');
@@ -38,6 +29,15 @@ export function ContractAnalyzerPage() {
   const [loading, setLoading] = useState(false);
   const [extracting, setExtracting] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('overview');
+
+  const ANALYSIS_SECTIONS: { id: string; title: string; icon: any; prompt: string; color: string }[] = [
+    { id: 'overview', title: t('contractAnalyzer.sections.overview'), icon: FileText, prompt: 'Provide a brief overview of what this contract is about, who the parties are, and the main purpose.', color: 'text-blue-500' },
+    { id: 'obligations', title: t('contractAnalyzer.sections.obligations'), icon: Scale, prompt: 'List the key obligations and responsibilities of each party in this contract.', color: 'text-indigo-500' },
+    { id: 'financial', title: t('contractAnalyzer.sections.financial'), icon: DollarSign, prompt: 'Extract all financial terms: payments, penalties, fees, deadlines, amounts.', color: 'text-emerald-500' },
+    { id: 'risks', title: t('contractAnalyzer.sections.risks'), icon: AlertTriangle, prompt: 'Identify potential risks, unfavorable clauses, or areas of concern in this contract.', color: 'text-red-500' },
+    { id: 'deadlines', title: t('contractAnalyzer.sections.deadlines'), icon: Clock, prompt: 'Extract all dates, deadlines, durations, renewal terms, and time-sensitive information.', color: 'text-amber-500' },
+    { id: 'termination', title: t('contractAnalyzer.sections.termination'), icon: Users, prompt: 'Extract all termination conditions, notice periods, and exit clauses.', color: 'text-purple-500' },
+  ];
 
   const extractText = async (file: File) => {
     setExtracting(true);
@@ -52,9 +52,9 @@ export function ContractAnalyzerPage() {
       }
       setPdfText(text);
       setPdfName(file.name);
-      showToast('Contract loaded', 'success');
+      showToast(t('contractAnalyzer.success.loaded'), 'success');
     } catch {
-      showToast('Failed to extract text', 'error');
+      showToast(t('contractAnalyzer.errors.failedExtract'), 'error');
     } finally {
       setExtracting(false);
     }
@@ -75,7 +75,7 @@ export function ContractAnalyzerPage() {
     try {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) {
-        showToast('AI not configured. Set VITE_GEMINI_API_KEY.', 'error');
+        showToast(t('contractAnalyzer.errors.aiNotConfigured'), 'error');
         return;
       }
 
@@ -101,15 +101,15 @@ export function ContractAnalyzerPage() {
           results.push({
             title: sec.title,
             icon: sec.icon,
-            content: 'Failed to analyze this section.',
+            content: t('contractAnalyzer.errors.failedSection'),
             color: sec.color,
           });
         }
       }
 
-      showToast('Analysis complete', 'success');
+      showToast(t('contractAnalyzer.success.complete'), 'success');
     } catch {
-      showToast('Analysis failed', 'error');
+      showToast(t('contractAnalyzer.errors.failed'), 'error');
     } finally {
       setLoading(false);
     }
@@ -117,7 +117,7 @@ export function ContractAnalyzerPage() {
 
   const copySection = (content: string) => {
     navigator.clipboard.writeText(content);
-    showToast('Copied', 'success');
+    showToast(t('contractAnalyzer.success.copied'), 'success');
   };
 
   const downloadReport = () => {
@@ -138,18 +138,18 @@ export function ContractAnalyzerPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-600 rounded-full mb-6">
               <ShieldAlert className="w-4 h-4" />
-              <span className="text-[10px] font-black uppercase tracking-[2px]">AI-Powered • 100 Credits</span>
+              <span className="text-[10px] font-black uppercase tracking-[2px]">{t('contractAnalyzer.badge')}</span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">Contract Analyzer</h1>
+            <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">{t('contractAnalyzer.title')}</h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium text-lg max-w-2xl mx-auto">
-              Upload a contract PDF and get AI-powered analysis of all critical terms, risks, and obligations
+              {t('contractAnalyzer.subtitle')}
             </p>
           </div>
           <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-1 shadow-2xl border border-slate-100 dark:border-slate-800">
             {extracting ? (
               <div className="p-20 flex flex-col items-center justify-center">
                 <Loader2 className="w-12 h-12 text-red-500 animate-spin mb-4" />
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Extracting text...</p>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{t('contractAnalyzer.extracting')}</p>
               </div>
             ) : (
               <ToolPage icon={ShieldAlert} title="" description="" color="bg-red-500" onProcess={handleUpload} hideContent={true} />
@@ -166,7 +166,7 @@ export function ContractAnalyzerPage() {
     <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Contract Analysis</h1>
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{t('contractAnalyzer.analysisTitle')}</h1>
           <p className="text-sm text-slate-400 mt-2">
             <FileText className="w-4 h-4 inline mr-1" />{pdfName}
           </p>
@@ -176,9 +176,9 @@ export function ContractAnalyzerPage() {
           <div className="text-center">
             <button onClick={runFullAnalysis}
               className="px-10 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-red-500/20 inline-flex items-center gap-3">
-              <ShieldAlert className="w-4 h-4" /> Run Full Analysis
+              <ShieldAlert className="w-4 h-4" /> {t('contractAnalyzer.runAnalysis')}
             </button>
-            <p className="text-[10px] text-slate-400 mt-3">100 credits • Analyzes 6 critical areas</p>
+            <p className="text-[10px] text-slate-400 mt-3">{t('contractAnalyzer.analysisInfo')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -203,7 +203,7 @@ export function ContractAnalyzerPage() {
               {sections.length > 0 && (
                 <button onClick={downloadReport}
                   className="w-full mt-4 px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 flex items-center justify-center gap-2 transition-all">
-                  <Download className="w-4 h-4" /> Export Report
+                  <Download className="w-4 h-4" /> {t('contractAnalyzer.exportReport')}
                 </button>
               )}
             </div>
@@ -214,7 +214,7 @@ export function ContractAnalyzerPage() {
                   <div className="flex items-center gap-3 mb-4">
                     <Loader2 className="w-5 h-5 text-red-500 animate-spin" />
                     <span className="text-sm font-bold text-slate-600 dark:text-slate-300">
-                      Analyzing... ({sections.length}/{ANALYSIS_SECTIONS.length} sections complete)
+                      {t('contractAnalyzer.analyzing', { current: sections.length, total: ANALYSIS_SECTIONS.length })}
                     </span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
@@ -240,7 +240,7 @@ export function ContractAnalyzerPage() {
               ) : !loading ? (
                 <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-12 text-center">
                   <ShieldAlert className="w-12 h-12 text-slate-200 dark:text-slate-700 mx-auto mb-4" />
-                  <p className="text-sm font-bold text-slate-400">Click sections on the left to view results</p>
+                  <p className="text-sm font-bold text-slate-400">{t('contractAnalyzer.emptyState')}</p>
                 </div>
               ) : null}
             </div>

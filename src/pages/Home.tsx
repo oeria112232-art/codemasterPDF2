@@ -11,32 +11,32 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
 
-const STATS = [
-  { value: '10M+', label: 'Files Processed', icon: FileText },
-  { value: '500K+', label: 'Active Users', icon: Users },
-  { value: '28+', label: 'PDF Tools', icon: Zap },
-  { value: '99.9%', label: 'Uptime', icon: TrendingUp },
-];
-
-const TESTIMONIALS = [
-  { name: 'Sarah Chen', role: 'Product Manager at Google', text: 'CodeMaster replaced 5 different PDF tools for our team. The AI chat feature is a game-changer.', rating: 5 },
-  { name: 'Ahmed Hassan', role: 'Legal Consultant', text: 'The Contract Analyzer saves me hours every week. It identifies risks I would have missed.', rating: 5 },
-  { name: 'Maria Rodriguez', role: 'University Professor', text: 'My students use PDF Chat to understand research papers. It\'s like having a study buddy built in.', rating: 5 },
-];
-
-const COMPARISON = [
-  { feature: 'PDF Processing', codemaster: true, adobe: true, smallpdf: true },
-  { feature: 'AI Chat with PDF', codemaster: true, adobe: false, smallpdf: false },
-  { feature: 'Contract Analysis', codemaster: true, adobe: false, smallpdf: false },
-  { feature: 'Batch Processing', codemaster: true, adobe: true, smallpdf: true },
-  { feature: 'Client-side Processing', codemaster: true, adobe: false, smallpdf: false },
-  { feature: 'Free Tier Available', codemaster: true, adobe: false, smallpdf: true },
-  { feature: 'Open Source Backend', codemaster: true, adobe: false, smallpdf: false },
-];
-
 export function Home() {
   const { t } = useTranslation();
   const [count, setCount] = useState(0);
+
+  const STATS = [
+    { value: '10M+', label: t('home.stats.filesProcessed'), icon: FileText },
+    { value: '500K+', label: t('home.stats.activeUsers'), icon: Users },
+    { value: '28+', label: t('home.stats.pdfTools'), icon: Zap },
+    { value: '99.9%', label: t('home.stats.uptime'), icon: TrendingUp },
+  ];
+
+  const TESTIMONIALS = [
+    { name: t('home.testimonials.items.0.name'), role: t('home.testimonials.items.0.role'), text: t('home.testimonials.items.0.text'), rating: 5 },
+    { name: t('home.testimonials.items.1.name'), role: t('home.testimonials.items.1.role'), text: t('home.testimonials.items.1.text'), rating: 5 },
+    { name: t('home.testimonials.items.2.name'), role: t('home.testimonials.items.2.role'), text: t('home.testimonials.items.2.text'), rating: 5 },
+  ];
+
+  const COMPARISON = [
+    { feature: t('home.comparison.features.pdfProcessing'), codemaster: true, adobe: true, smallpdf: true },
+    { feature: t('home.comparison.features.aiChat'), codemaster: true, adobe: false, smallpdf: false },
+    { feature: t('home.comparison.features.contractAnalysis'), codemaster: true, adobe: false, smallpdf: false },
+    { feature: t('home.comparison.features.batchProcessing'), codemaster: true, adobe: true, smallpdf: true },
+    { feature: t('home.comparison.features.clientSide'), codemaster: true, adobe: false, smallpdf: false },
+    { feature: t('home.comparison.features.freeTier'), codemaster: true, adobe: false, smallpdf: true },
+    { feature: t('home.comparison.features.openSource'), codemaster: true, adobe: false, smallpdf: false },
+  ];
 
   useEffect(() => {
     const target = 10000000;
@@ -106,14 +106,14 @@ export function Home() {
     },
     {
       id: "intelligence",
-      title: "Intelligence Suite",
-      description: "AI-powered tools for document analysis and smart processing",
+      title: t('home.intelligenceSuite.title'),
+      description: t('home.intelligenceSuite.subtitle'),
       tools: [
-        { icon: MessageSquare, title: "PDF Chat", description: "Ask questions about your PDF using AI", path: '/pdf-to-chat', color: 'bg-blue-500' },
-        { icon: GitCompareArrows, title: "PDF Compare", description: "Compare two PDFs and see all differences", path: '/pdf-to-compare', color: 'bg-purple-500' },
-        { icon: Layers, title: "Batch Process", description: "Process multiple PDFs at once", path: '/batch-process', color: 'bg-amber-500' },
-        { icon: Sparkles, title: "AI Summarize", description: "Summarize any PDF with AI", path: '/ai-summarize', color: 'bg-violet-500' },
-        { icon: ShieldAlert, title: "Contract Analyzer", description: "Analyze contracts with AI", path: '/contract-analyzer', color: 'bg-red-500' },
+        { icon: MessageSquare, title: t('home.intelligenceTools.pdfChat.title'), description: t('home.intelligenceTools.pdfChat.desc'), path: '/pdf-to-chat', color: 'bg-blue-500' },
+        { icon: GitCompareArrows, title: t('home.intelligenceTools.pdfCompare.title'), description: t('home.intelligenceTools.pdfCompare.desc'), path: '/pdf-to-compare', color: 'bg-purple-500' },
+        { icon: Layers, title: t('home.intelligenceTools.batchProcess.title'), description: t('home.intelligenceTools.batchProcess.desc'), path: '/batch-process', color: 'bg-amber-500' },
+        { icon: Sparkles, title: t('home.intelligenceTools.aiSummarize.title'), description: t('home.intelligenceTools.aiSummarize.desc'), path: '/ai-summarize', color: 'bg-violet-500' },
+        { icon: ShieldAlert, title: t('home.intelligenceTools.contractAnalyzer.title'), description: t('home.intelligenceTools.contractAnalyzer.desc'), path: '/contract-analyzer', color: 'bg-red-500' },
       ]
     }
   ];
@@ -184,7 +184,7 @@ export function Home() {
               </div>
               {cat.id === 'intelligence' && (
                 <Link to="/dashboard" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1 transition-colors">
-                  View All <ArrowRight className="w-4 h-4" />
+                  {t('home.viewAll')} <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
             </div>
@@ -209,8 +209,8 @@ export function Home() {
       <section className="py-20 md:py-28 bg-slate-100/50 dark:bg-slate-900/30 border-y border-slate-200/80 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Why CodeMaster?</h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">Everything you need for professional PDF management, powered by AI</p>
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">{t('home.whyCodeMaster.title')}</h2>
+            <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">{t('home.whyCodeMaster.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14">
             <FeatureItem icon={Zap} title={t('app.features.fast')} desc={t('app.features.fastDesc')} />
@@ -224,15 +224,15 @@ export function Home() {
       <section className="py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">How We Compare</h2>
-            <p className="text-slate-500 dark:text-slate-400">See why professionals choose CodeMaster</p>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">{t('home.comparison.title')}</h2>
+            <p className="text-slate-500 dark:text-slate-400">{t('home.comparison.subtitle')}</p>
           </div>
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-xl">
             <div className="grid grid-cols-4 text-xs font-black uppercase tracking-widest">
-              <div className="p-4 text-slate-400">Feature</div>
-              <div className="p-4 text-center text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10">CodeMaster</div>
-              <div className="p-4 text-center text-slate-400">Adobe</div>
-              <div className="p-4 text-center text-slate-400">Smallpdf</div>
+              <div className="p-4 text-slate-400">{t('home.comparison.headers.feature')}</div>
+              <div className="p-4 text-center text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10">{t('home.comparison.headers.codemaster')}</div>
+              <div className="p-4 text-center text-slate-400">{t('home.comparison.headers.adobe')}</div>
+              <div className="p-4 text-center text-slate-400">{t('home.comparison.headers.smallpdf')}</div>
             </div>
             {COMPARISON.map((row, i) => (
               <div key={i} className={`grid grid-cols-4 text-sm border-t border-slate-100 dark:border-slate-800 ${i % 2 === 0 ? 'bg-slate-50/50 dark:bg-slate-800/20' : ''}`}>
@@ -256,8 +256,8 @@ export function Home() {
       <section className="py-20 md:py-28 bg-slate-100/50 dark:bg-slate-900/30 border-y border-slate-200/80 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Loved by Professionals</h2>
-            <p className="text-slate-500 dark:text-slate-400">Join thousands of satisfied users worldwide</p>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">{t('home.testimonials.title')}</h2>
+            <p className="text-slate-500 dark:text-slate-400">{t('home.testimonials.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((testimonial, i) => (

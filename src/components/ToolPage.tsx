@@ -39,9 +39,9 @@ export function ToolPage({ icon: Icon, title, description, color, onProcess, hid
       console.error('Tool processing error:', error);
       const message = error?.message || t('common.error');
       if (message.includes('password') || message.includes('encrypted')) {
-        showToast('This PDF is password-protected. Please unlock it first.', 'error');
+        showToast(t('toolPage.passwordProtected'), 'error');
       } else if (message.includes('corrupt') || message.includes('invalid')) {
-        showToast('This file appears to be corrupted or invalid.', 'error');
+        showToast(t('toolPage.corruptedFile'), 'error');
       } else {
         showToast(message, 'error');
       }

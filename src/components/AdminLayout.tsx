@@ -4,10 +4,12 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { ref, get } from 'firebase/database';
 import { auth, database } from '../lib/firebase';
 import { Loader2, ShieldAlert } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map((e: string) => e.trim().toLowerCase()).filter(Boolean);
 
 export function AdminLayout() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [authorized, setAuthorized] = useState(false);
 
@@ -39,7 +41,7 @@ export function AdminLayout() {
             <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-[#020617]">
                 <div className="flex flex-col items-center gap-4">
                     <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Verifying Access...</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('adminLayout.verifying')}</p>
                 </div>
             </div>
         );
@@ -52,15 +54,15 @@ export function AdminLayout() {
                     <div className="w-20 h-20 bg-rose-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
                         <ShieldAlert className="w-10 h-10 text-rose-500" />
                     </div>
-                    <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Access Denied</h1>
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-4">{t('adminLayout.accessDenied')}</h1>
                     <p className="text-slate-500 dark:text-slate-400 font-medium mb-8">
-                        You don't have permission to access this area. Admin access only.
+                        {t('adminLayout.noPermission')}
                     </p>
                     <a
                         href="/"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20"
                     >
-                        Return Home
+                        {t('adminLayout.returnHome')}
                     </a>
                 </div>
             </div>

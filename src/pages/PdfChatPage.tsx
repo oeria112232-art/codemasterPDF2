@@ -20,7 +20,7 @@ interface Message {
 }
 
 export function PdfChatPage() {
-  useTranslation();
+  const { t } = useTranslation();
   const { showToast } = useToast();
   useAuth();
   useCredits();
@@ -60,10 +60,10 @@ export function PdfChatPage() {
         content: `I've loaded **${file.name}** (${pdf.numPages} pages, ${fullText.length.toLocaleString()} characters). Ask me anything about this document!`,
         timestamp: new Date(),
       }]);
-      showToast('PDF loaded successfully', 'success');
+      showToast(t('pdfChat.success.pdfLoaded'), 'success');
     } catch (err) {
       console.error('PDF extraction error:', err);
-      showToast('Failed to extract text from PDF', 'error');
+      showToast(t('pdfChat.errors.failedToExtract'), 'error');
     } finally {
       setExtracting(false);
     }
@@ -86,7 +86,7 @@ export function PdfChatPage() {
       if (!apiKey) {
         setMessages(prev => [...prev, {
           role: 'assistant',
-          content: 'AI is not configured. Please set the VITE_GEMINI_API_KEY environment variable.',
+          content: t('pdfChat.errors.aiNotConfigured'),
           timestamp: new Date(),
         }]);
         return;
@@ -122,7 +122,7 @@ export function PdfChatPage() {
       console.error('AI error:', err);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Sorry, I encountered an error processing your request. Please try again.',
+        content: t('pdfChat.errors.processingError'),
         timestamp: new Date(),
       }]);
     } finally {
@@ -132,7 +132,7 @@ export function PdfChatPage() {
 
   const copyMessage = (content: string) => {
     navigator.clipboard.writeText(content);
-    showToast('Copied to clipboard', 'success');
+    showToast(t('pdfChat.success.copied'), 'success');
   };
 
   const clearChat = () => {
@@ -150,20 +150,20 @@ export function PdfChatPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-600 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
-              <span className="text-[10px] font-black uppercase tracking-[2px]">AI-Powered</span>
+              <span className="text-[10px] font-black uppercase tracking-[2px]">{t('pdfChat.badge')}</span>
             </div>
             <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
-              PDF Chat
+              {t('pdfChat.title')}
             </h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium text-lg max-w-2xl mx-auto">
-              Upload a PDF and ask questions about its content using AI
+              {t('pdfChat.subtitle')}
             </p>
           </div>
           <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-1 shadow-2xl border border-slate-100 dark:border-slate-800">
             {extracting ? (
               <div className="p-20 flex flex-col items-center justify-center">
                 <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Extracting text...</p>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{t('pdfChat.extracting')}</p>
               </div>
             ) : (
               <ToolPage
@@ -182,8 +182,8 @@ export function PdfChatPage() {
                 <MessageSquare className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Natural Language</h4>
-                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">Ask questions in plain English</p>
+                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t('pdfChat.features.naturalLanguage')}</h4>
+                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">{t('pdfChat.features.naturalLanguageDesc')}</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -191,8 +191,8 @@ export function PdfChatPage() {
                 <Bot className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">AI Analysis</h4>
-                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">Powered by Google Gemini</p>
+                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t('pdfChat.features.aiAnalysis')}</h4>
+                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">{t('pdfChat.features.aiAnalysisDesc')}</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -200,8 +200,8 @@ export function PdfChatPage() {
                 <FileText className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Free Tool</h4>
-                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">No credits required</p>
+                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t('pdfChat.features.freeTool')}</h4>
+                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">{t('pdfChat.features.freeToolDesc')}</p>
               </div>
             </div>
           </div>
@@ -219,7 +219,7 @@ export function PdfChatPage() {
           </div>
           <div>
             <p className="text-sm font-bold text-slate-900 dark:text-white">{pdfName}</p>
-            <p className="text-[10px] text-slate-400 font-medium">{pdfText.length.toLocaleString()} characters</p>
+            <p className="text-[10px] text-slate-400 font-medium">{pdfText.length.toLocaleString()} {t('pdfChat.characters')}</p>
           </div>
         </div>
         <button onClick={clearChat} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
@@ -282,7 +282,7 @@ export function PdfChatPage() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-            placeholder="Ask a question about your PDF..."
+            placeholder={t('pdfChat.placeholder')}
             className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-800 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/50 text-sm font-medium text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700"
             disabled={loading}
           />

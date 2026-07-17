@@ -1,736 +1,1141 @@
-{
-    "app": {
-        "title": "Code Master",
-        "description": "Code Master is your all-in-one platform for managing and editing PDF files. Merge, split, compress, and protect your documents in seconds with advanced AI integration.",
-        "heroTitle": "Professional PDF Tools: Edit, Convert, & Smart Translation",
-        "features": {
-            "fast": "Fast & Easy",
-            "fastDesc": "Process your files in seconds with our intuitive interface",
-            "secure": "Secure",
-            "secureDesc": "Your files are protected with advanced encryption",
-            "cloud": "Cloud Based",
-            "cloudDesc": "Access your tools from anywhere, anytime"
-        },
-        "whyChoose": "Why choose Code Master?",
-        "nav": {
-            "home": "Home",
-            "about": "About",
-            "contact": "Contact",
-            "tools": "Tools",
-            "signIn": "Sign In",
-            "dashboard": "Dashboard",
-            "logout": "Sign Out",
-            "proSuite": "Pro Suite",
-            "intelligenceSuite": "Intelligence Suite"
-        },
-        "hero": {
-            "getStarted": "Get Started Free",
-            "viewTools": "View All Tools",
-            "powerTools": "Power Tools",
-            "suiteTitle": "Enterprise PDF Suite",
-            "suiteDesc": "Modern tools optimized for speed and high-fidelity output.",
-            "workflowTitle": "Ready to transform your workflow?",
-            "joinUsers": "Join thousands of users worldwide",
-            "optimizeNow": "Optimize Now — It's Free"
-        },
-        "categories": {
-            "optimize": {
-                "title": "Optimization Cluster",
-                "desc": "High-speed algorithms for merging, splitting, and compressing."
+﻿{
+    "app":  {
+                "title":  "Code Master",
+                "description":  "Code Master is your all-in-one platform for managing and editing PDF files. Merge, split, compress, and protect your documents in seconds with advanced AI integration.",
+                "heroTitle":  "Professional PDF Tools: Edit, Convert, \u0026 Smart Translation",
+                "features":  {
+                                 "fast":  "Fast \u0026 Easy",
+                                 "fastDesc":  "Process your files in seconds with our intuitive interface",
+                                 "secure":  "Secure",
+                                 "secureDesc":  "Your files are protected with advanced encryption",
+                                 "cloud":  "Cloud Based",
+                                 "cloudDesc":  "Access your tools from anywhere, anytime"
+                             },
+                "whyChoose":  "Why choose Code Master?",
+                "nav":  {
+                            "home":  "Home",
+                            "about":  "About",
+                            "contact":  "Contact",
+                            "tools":  "Tools",
+                            "signIn":  "Sign In",
+                            "dashboard":  "Dashboard",
+                            "logout":  "Sign Out",
+                            "proSuite":  "Pro Suite",
+                            "intelligenceSuite":  "Intelligence Suite"
+                        },
+                "hero":  {
+                             "getStarted":  "Get Started Free",
+                             "viewTools":  "View All Tools",
+                             "powerTools":  "Power Tools",
+                             "suiteTitle":  "Enterprise PDF Suite",
+                             "suiteDesc":  "Modern tools optimized for speed and high-fidelity output.",
+                             "workflowTitle":  "Ready to transform your workflow?",
+                             "joinUsers":  "Join thousands of users worldwide",
+                             "optimizeNow":  "Optimize Now â€” It\u0027s Free"
+                         },
+                "categories":  {
+                                   "optimize":  {
+                                                    "title":  "Optimization Cluster",
+                                                    "desc":  "High-speed algorithms for merging, splitting, and compressing."
+                                                },
+                                   "edit":  {
+                                                "title":  "Precision Suite",
+                                                "desc":  "Advanced editors for structural modifications and layout control."
+                                            },
+                                   "security":  {
+                                                    "title":  "Security Layer",
+                                                    "desc":  "Enterprise-grade encryption and privacy masking protocols."
+                                                },
+                                   "convert":  {
+                                                   "title":  "Conversion Engine",
+                                                   "desc":  "High-fidelity translation between document formats."
+                                               },
+                                   "intelligence":  {
+                                                        "title":  "Intelligence Suite",
+                                                        "desc":  "AI-powered tools for document analysis and smart processing"
+                                                    }
+                               }
             },
-            "edit": {
-                "title": "Precision Suite",
-                "desc": "Advanced editors for structural modifications and layout control."
-            },
-            "security": {
-                "title": "Security Layer",
-                "desc": "Enterprise-grade encryption and privacy masking protocols."
-            },
-            "convert": {
-                "title": "Conversion Engine",
-                "desc": "High-fidelity translation between document formats."
-            },
-            "intelligence": {
-                "title": "Intelligence Suite",
-                "desc": "AI-powered tools for document analysis and smart processing"
-            }
-        }
-    },
-    "about": {
-        "mission": "Our Mission Protocol",
-        "pioneering": "Pioneering the Document Renaissance.",
-        "missionDesc": "We don't just process files; we optimize human productivity by merging high-fidelity engineering with predictive intelligence.",
-        "neuralCore": "Neural Core",
-        "neuralDesc": "Advanced client-side processing algorithms that outperform cloud alternatives by 400% in latency-sensitive tasks.",
-        "quantumSecurity": "Quantum Security",
-        "quantumDesc": "On-device execution ensures that not a single bit of your data ever touches our external servers.",
-        "globalPresence": "Global Presence",
-        "globalDesc": "Supporting over 20+ languages with culture-aware UI layouts for a truly borderless document experience.",
-        "engineeredFor": "Engineered for the 1%.",
-        "engineeredDesc": "Our team consists of specialized software architects and product designers dedicated to one single goal: making PDF management feel like magic. From our high-definition rendering engine to our proprietary compression logic, every line of code is optimized for performance.",
-        "uptime": "Optimization Uptime",
-        "processed": "Processed Blocks"
-    },
-    "contact": {
-        "connection": "Global Connection",
-        "future": "Let's build the Future together.",
-        "futureDesc": "Have a specialized requirement? Our elite engineering unit is ready to assist with high-scale enterprise integrations.",
-        "secureChannel": "Secure Channel",
-        "directLine": "Direct Line",
-        "hqCluster": "HQ Cluster",
-        "identityLabel": "Identity (Name)",
-        "emailLabel": "Digital Point (Email)",
-        "subjectLabel": "Subject Area",
-        "enterpriseOption": "Enterprise Integration",
-        "supportOption": "Technical Support",
-        "partnershipOption": "Partnership Protocol",
-        "generalOption": "General Investigation",
-        "messageLabel": "Transmission Data (Message)",
-        "messagePlaceholder": "Describe your mission...",
-        "sending": "Initializing Stream...",
-        "send": "Commit Transmission",
-        "success": "Transmission Received. Our team will ping you shortly."
-    },
-    "privacy": {
-        "title": "Privacy Policy",
-        "lastUpdated": "Last updated",
-        "collectTitle": "Information We Collect",
-        "collectDesc": "We collect information that you provide directly to us when using our services.",
-        "useTitle": "How We Use Your Information",
-        "useDesc": "We use the information we collect to provide, maintain, and improve our services.",
-        "securityTitle": "Security",
-        "securityDesc": "We take reasonable measures to help protect your information from loss, theft, misuse, and unauthorized access."
-    },
-    "terms": {
-        "title": "Terms of Service",
-        "section1Title": "1. Terms",
-        "section1Desc": "By accessing PDF Tools, you agree to be bound by these terms of service and agree that you are responsible for compliance with any applicable local laws.",
-        "section2Title": "2. Use License",
-        "section2Desc": "Permission is granted to temporarily use PDF Tools for personal, non-commercial transitory viewing only."
-    },
-    "organizer": {
-        "mode": "Organize & Reorder Mode",
-        "processing": "Processing...",
-        "applyChanges": "Apply Changes",
-        "analyzing": "Analyzing Structure...",
-        "originalPage": "Original Page {{num}}",
-        "hint": "{{count}} Pages • Hint: Drag and drop cards to reorder",
-        "cannotDelete": "Cannot delete all pages!",
-        "errorSaving": "Error saving document",
-        "rotateLeft": "Rotate Left",
-        "rotateRight": "Rotate Right",
-        "rotateAllLeft": "Rotate All Left",
-        "rotateAllRight": "Rotate All Right",
-        "deletePage": "Delete Page"
-    },
-    "editor": {
-        "signatureLoaded": "Signature loaded. Click anywhere to place.",
-        "enterContent": "Enter content:",
-        "exportSuccess": "Document exported successfully!",
-        "critError": "Critical Error during PDF finalization.",
-        "finalize": "Download File",
-        "exportResult": "Export Result",
-        "workspaceTools": "Workspace Tools",
-        "textContent": "Text Content",
-        "textDesc": "Add headings or custom body text",
-        "visualSignature": "Visual Signature",
-        "signatureDesc": "Upload PNG/JPG placement",
-        "privacyMask": "Privacy Mask",
-        "maskDesc": "Permanently hide sections",
-        "securityStamp": "Security Stamp",
-        "stampDesc": "Apply global watermark",
-        "boundaryCrop": "Boundary Crop",
-        "cropDesc": "Adjust page viewport",
-        "configuration": "Configuration",
-        "topMargin": "Top Margin",
-        "bottomMargin": "Bottom Margin",
-        "leftMargin": "Left Margin",
-        "rightMargin": "Right Margin",
-        "colorPalette": "Color Palette",
-        "fontDimension": "Font Dimension",
-        "boundingWidth": "Bounding Width %",
-        "boundingHeight": "Bounding Height %",
-        "purgeElement": "Purge Element",
-        "highDefRender": "High-Def Render Engine Active",
-        "highFidelityRender": "High Fidelity Render",
-        "deciphering": "Deciphering PDF Metadata...",
-        "pageIndex": "Page Index",
-        "adjustProjection": "Adjust Projection",
-        "active": "Active",
-        "pageSize": "Page Size",
-        "orientation": "Orientation",
-        "margins": "Margins",
-        "layout": "Page Layout",
-        "portraitShort": "Port",
-        "landscapeShort": "Land",
-        "fitToImage": "Fit to Image",
-        "portrait": "Portrait",
-        "landscape": "Landscape",
-        "none": "None",
-        "small": "Small",
-        "big": "Big",
-        "addMoreImages": "Add more images",
-        "imageQuality": "Image Quality",
-        "lowFileSize": "Low File Size",
-        "highDef": "High Definition",
-        "betaFeature": "Beta Feature",
-        "betaDesc": "This extraction runs entirely in your browser. Complex layouts might not convert perfectly.",
-        "readyToConvert": "Ready to Convert",
-        "readyDesc": "The document {{name}} is ready for extraction.",
-        "processing": "Processing...",
-        "ocrMode": "OCR Mode (Professional)",
-        "ocrStandard": "Standard (No OCR)",
-        "ocrPro": "OCR (Scanned Files)",
-        "ocrStandardDesc": "Faster. Converts selectable text from PDF directly.",
-        "ocrProDesc": "Extract text from images using AI. Slower but works on scans.",
-        "language": "Language",
-        "textGrouping": "Text Grouping",
-        "smartParagraphs": "Smart Paragraphs"
-    },
-    "signTool": {
-        "options": "Signature Options",
-        "simple": "Simple Signature",
-        "digital": "Digital Signature",
-        "signers": "Signers",
-        "requiredFields": "Required Fields",
-        "optionalFields": "Optional Fields",
-        "send": "Send for Signature",
-        "signature": "Signature",
-        "initials": "Initials",
-        "date": "Date",
-        "text": "Text",
-        "draw": "Draw",
-        "type": "Type",
-        "upload": "Upload",
-        "clear": "Clear",
-        "apply": "Apply"
-    },
-    "watermarkTool": {
-        "options": "Watermark Options",
-        "placeImage": "Place Image",
-        "placeText": "Place Text",
-        "textLabel": "Text:",
-        "formatting": "Text Formatting:",
-        "position": "Position:",
-        "mosaic": "Mosaic",
-        "addWatermark": "Add Watermark",
-        "transparency": "Transparency",
-        "rotation": "Rotation",
-        "layer": "Layer",
-        "overContent": "Over Content",
-        "underContent": "Under Content",
-        "pages": "Pages",
-        "allPages": "All Pages",
-        "selectImage": "Select Watermark Image"
-    },
-    "splitTool": {
-        "options": "Split",
-        "range": "Range",
-        "pages": "Pages",
-        "size": "Size",
-        "rangeMode": "Range Mode:",
-        "customRange": "Custom Range",
-        "fixedRange": "Fixed Range",
-        "rangeLabel": "Range",
-        "fromPage": "From page",
-        "toPage": "to",
-        "addRange": "Add range",
-        "splitPdf": "Split PDF",
-        "mergeRanges": "Merge all ranges into one PDF file",
-        "extractAll": "Extract all pages"
-    },
-    "auth": {
-        "loginTitle": "Welcome back",
-        "loginSubtitle": "Please enter your details to sign in",
-        "signupTitle": "Create an account",
-        "signupSubtitle": "Start your journey with us today",
-        "name": "Full Name",
-        "email": "Email Address",
-        "password": "Password",
-        "confirmPassword": "Confirm Password",
-        "submit": "Sign In",
-        "submitSignup": "Create Account",
-        "googleLogin": "Continue with Google",
-        "or": "Or continue with",
-        "noAccount": "Don't have an account?",
-        "hasAccount": "Already have an account?",
-        "signUp": "Sign up",
-        "signIn": "Sign in",
-        "error": "Authentication failed",
-        "passwordMismatch": "Passwords do not match",
-        "accountCreated": "Account created successfully",
-        "success": "Signed in successfully",
-        "secureAccess": "Secure Access",
-        "welcomePro": "Welcome to the Professional Suite.",
-        "loginDesc": "Access high-fidelity PDF tools and enterprise-grade security within one intelligent platform.",
-        "encryption": "Hardware-level Encryption",
-        "privacyPriority": "Your privacy is our core engineering priority.",
-        "verifying": "Verifying...",
-        "onboarding": "System Onboarding",
-        "joinElite": "Join the Elite PDF Engine.",
-        "signupDesc": "Create your account to unlock advanced features, unlimited cloud storage, and predictive AI tools.",
-        "securityTitle": "Enterprise Security",
-        "securityDesc": "Military-grade protection for every single document.",
-        "processing": "Processing..."
-    },
-    "upload": {
-        "ready": "Ready for Ingestion",
-        "release": "Release to Process",
-        "dragDrop": "Drag and drop your intelligence blocks (PDFs) here",
-        "selectFiles": "Select Local Sources",
-        "encrypted": "AES-256 Encrypted",
-        "atomic": "Atomic Finalization",
-        "activeQueue": "Active Queue",
-        "clearAll": "Clear All",
-        "dataBlock": "Data Block",
-        "processing": "Processing Data..."
-    },
-    "footer": {
-        "description": "Empowering businesses with cutting-edge software solutions, robust security systems, and expert application management.",
-        "systems": "Systems",
-        "intelligence": "Intelligence",
-        "support": "Enterprise Support",
-        "legal": "Legal",
-        "terms": "Protocol (Terms)",
-        "privacy": "Encryption Policy",
-        "connectivity": "Connectivity",
-        "identity": "System Identity",
-        "live": "Cluster Live",
-        "copyright": "PRO TOOLS CORP. EXECUTED WITH PRECISION.",
-        "engineered": "Engineered with for Performance"
-    },
-    "toolPage": {
-        "engine": "High-Performance Engine",
-        "calculating": "Calculating Delta...",
-        "commit": "Commit {{title}} Operations",
-        "start": "Start Optimization",
-        "protocol": "Processing Protocol",
-        "step1": {
-            "label": "Ingest Local Assets",
-            "desc": "Drag files into the neural ingestion portal"
-        },
-        "step2": {
-            "label": "Define Parameters",
-            "desc": "Configure tool-specific metadata and logic"
-        },
-        "step3": {
-            "label": "Execute Core",
-            "desc": "Atomic processing starts within your browser"
-        },
-        "shieldTitle": "On-Device Shield",
-        "shieldDesc": "This transaction is processed exclusively on your hardware. No bit of your document ever crosses our cluster's network boundaries.",
-        "fidelityTitle": "High Fidelity Outcome",
-        "fidelityDesc": "Our engine preserves original metadata and structural integrity up to 99.9% across all conversions.",
-        "comingSoon": "This specialized tool is coming soon!",
-        "selectFile": "Please select at least one file to continue."
-    },
-    "authRequired": {
-        "title": "Login Required",
-        "message": "Please sign in or create an account to access this tool.",
-        "loginButton": "Sign In",
-        "signupButton": "Create Account"
-    },
-    "tools": {
-        "merge": {
-            "title": "Merge PDF",
-            "description": "Combine multiple PDFs into one document"
-        },
-        "split": {
-            "title": "Split PDF",
-            "description": "Extract pages from your PDF",
-            "largeFile": "Processing a large file, this might take a moment...",
-            "splitSuccess": "PDF split successfully! ZIP archive downloaded.",
-            "splitError": "Failed to split PDF. The file might be protected or corrupted."
-        },
-        "compress": {
-            "title": "Compress PDF",
-            "description": "Reduce PDF file size while maintaining quality",
-            "neuralOptimizer": "Advanced Neural Optimizer",
-            "extremeCompression": "Extreme Compression",
-            "extremeDesc": "Maximum size reduction. (Metadata Purge)",
-            "recommended": "Recommended",
-            "balancedDesc": "Perfect balance of quality and size.",
-            "basic": "Basic",
-            "basicDesc": "Clean up document structure only.",
-            "optimizingVectors": "Optimizing Vectors...",
-            "applyingHeuristics": "Applying {{level}} heuristics",
-            "complete": "Optimization Complete",
-            "originalSize": "Original Size",
-            "optimizedSize": "Optimized Size",
-            "processAnother": "Process Another",
-            "viewDocument": "View Document",
-            "instantProcessing": "Instant Processing",
-            "instantDesc": "Optimized in your browser without cloud delays.",
-            "privacyFirst": "Privacy First",
-            "privacyDesc": "Your files never leave your system.",
-            "smartCleanup": "Smart Cleanup",
-            "cleanupDesc": "Removes bloated metadata and hidden tracks.",
-            "networkError": "Connection failed. Please check your internet connection."
-        },
-        "convert": {
-            "title": "PDF to Image",
-            "description": "Convert PDF pages to images",
-            "aiEngine": "Intelligent Cloud Engine v2.0",
-            "aiEngineDesc": "This tool uses our neural conversion engine which is currently under heavy load. We process small files locally while keeping large complex documents in the cloud queue.",
-            "ultraFast": "Ultra Fast",
-            "encrypted": "Encrypted",
-            "betaMessage": "Cloud-based conversion for Office files is currently in Beta. Using local fallback...",
-            "optimizing": "This specialized engine is being optimized for your device.",
-            "alternativeMethod": "Alternative Method",
-            "enterUrl": "Convert from URL"
-        },
-        "pdfToWord": {
-            "title": "PDF to Word",
-            "description": "Convert PDF to editable Word document"
-        },
-        "protect": {
-            "title": "Protect PDF",
-            "description": "Add password protection to your PDF"
-        },
-        "watermark": {
-            "title": "Watermark",
-            "description": "Add text watermark to PDF pages"
-        },
-        "unlock": {
-            "title": "Unlock PDF",
-            "description": "Remove password protection from PDF"
-        },
-        "rotate": {
-            "title": "Rotate PDF",
-            "description": "Rotate your PDF pages"
-        },
-        "imageToPdf": {
-            "title": "Image to PDF",
-            "description": "Convert images to PDF format"
-        },
-        "sign": {
-            "title": "Sign PDF",
-            "description": "Add signature to your PDF document"
-        },
-        "pageNumbers": {
-            "title": "Add Page Numbers",
-            "description": "Insert page numbers to your PDF"
-        },
-        "organize": {
-            "title": "Organize PDF",
-            "description": "Reorder, delete, and rotate PDF pages"
-        },
-        "pdfToPowerPoint": {
-            "title": "PDF to PowerPoint",
-            "description": "Convert PDF to editable PowerPoint presentation"
-        },
-        "pdfToExcel": {
-            "title": "PDF to Excel",
-            "description": "Convert PDF data to Excel spreadsheet"
-        },
-        "wordToPdf": {
-            "title": "Word to PDF",
-            "description": "Convert Word documents to PDF"
-        },
-        "powerPointToPdf": {
-            "title": "PowerPoint to PDF",
-            "description": "Convert PowerPoint presentations to PDF"
-        },
-        "excelToPdf": {
-            "title": "Excel to PDF",
-            "description": "Convert Excel spreadsheets to PDF"
-        },
-        "pdfToJpg": {
-            "title": "PDF to JPG",
-            "description": "Convert PDF pages to JPG images"
-        },
-        "jpgToPdf": {
-            "title": "JPG to PDF",
-            "description": "Convert JPG images to PDF"
-        },
-        "htmlToPdf": {
-            "title": "HTML to PDF",
-            "description": "Convert webpages to PDF documents",
-            "screenSize": "Screen Size",
-            "onePage": "One single long page",
-            "blockAds": "Attempt to block ads",
-            "removeOverlays": "Remove overlay windows",
-            "desktop": "Desktop (1352px)",
-            "desktopLarge": "Desktop Large (1920px)",
-            "mobile": "Mobile (360px)",
-            "tablet": "Tablet (768px)",
-            "convertButton": "Convert to PDF",
-            "websiteUrl": "Website URL",
-            "htmlSettings": "HTML Settings",
-            "status": {
-                "connecting": "Connecting to Server",
-                "connectingSub": "Establishing secure connection...",
-                "smartRouting": "Smart Routing",
-                "smartRoutingSub": "Finding fastest proxy gateway...",
-                "fetching": "Fetching Content",
-                "fetchingSub": "Downloading HTML structure...",
-                "processingCss": "Processing Assets",
-                "processingCssSub": "Inlining CSS & Images...",
-                "preparing": "Finalizing PDF",
-                "preparingSub": "Rendering document layout..."
-            }
-        },
-        "pdfToPdfa": {
-            "title": "PDF to PDF/A",
-            "description": "Convert PDF to PDF/A for long-term archiving"
-        },
-        "edit": {
-            "title": "Edit PDF",
-            "description": "Edit texts, images, and shapes in PDF"
-        },
-        "crop": {
-            "title": "Crop PDF",
-            "description": "Crop PDF margins or select specific areas"
-        },
-        "repair": {
-            "title": "Repair PDF",
-            "description": "Repair damaged PDF files"
-        },
-        "redact": {
-            "title": "Redact PDF",
-            "description": "Hide sensitive text and graphics"
-        },
-        "config": {
-            "title": "Tool Configuration",
-            "passwordLabel": "Security Key (Password)",
-            "passwordPlaceholder": "Enter secure password",
-            "placement": "Placement Strategy",
-            "top": "Page Top",
-            "bottom": "Page Bottom",
-            "cancel": "Cancel",
-            "finalize": "Finalize Processing"
-        },
-        "examGenerator": {
-            "title": "Exam Generator",
-            "description": "Create exams from any content with AI"
-        },
-        "pdfChat": {
-            "title": "PDF Chat",
-            "description": "Ask questions about your PDF using AI"
-        },
-        "pdfCompare": {
-            "title": "PDF Compare",
-            "description": "Compare two PDF files and see all differences"
-        },
-        "batchProcess": {
-            "title": "Batch Process",
-            "description": "Process multiple PDF files at once"
-        },
-        "aiSummarize": {
-            "title": "AI Summarize",
-            "description": "Summarize any PDF with AI in seconds"
-        },
-        "contractAnalyzer": {
-            "title": "Contract Analyzer",
-            "description": "Analyze contracts with AI for risks and obligations"
-        }
-    },
-    "examGenerator": {
-        "dashboardTitle": "Dashboard",
-        "createExam": "Create Exam",
-        "history": "History",
-        "examHistory": "Exam History",
-        "examHistoryDesc": "View and download your previously generated exams",
-        "noHistory": "No exams generated yet",
-        "questions": "questions",
-        "download": "Download",
-        "date": "Date",
-        "difficulty": "Difficulty",
-        "sourceSummary": "Source Summary",
-        "correctAnswer": "Correct Answer",
-        "explanation": "Explanation",
-        "uploadTitle": "Upload Study Material",
-        "uploadDesc": "Upload a PDF, Word document, or paste text to generate an exam.",
-        "pasteText": "Paste Text",
-        "uploadFile": "Upload File",
-        "enterTextPlaceholder": "Paste your study material text here...",
-        "examConfiguration": "Exam Configuration",
-        "examTitle": "Exam Title",
-        "examTitlePlaceholder": "e.g. Biology Midterm",
-        "questionType": "Question Types",
-        "mcq": "Multiple Choice",
-        "trueFalse": "True / False",
-        "shortAnswer": "Short Answer",
-        "difficultyLevel": "Difficulty Level",
-        "easy": "Easy",
-        "medium": "Medium",
-        "hard": "Hard",
-        "questionCount": "Number of Questions",
-        "generateBtn": "Generate Exam",
-        "generating": "Generating...",
-        "readingContent": "Reading content...",
-        "analyzing": "Analyzing materials...",
-        "generatingQuestions": "Generating questions...",
-        "validating": "Validating questions...",
-        "initializing": "Initializing...",
-        "landing": {
-            "hero": {
-                "title": "AI-Powered Exam Generation",
-                "subtitle": "Transform your study materials into comprehensive exams in seconds",
-                "cta": "Get Started"
-            },
-            "preview": "Your Generated Exam Preview",
-            "features": {
-                "title": "Powerful Features",
-                "subtitle": "Everything you need to create professional exams",
-                "upload": {
-                    "title": "Easy Upload",
-                    "desc": "Upload PDF, Word documents, or paste text directly"
+    "about":  {
+                  "mission":  "Our Mission Protocol",
+                  "pioneering":  "Pioneering the Document Renaissance.",
+                  "missionDesc":  "We don\u0027t just process files; we optimize human productivity by merging high-fidelity engineering with predictive intelligence.",
+                  "neuralCore":  "Neural Core",
+                  "neuralDesc":  "Advanced client-side processing algorithms that outperform cloud alternatives by 400% in latency-sensitive tasks.",
+                  "quantumSecurity":  "Quantum Security",
+                  "quantumDesc":  "On-device execution ensures that not a single bit of your data ever touches our external servers.",
+                  "globalPresence":  "Global Presence",
+                  "globalDesc":  "Supporting over 20+ languages with culture-aware UI layouts for a truly borderless document experience.",
+                  "engineeredFor":  "Engineered for the 1%.",
+                  "engineeredDesc":  "Our team consists of specialized software architects and product designers dedicated to one single goal: making PDF management feel like magic. From our high-definition rendering engine to our proprietary compression logic, every line of code is optimized for performance.",
+                  "uptime":  "Optimization Uptime",
+                  "processed":  "Processed Blocks"
+              },
+    "contact":  {
+                    "connection":  "Global Connection",
+                    "future":  "Let\u0027s build the Future together.",
+                    "futureDesc":  "Have a specialized requirement? Our elite engineering unit is ready to assist with high-scale enterprise integrations.",
+                    "secureChannel":  "Secure Channel",
+                    "directLine":  "Direct Line",
+                    "hqCluster":  "HQ Cluster",
+                    "identityLabel":  "Identity (Name)",
+                    "emailLabel":  "Digital Point (Email)",
+                    "subjectLabel":  "Subject Area",
+                    "enterpriseOption":  "Enterprise Integration",
+                    "supportOption":  "Technical Support",
+                    "partnershipOption":  "Partnership Protocol",
+                    "generalOption":  "General Investigation",
+                    "messageLabel":  "Transmission Data (Message)",
+                    "messagePlaceholder":  "Describe your mission...",
+                    "sending":  "Initializing Stream...",
+                    "send":  "Commit Transmission",
+                    "success":  "Transmission Received. Our team will ping you shortly."
                 },
-                "ai": {
-                    "title": "AI Generation",
-                    "desc": "Advanced AI creates diverse, high-quality questions"
+    "privacy":  {
+                    "title":  "Privacy Policy",
+                    "lastUpdated":  "Last updated",
+                    "collectTitle":  "Information We Collect",
+                    "collectDesc":  "We collect information that you provide directly to us when using our services.",
+                    "useTitle":  "How We Use Your Information",
+                    "useDesc":  "We use the information we collect to provide, maintain, and improve our services.",
+                    "securityTitle":  "Security",
+                    "securityDesc":  "We take reasonable measures to help protect your information from loss, theft, misuse, and unauthorized access."
                 },
-                "formats": {
-                    "title": "Multiple Formats",
-                    "desc": "MCQ, True/False, Short Answer, and Essay questions"
+    "terms":  {
+                  "title":  "Terms of Service",
+                  "section1Title":  "1. Terms",
+                  "section1Desc":  "By accessing PDF Tools, you agree to be bound by these terms of service and agree that you are responsible for compliance with any applicable local laws.",
+                  "section2Title":  "2. Use License",
+                  "section2Desc":  "Permission is granted to temporarily use PDF Tools for personal, non-commercial transitory viewing only."
+              },
+    "organizer":  {
+                      "mode":  "Organize \u0026 Reorder Mode",
+                      "processing":  "Processing...",
+                      "applyChanges":  "Apply Changes",
+                      "analyzing":  "Analyzing Structure...",
+                      "originalPage":  "Original Page {{num}}",
+                      "hint":  "{{count}} Pages â€¢ Hint: Drag and drop cards to reorder",
+                      "cannotDelete":  "Cannot delete all pages!",
+                      "errorSaving":  "Error saving document",
+                      "rotateLeft":  "Rotate Left",
+                      "rotateRight":  "Rotate Right",
+                      "rotateAllLeft":  "Rotate All Left",
+                      "rotateAllRight":  "Rotate All Right",
+                      "deletePage":  "Delete Page"
+                  },
+    "editor":  {
+                   "signatureLoaded":  "Signature loaded. Click anywhere to place.",
+                   "enterContent":  "Enter content:",
+                   "exportSuccess":  "Document exported successfully!",
+                   "critError":  "Critical Error during PDF finalization.",
+                   "finalize":  "Download File",
+                   "exportResult":  "Export Result",
+                   "workspaceTools":  "Workspace Tools",
+                   "textContent":  "Text Content",
+                   "textDesc":  "Add headings or custom body text",
+                   "visualSignature":  "Visual Signature",
+                   "signatureDesc":  "Upload PNG/JPG placement",
+                   "privacyMask":  "Privacy Mask",
+                   "maskDesc":  "Permanently hide sections",
+                   "securityStamp":  "Security Stamp",
+                   "stampDesc":  "Apply global watermark",
+                   "boundaryCrop":  "Boundary Crop",
+                   "cropDesc":  "Adjust page viewport",
+                   "configuration":  "Configuration",
+                   "topMargin":  "Top Margin",
+                   "bottomMargin":  "Bottom Margin",
+                   "leftMargin":  "Left Margin",
+                   "rightMargin":  "Right Margin",
+                   "colorPalette":  "Color Palette",
+                   "fontDimension":  "Font Dimension",
+                   "boundingWidth":  "Bounding Width %",
+                   "boundingHeight":  "Bounding Height %",
+                   "purgeElement":  "Purge Element",
+                   "highDefRender":  "High-Def Render Engine Active",
+                   "highFidelityRender":  "High Fidelity Render",
+                   "deciphering":  "Deciphering PDF Metadata...",
+                   "pageIndex":  "Page Index",
+                   "adjustProjection":  "Adjust Projection",
+                   "active":  "Active",
+                   "pageSize":  "Page Size",
+                   "orientation":  "Orientation",
+                   "margins":  "Margins",
+                   "layout":  "Page Layout",
+                   "portraitShort":  "Port",
+                   "landscapeShort":  "Land",
+                   "fitToImage":  "Fit to Image",
+                   "portrait":  "Portrait",
+                   "landscape":  "Landscape",
+                   "none":  "None",
+                   "small":  "Small",
+                   "big":  "Big",
+                   "addMoreImages":  "Add more images",
+                   "imageQuality":  "Image Quality",
+                   "lowFileSize":  "Low File Size",
+                   "highDef":  "High Definition",
+                   "betaFeature":  "Beta Feature",
+                   "betaDesc":  "This extraction runs entirely in your browser. Complex layouts might not convert perfectly.",
+                   "readyToConvert":  "Ready to Convert",
+                   "readyDesc":  "The document {{name}} is ready for extraction.",
+                   "processing":  "Processing...",
+                   "ocrMode":  "OCR Mode (Professional)",
+                   "ocrStandard":  "Standard (No OCR)",
+                   "ocrPro":  "OCR (Scanned Files)",
+                   "ocrStandardDesc":  "Faster. Converts selectable text from PDF directly.",
+                   "ocrProDesc":  "Extract text from images using AI. Slower but works on scans.",
+                   "language":  "Language",
+                   "textGrouping":  "Text Grouping",
+                   "smartParagraphs":  "Smart Paragraphs"
+               },
+    "signTool":  {
+                     "options":  "Signature Options",
+                     "simple":  "Simple Signature",
+                     "digital":  "Digital Signature",
+                     "signers":  "Signers",
+                     "requiredFields":  "Required Fields",
+                     "optionalFields":  "Optional Fields",
+                     "send":  "Send for Signature",
+                     "signature":  "Signature",
+                     "initials":  "Initials",
+                     "date":  "Date",
+                     "text":  "Text",
+                     "draw":  "Draw",
+                     "type":  "Type",
+                     "upload":  "Upload",
+                     "clear":  "Clear",
+                     "apply":  "Apply"
+                 },
+    "watermarkTool":  {
+                          "options":  "Watermark Options",
+                          "placeImage":  "Place Image",
+                          "placeText":  "Place Text",
+                          "textLabel":  "Text:",
+                          "formatting":  "Text Formatting:",
+                          "position":  "Position:",
+                          "mosaic":  "Mosaic",
+                          "addWatermark":  "Add Watermark",
+                          "transparency":  "Transparency",
+                          "rotation":  "Rotation",
+                          "layer":  "Layer",
+                          "overContent":  "Over Content",
+                          "underContent":  "Under Content",
+                          "pages":  "Pages",
+                          "allPages":  "All Pages",
+                          "selectImage":  "Select Watermark Image"
+                      },
+    "splitTool":  {
+                      "options":  "Split",
+                      "range":  "Range",
+                      "pages":  "Pages",
+                      "size":  "Size",
+                      "rangeMode":  "Range Mode:",
+                      "customRange":  "Custom Range",
+                      "fixedRange":  "Fixed Range",
+                      "rangeLabel":  "Range",
+                      "fromPage":  "From page",
+                      "toPage":  "to",
+                      "addRange":  "Add range",
+                      "splitPdf":  "Split PDF",
+                      "mergeRanges":  "Merge all ranges into one PDF file",
+                      "extractAll":  "Extract all pages"
+                  },
+    "auth":  {
+                 "loginTitle":  "Welcome back",
+                 "loginSubtitle":  "Please enter your details to sign in",
+                 "signupTitle":  "Create an account",
+                 "signupSubtitle":  "Start your journey with us today",
+                 "name":  "Full Name",
+                 "email":  "Email Address",
+                 "password":  "Password",
+                 "confirmPassword":  "Confirm Password",
+                 "submit":  "Sign In",
+                 "submitSignup":  "Create Account",
+                 "googleLogin":  "Continue with Google",
+                 "or":  "Or continue with",
+                 "noAccount":  "Don\u0027t have an account?",
+                 "hasAccount":  "Already have an account?",
+                 "signUp":  "Sign up",
+                 "signIn":  "Sign in",
+                 "error":  "Authentication failed",
+                 "passwordMismatch":  "Passwords do not match",
+                 "accountCreated":  "Account created successfully",
+                 "success":  "Signed in successfully",
+                 "secureAccess":  "Secure Access",
+                 "welcomePro":  "Welcome to the Professional Suite.",
+                 "loginDesc":  "Access high-fidelity PDF tools and enterprise-grade security within one intelligent platform.",
+                 "encryption":  "Hardware-level Encryption",
+                 "privacyPriority":  "Your privacy is our core engineering priority.",
+                 "verifying":  "Verifying...",
+                 "onboarding":  "System Onboarding",
+                 "joinElite":  "Join the Elite PDF Engine.",
+                 "signupDesc":  "Create your account to unlock advanced features, unlimited cloud storage, and predictive AI tools.",
+                 "securityTitle":  "Enterprise Security",
+                 "securityDesc":  "Military-grade protection for every single document.",
+                 "processing":  "Processing..."
+             },
+    "upload":  {
+                   "ready":  "Ready for Ingestion",
+                   "release":  "Release to Process",
+                   "dragDrop":  "Drag and drop your intelligence blocks (PDFs) here",
+                   "selectFiles":  "Select Local Sources",
+                   "encrypted":  "AES-256 Encrypted",
+                   "atomic":  "Atomic Finalization",
+                   "activeQueue":  "Active Queue",
+                   "clearAll":  "Clear All",
+                   "dataBlock":  "Data Block",
+                   "processing":  "Processing Data..."
+               },
+    "footer":  {
+                   "description":  "Empowering businesses with cutting-edge software solutions, robust security systems, and expert application management.",
+                   "systems":  "Systems",
+                   "intelligence":  "Intelligence",
+                   "support":  "Enterprise Support",
+                   "legal":  "Legal",
+                   "terms":  "Protocol (Terms)",
+                   "privacy":  "Encryption Policy",
+                   "connectivity":  "Connectivity",
+                   "identity":  "System Identity",
+                   "live":  "Cluster Live",
+                   "copyright":  "PRO TOOLS CORP. EXECUTED WITH PRECISION.",
+                   "engineered":  "Engineered with for Performance"
+               },
+    "toolPage":  {
+                     "engine":  "High-Performance Engine",
+                     "calculating":  "Calculating Delta...",
+                     "commit":  "Commit {{title}} Operations",
+                     "start":  "Start Optimization",
+                     "protocol":  "Processing Protocol",
+                     "step1":  {
+                                   "label":  "Ingest Local Assets",
+                                   "desc":  "Drag files into the neural ingestion portal"
+                               },
+                     "step2":  {
+                                   "label":  "Define Parameters",
+                                   "desc":  "Configure tool-specific metadata and logic"
+                               },
+                     "step3":  {
+                                   "label":  "Execute Core",
+                                   "desc":  "Atomic processing starts within your browser"
+                               },
+                     "shieldTitle":  "On-Device Shield",
+                     "shieldDesc":  "This transaction is processed exclusively on your hardware. No bit of your document ever crosses our cluster\u0027s network boundaries.",
+                     "fidelityTitle":  "High Fidelity Outcome",
+                     "fidelityDesc":  "Our engine preserves original metadata and structural integrity up to 99.9% across all conversions.",
+                     "comingSoon":  "This specialized tool is coming soon!",
+                     "selectFile":  "Please select at least one file to continue.",
+                     "passwordProtected":  "This PDF is password-protected. Please unlock it first.",
+                     "corruptedFile":  "This file appears to be corrupted or invalid.",
+                     "failedRotate":  "Failed to rotate PDF",
+                     "passwordRequired":  "Password required",
+                     "passwordMinLength":  "Password must be at least 4 characters"
+                 },
+    "authRequired":  {
+                         "title":  "Login Required",
+                         "message":  "Please sign in or create an account to access this tool.",
+                         "loginButton":  "Sign In",
+                         "signupButton":  "Create Account"
+                     },
+    "tools":  {
+                  "merge":  {
+                                "title":  "Merge PDF",
+                                "description":  "Combine multiple PDFs into one document"
+                            },
+                  "split":  {
+                                "title":  "Split PDF",
+                                "description":  "Extract pages from your PDF",
+                                "largeFile":  "Processing a large file, this might take a moment...",
+                                "splitSuccess":  "PDF split successfully! ZIP archive downloaded.",
+                                "splitError":  "Failed to split PDF. The file might be protected or corrupted."
+                            },
+                  "compress":  {
+                                   "title":  "Compress PDF",
+                                   "description":  "Reduce PDF file size while maintaining quality",
+                                   "neuralOptimizer":  "Advanced Neural Optimizer",
+                                   "extremeCompression":  "Extreme Compression",
+                                   "extremeDesc":  "Maximum size reduction. (Metadata Purge)",
+                                   "recommended":  "Recommended",
+                                   "balancedDesc":  "Perfect balance of quality and size.",
+                                   "basic":  "Basic",
+                                   "basicDesc":  "Clean up document structure only.",
+                                   "optimizingVectors":  "Optimizing Vectors...",
+                                   "applyingHeuristics":  "Applying {{level}} heuristics",
+                                   "complete":  "Optimization Complete",
+                                   "originalSize":  "Original Size",
+                                   "optimizedSize":  "Optimized Size",
+                                   "processAnother":  "Process Another",
+                                   "viewDocument":  "View Document",
+                                   "instantProcessing":  "Instant Processing",
+                                   "instantDesc":  "Optimized in your browser without cloud delays.",
+                                   "privacyFirst":  "Privacy First",
+                                   "privacyDesc":  "Your files never leave your system.",
+                                   "smartCleanup":  "Smart Cleanup",
+                                   "cleanupDesc":  "Removes bloated metadata and hidden tracks.",
+                                   "networkError":  "Connection failed. Please check your internet connection."
+                               },
+                  "convert":  {
+                                  "title":  "PDF to Image",
+                                  "description":  "Convert PDF pages to images",
+                                  "aiEngine":  "Intelligent Cloud Engine v2.0",
+                                  "aiEngineDesc":  "This tool uses our neural conversion engine which is currently under heavy load. We process small files locally while keeping large complex documents in the cloud queue.",
+                                  "ultraFast":  "Ultra Fast",
+                                  "encrypted":  "Encrypted",
+                                  "betaMessage":  "Cloud-based conversion for Office files is currently in Beta. Using local fallback...",
+                                  "optimizing":  "This specialized engine is being optimized for your device.",
+                                  "alternativeMethod":  "Alternative Method",
+                                  "enterUrl":  "Convert from URL"
+                              },
+                  "pdfToWord":  {
+                                    "title":  "PDF to Word",
+                                    "description":  "Convert PDF to editable Word document"
+                                },
+                  "protect":  {
+                                  "title":  "Protect PDF",
+                                  "description":  "Add password protection to your PDF"
+                              },
+                  "watermark":  {
+                                    "title":  "Watermark",
+                                    "description":  "Add text watermark to PDF pages"
+                                },
+                  "unlock":  {
+                                 "title":  "Unlock PDF",
+                                 "description":  "Remove password protection from PDF"
+                             },
+                  "rotate":  {
+                                 "title":  "Rotate PDF",
+                                 "description":  "Rotate your PDF pages"
+                             },
+                  "imageToPdf":  {
+                                     "title":  "Image to PDF",
+                                     "description":  "Convert images to PDF format"
+                                 },
+                  "sign":  {
+                               "title":  "Sign PDF",
+                               "description":  "Add signature to your PDF document"
+                           },
+                  "pageNumbers":  {
+                                      "title":  "Add Page Numbers",
+                                      "description":  "Insert page numbers to your PDF"
+                                  },
+                  "organize":  {
+                                   "title":  "Organize PDF",
+                                   "description":  "Reorder, delete, and rotate PDF pages"
+                               },
+                  "pdfToPowerPoint":  {
+                                          "title":  "PDF to PowerPoint",
+                                          "description":  "Convert PDF to editable PowerPoint presentation"
+                                      },
+                  "pdfToExcel":  {
+                                     "title":  "PDF to Excel",
+                                     "description":  "Convert PDF data to Excel spreadsheet"
+                                 },
+                  "wordToPdf":  {
+                                    "title":  "Word to PDF",
+                                    "description":  "Convert Word documents to PDF"
+                                },
+                  "powerPointToPdf":  {
+                                          "title":  "PowerPoint to PDF",
+                                          "description":  "Convert PowerPoint presentations to PDF"
+                                      },
+                  "excelToPdf":  {
+                                     "title":  "Excel to PDF",
+                                     "description":  "Convert Excel spreadsheets to PDF"
+                                 },
+                  "pdfToJpg":  {
+                                   "title":  "PDF to JPG",
+                                   "description":  "Convert PDF pages to JPG images"
+                               },
+                  "jpgToPdf":  {
+                                   "title":  "JPG to PDF",
+                                   "description":  "Convert JPG images to PDF"
+                               },
+                  "htmlToPdf":  {
+                                    "title":  "HTML to PDF",
+                                    "description":  "Convert webpages to PDF documents",
+                                    "screenSize":  "Screen Size",
+                                    "onePage":  "One single long page",
+                                    "blockAds":  "Attempt to block ads",
+                                    "removeOverlays":  "Remove overlay windows",
+                                    "desktop":  "Desktop (1352px)",
+                                    "desktopLarge":  "Desktop Large (1920px)",
+                                    "mobile":  "Mobile (360px)",
+                                    "tablet":  "Tablet (768px)",
+                                    "convertButton":  "Convert to PDF",
+                                    "websiteUrl":  "Website URL",
+                                    "htmlSettings":  "HTML Settings",
+                                    "status":  {
+                                                   "connecting":  "Connecting to Server",
+                                                   "connectingSub":  "Establishing secure connection...",
+                                                   "smartRouting":  "Smart Routing",
+                                                   "smartRoutingSub":  "Finding fastest proxy gateway...",
+                                                   "fetching":  "Fetching Content",
+                                                   "fetchingSub":  "Downloading HTML structure...",
+                                                   "processingCss":  "Processing Assets",
+                                                   "processingCssSub":  "Inlining CSS \u0026 Images...",
+                                                   "preparing":  "Finalizing PDF",
+                                                   "preparingSub":  "Rendering document layout..."
+                                               }
+                                },
+                  "pdfToPdfa":  {
+                                    "title":  "PDF to PDF/A",
+                                    "description":  "Convert PDF to PDF/A for long-term archiving"
+                                },
+                  "edit":  {
+                               "title":  "Edit PDF",
+                               "description":  "Edit texts, images, and shapes in PDF"
+                           },
+                  "crop":  {
+                               "title":  "Crop PDF",
+                               "description":  "Crop PDF margins or select specific areas"
+                           },
+                  "repair":  {
+                                 "title":  "Repair PDF",
+                                 "description":  "Repair damaged PDF files"
+                             },
+                  "redact":  {
+                                 "title":  "Redact PDF",
+                                 "description":  "Hide sensitive text and graphics"
+                             },
+                  "config":  {
+                                 "title":  "Tool Configuration",
+                                 "passwordLabel":  "Security Key (Password)",
+                                 "passwordPlaceholder":  "Enter secure password",
+                                 "placement":  "Placement Strategy",
+                                 "top":  "Page Top",
+                                 "bottom":  "Page Bottom",
+                                 "cancel":  "Cancel",
+                                 "finalize":  "Finalize Processing"
+                             },
+                  "examGenerator":  {
+                                        "title":  "Exam Generator",
+                                        "description":  "Create exams from any content with AI"
+                                    },
+                  "pdfChat":  {
+                                  "title":  "PDF Chat",
+                                  "description":  "Ask questions about your PDF using AI"
+                              },
+                  "pdfCompare":  {
+                                     "title":  "PDF Compare",
+                                     "description":  "Compare two PDF files and see all differences"
+                                 },
+                  "batchProcess":  {
+                                       "title":  "Batch Process",
+                                       "description":  "Process multiple PDF files at once"
+                                   },
+                  "aiSummarize":  {
+                                      "title":  "AI Summarize",
+                                      "description":  "Summarize any PDF with AI in seconds"
+                                  },
+                  "contractAnalyzer":  {
+                                           "title":  "Contract Analyzer",
+                                           "description":  "Analyze contracts with AI for risks and obligations"
+                                       }
+              },
+    "examGenerator":  {
+                          "dashboardTitle":  "Dashboard",
+                          "createExam":  "Create Exam",
+                          "history":  "History",
+                          "examHistory":  "Exam History",
+                          "examHistoryDesc":  "View and download your previously generated exams",
+                          "noHistory":  "No exams generated yet",
+                          "questions":  "questions",
+                          "download":  "Download",
+                          "date":  "Date",
+                          "difficulty":  "Difficulty",
+                          "sourceSummary":  "Source Summary",
+                          "correctAnswer":  "Correct Answer",
+                          "explanation":  "Explanation",
+                          "uploadTitle":  "Upload Study Material",
+                          "uploadDesc":  "Upload a PDF, Word document, or paste text to generate an exam.",
+                          "pasteText":  "Paste Text",
+                          "uploadFile":  "Upload File",
+                          "enterTextPlaceholder":  "Paste your study material text here...",
+                          "examConfiguration":  "Exam Configuration",
+                          "examTitle":  "Exam Title",
+                          "examTitlePlaceholder":  "e.g. Biology Midterm",
+                          "questionType":  "Question Types",
+                          "mcq":  "Multiple Choice",
+                          "trueFalse":  "True / False",
+                          "shortAnswer":  "Short Answer",
+                          "difficultyLevel":  "Difficulty Level",
+                          "easy":  "Easy",
+                          "medium":  "Medium",
+                          "hard":  "Hard",
+                          "questionCount":  "Number of Questions",
+                          "generateBtn":  "Generate Exam",
+                          "generating":  "Generating...",
+                          "readingContent":  "Reading content...",
+                          "analyzing":  "Analyzing materials...",
+                          "generatingQuestions":  "Generating questions...",
+                          "validating":  "Validating questions...",
+                          "initializing":  "Initializing...",
+                          "landing":  {
+                                          "hero":  {
+                                                       "title":  "AI-Powered Exam Generation",
+                                                       "subtitle":  "Transform your study materials into comprehensive exams in seconds",
+                                                       "cta":  "Get Started"
+                                                   },
+                                          "preview":  "Your Generated Exam Preview",
+                                          "features":  {
+                                                           "title":  "Powerful Features",
+                                                           "subtitle":  "Everything you need to create professional exams",
+                                                           "upload":  {
+                                                                          "title":  "Easy Upload",
+                                                                          "desc":  "Upload PDF, Word documents, or paste text directly"
+                                                                      },
+                                                           "ai":  {
+                                                                      "title":  "AI Generation",
+                                                                      "desc":  "Advanced AI creates diverse, high-quality questions"
+                                                                  },
+                                                           "formats":  {
+                                                                           "title":  "Multiple Formats",
+                                                                           "desc":  "MCQ, True/False, Short Answer, and Essay questions"
+                                                                       },
+                                                           "bilingual":  {
+                                                                             "title":  "Bilingual Support",
+                                                                             "desc":  "Full support for Arabic and English languages"
+                                                                         },
+                                                           "secure":  {
+                                                                          "title":  "Secure \u0026 Private",
+                                                                          "desc":  "Your data is encrypted and never shared"
+                                                                      },
+                                                           "instant":  {
+                                                                           "title":  "Instant Results",
+                                                                           "desc":  "Generate complete exams in under 30 seconds"
+                                                                       }
+                                                       },
+                                          "howItWorks":  {
+                                                             "title":  "How It Works"
+                                                         },
+                                          "steps":  {
+                                                        "one":  {
+                                                                    "title":  "Upload Content",
+                                                                    "desc":  "Upload your study materials or paste text"
+                                                                },
+                                                        "two":  {
+                                                                    "title":  "Configure Exam",
+                                                                    "desc":  "Choose question types and difficulty level"
+                                                                },
+                                                        "three":  {
+                                                                      "title":  "Generate \u0026 Download",
+                                                                      "desc":  "Get your exam ready as PDF with answer key"
+                                                                  }
+                                                    },
+                                          "cta":  {
+                                                      "title":  "Ready to Create Your First Exam?",
+                                                      "subtitle":  "Join thousands of educators using AI to save time",
+                                                      "button":  "Start Free Trial"
+                                                  }
+                                      },
+                          "errors":  {
+                                         "selectType":  "Select at least one question type.",
+                                         "fileTooLarge":  "File exceeds 50MB limit.",
+                                         "quotaExceeded":  "Usage limit reached. Please check your OpenAI plan or try again later."
+                                     }
+                      },
+    "profile":  {
+                    "title":  "Member Profile",
+                    "personalInfo":  "Personal Information",
+                    "securityTab":  "Security",
+                    "settingsTab":  "Settings",
+                    "email":  "Digital Identity (Email)",
+                    "joined":  "Activation Date",
+                    "accountAge":  "Account Age",
+                    "stats":  "Activity Metrics",
+                    "filesProcessed":  "Files Optimized",
+                    "aiInteractions":  "Neural Queries",
+                    "accountStatus":  "Account Status",
+                    "verified":  "Verified",
+                    "unverified":  "Pending Verification",
+                    "active":  "Active",
+                    "encrypted":  "Encrypted",
+                    "editProfile":  "Edit Profile",
+                    "saveChanges":  "Save Changes",
+                    "cancel":  "Cancel",
+                    "logout":  "Sign Out",
+                    "fullName":  "Full Name",
+                    "phoneLabel":  "Phone Number",
+                    "phonePlaceholder":  "+1 (555) 123-4567",
+                    "bioLabel":  "Bio",
+                    "bioPlaceholder":  "Tell us about yourself...",
+                    "notSet":  "Not set",
+                    "updateSuccess":  "Profile updated successfully",
+                    "nameRequired":  "Name must be at least 2 characters",
+                    "rateLimit":  "Too many updates. Please wait a moment.",
+                    "avatarUpdated":  "Avatar updated successfully",
+                    "avatarRemoved":  "Avatar removed",
+                    "avatarTooLarge":  "Image must be less than 2MB",
+                    "avatarInvalidType":  "Only JPEG, PNG, WebP, and GIF images are allowed",
+                    "quickStats":  "Quick Stats",
+                    "lastLogin":  "Last Login",
+                    "totalLogins":  "Total Logins",
+                    "language":  "Language",
+                    "billing":  "Billing \u0026 Subscription",
+                    "paymentMethod":  "Payment Method",
+                    "plan":  "Current Plan",
+                    "proPlan":  "Pro Engineering Suite",
+                    "freePlan":  "Standard Access",
+                    "upgrade":  "Upgrade to Pro",
+                    "manageBilling":  "Manage Subscription",
+                    "cardNumber":  "Card ending in",
+                    "expiry":  "Expires",
+                    "addPayment":  "Add Payment Method",
+                    "avatar":  "Profile Avatar",
+                    "paymentSuccess":  "Payment method secured",
+                    "changePassword":  "Change Password",
+                    "changePasswordDesc":  "Update your password regularly for better security",
+                    "currentPassword":  "Current Password",
+                    "newPassword":  "New Password",
+                    "confirmNewPassword":  "Confirm New Password",
+                    "passwordMismatch":  "Passwords do not match",
+                    "passwordsMatch":  "Passwords match",
+                    "weakPassword":  "Password is too weak. Follow the strength guidelines.",
+                    "samePassword":  "New password must be different from current password",
+                    "passwordChanged":  "Password changed successfully",
+                    "wrongCurrentPassword":  "Current password is incorrect",
+                    "wrongPassword":  "Password is incorrect",
+                    "fillAllFields":  "Please fill in all fields",
+                    "updating":  "Updating...",
+                    "passwordRateLimit":  "Too many password change attempts. Please wait 5 minutes.",
+                    "securityOverview":  "Security Overview",
+                    "securityOverviewDesc":  "Your account protection status",
+                    "encryption":  "End-to-End Encryption",
+                    "encryptionDesc":  "All data is encrypted in transit and at rest",
+                    "authProtection":  "Firebase Authentication",
+                    "authProtectionDesc":  "Enterprise-grade identity verification",
+                    "onDeviceProcessing":  "On-Device Processing",
+                    "onDeviceProcessingDesc":  "Files never leave your browser",
+                    "secureSessions":  "Secure Sessions",
+                    "secureSessionsDesc":  "Sessions protected with Firebase tokens",
+                    "deleteAccount":  "Delete Account",
+                    "deleteAccountDesc":  "Permanently delete your account and all data",
+                    "deleteAccountWarning":  "This action is irreversible. All your data, profile information, and account history will be permanently deleted. You will not be able to recover your account.",
+                    "typeDeleteConfirm":  "Type DELETE to confirm",
+                    "typeDelete":  "Please type DELETE to confirm account deletion",
+                    "enterPassword":  "Enter your password",
+                    "enterPasswordToDelete":  "Please enter your password to delete",
+                    "confirmDelete":  "Permanently Delete Account",
+                    "accountDeleted":  "Account deleted successfully",
+                    "deleteRateLimit":  "Too many delete attempts. Please try again later.",
+                    "notifications":  "Notification Preferences",
+                    "notificationsDesc":  "Manage how you receive notifications",
+                    "pushNotifications":  "Push Notifications",
+                    "pushNotificationsDesc":  "Receive alerts about account activity",
+                    "emailNotifications":  "Email Notifications",
+                    "emailNotificationsDesc":  "Receive email updates about your account",
+                    "languageDesc":  "Choose your preferred language",
+                    "appInfo":  "Application Info",
+                    "appInfoDesc":  "System and version details",
+                    "version":  "Version",
+                    "securityProtocol":  "Security Protocol",
+                    "dataProcessing":  "Data Processing",
+                    "onDevice":  "Client-Side Only",
+                    "saveSettings":  "Save Settings",
+                    "settingsSaved":  "Settings saved successfully"
                 },
-                "bilingual": {
-                    "title": "Bilingual Support",
-                    "desc": "Full support for Arabic and English languages"
+    "common":  {
+                   "loading":  "Loading...",
+                   "error":  "An error occurred",
+                   "success":  "Success!",
+                   "openTool":  "Open Tool"
+               },
+    "home":  {
+                 "stats":  {
+                               "filesProcessed":  "Files Processed",
+                               "activeUsers":  "Active Users",
+                               "pdfTools":  "PDF Tools",
+                               "uptime":  "Uptime"
+                           },
+                 "testimonials":  {
+                                      "title":  "Loved by Professionals",
+                                      "subtitle":  "Join thousands of satisfied users worldwide",
+                                      "items":  [
+                                                    {
+                                                        "name":  "Sarah Chen",
+                                                        "role":  "Product Manager at Google",
+                                                        "text":  "CodeMaster replaced 5 different PDF tools for our team. The AI chat feature is a game-changer."
+                                                    },
+                                                    {
+                                                        "name":  "Mohammed Al-Rashid",
+                                                        "role":  "Legal Consultant",
+                                                        "text":  "The Contract Analyzer saves me hours every week. It identifies risks I would have missed."
+                                                    },
+                                                    {
+                                                        "name":  "Dr. Emily Watson",
+                                                        "role":  "University Professor",
+                                                        "text":  "My students use PDF Chat to understand research papers. It\u0027s like having a study buddy built in."
+                                                    }
+                                                ]
+                                  },
+                 "comparison":  {
+                                    "title":  "How We Compare",
+                                    "subtitle":  "See why professionals choose CodeMaster",
+                                    "headers":  {
+                                                    "feature":  "Feature",
+                                                    "codemaster":  "CodeMaster",
+                                                    "adobe":  "Adobe",
+                                                    "smallpdf":  "Smallpdf"
+                                                },
+                                    "features":  {
+                                                     "pdfProcessing":  "PDF Processing",
+                                                     "aiChat":  "AI Chat with PDF",
+                                                     "contractAnalysis":  "Contract Analysis",
+                                                     "batchProcessing":  "Batch Processing",
+                                                     "clientSide":  "Client-side Processing",
+                                                     "freeTier":  "Free Tier Available",
+                                                     "openSource":  "Open Source Backend"
+                                                 }
+                                },
+                 "whyCodeMaster":  {
+                                       "title":  "Why CodeMaster?",
+                                       "subtitle":  "Everything you need for professional PDF management, powered by AI"
+                                   },
+                 "viewAll":  "View All",
+                 "intelligenceSuite":  {
+                                           "title":  "Intelligence Suite",
+                                           "subtitle":  "AI-powered tools for document analysis and smart processing"
+                                       },
+                 "intelligenceTools":  {
+                                           "pdfChat":  {
+                                                           "title":  "PDF Chat",
+                                                           "desc":  "Ask questions about your PDF using AI"
+                                                       },
+                                           "pdfCompare":  {
+                                                              "title":  "PDF Compare",
+                                                              "desc":  "Compare two PDFs and see all differences"
+                                                          },
+                                           "batchProcess":  {
+                                                                "title":  "Batch Process",
+                                                                "desc":  "Process multiple PDFs at once"
+                                                            },
+                                           "aiSummarize":  {
+                                                               "title":  "AI Summarize",
+                                                               "desc":  "Summarize any PDF with AI"
+                                                           },
+                                           "contractAnalyzer":  {
+                                                                    "title":  "Contract Analyzer",
+                                                                    "desc":  "Analyze contracts with AI"
+                                                                }
+                                       }
+             },
+    "pricing":  {
+                    "badge":  "Pay Per Use",
+                    "title":  "Simple, Transparent Pricing",
+                    "subtitle":  "Buy credits and use only what you need. No subscriptions, no hidden fees.",
+                    "balance":  "Your balance",
+                    "credits":  "credits",
+                    "plans":  {
+                                  "free":  {
+                                               "price":  "Free",
+                                               "credits":  "100 credits",
+                                               "creditDesc":  "Unlimited credits",
+                                               "feature1":  "All tools unlimited",
+                                               "feature2":  "All PDF tools",
+                                               "feature3":  "AI features",
+                                               "feature4":  "Priority support"
+                                           },
+                                  "currentPlan":  "Current Plan",
+                                  "processing":  "Processing...",
+                                  "buyNow":  "Buy Now"
+                              },
+                    "howItWorks":  {
+                                       "title":  "How Credits Work",
+                                       "steps":  {
+                                                     "buy":  {
+                                                                 "title":  "Buy Credits",
+                                                                 "desc":  "Choose a plan that fits your needs"
+                                                             },
+                                                     "use":  {
+                                                                 "title":  "Use Tools",
+                                                                 "desc":  "Each tool costs a specific number of credits"
+                                                             },
+                                                     "pay":  {
+                                                                 "title":  "Pay Only for What You Use",
+                                                                 "desc":  "No recurring charges, buy more when needed"
+                                                             }
+                                                 }
+                                   },
+                    "errors":  {
+                                   "signInRequired":  "Please sign in to purchase credits",
+                                   "purchaseFailed":  "Purchase failed. Please try again."
+                               },
+                    "success":  {
+                                    "purchased":  "Purchased {{planId}} plan",
+                                    "creditsAdded":  "Successfully purchased {{amount}} credits!"
+                                }
                 },
-                "secure": {
-                    "title": "Secure & Private",
-                    "desc": "Your data is encrypted and never shared"
+    "dashboard":  {
+                      "greeting":  "Hello, {{name}}!",
+                      "subtitle":  "Manage your account and tools",
+                      "cards":  {
+                                    "credits":  "Credits",
+                                    "freeTools":  "Free Tools",
+                                    "totalTools":  "Total Tools"
+                                },
+                      "tabs":  {
+                                   "overview":  "Overview",
+                                   "allTools":  "All Tools",
+                                   "buyCredits":  "Buy Credits"
+                               },
+                      "freeTools":  "Free Tools",
+                      "paidTools":  "Popular Paid Tools",
+                      "free":  "Free",
+  "buyMoreCredits": "Buy More Credits",
+  "youHaveCredits": "You have {{credits}} credits"
+                  },
+    "pdfChat":  {
+                    "badge":  "AI-Powered",
+                    "title":  "PDF Chat",
+                    "subtitle":  "Upload a PDF and ask questions about its content using AI",
+                    "extracting":  "Extracting text...",
+                    "features":  {
+                                     "naturalLanguage":  "Natural Language",
+                                     "naturalLanguageDesc":  "Ask questions in plain English",
+                                     "aiAnalysis":  "AI Analysis",
+                                     "aiAnalysisDesc":  "Powered by Google Gemini",
+                                     "freeTool":  "Free Tool",
+                                     "freeToolDesc":  "No credits required"
+                                 },
+                    "characters":  "characters",
+                    "placeholder":  "Ask a question about your PDF...",
+                    "errors":  {
+                                   "aiNotConfigured":  "AI is not configured. Please set the VITE_GEMINI_API_KEY environment variable.",
+                                   "failedToExtract":  "Failed to extract text from PDF",
+                                   "processingError":  "Sorry, I encountered an error processing your request. Please try again."
+                               },
+                    "success":  {
+                                    "pdfLoaded":  "PDF loaded successfully",
+                                    "copied":  "Copied to clipboard"
+                                }
                 },
-                "instant": {
-                    "title": "Instant Results",
-                    "desc": "Generate complete exams in under 30 seconds"
+    "pdfCompare":  {
+                       "badge":  "Free Tool",
+                       "title":  "PDF Compare",
+                       "subtitle":  "Compare two PDF files and see all differences highlighted",
+                       "docA":  "Document A",
+                       "docB":  "Document B",
+                       "remove":  "Remove",
+                       "uploadPrompt":  "Click to upload PDF",
+                       "comparing":  "Comparing...",
+                       "compareDocs":  "Compare Documents",
+                       "results":  {
+                                       "title":  "Comparison Results",
+                                       "similarity":  "Similarity",
+                                       "added":  "Added",
+                                       "removed":  "Removed",
+                                       "unchanged":  "Unchanged",
+                                       "all":  "All",
+                                       "noDiffs":  "No differences in this filter"
+                                   },
+                       "compareAgain":  "Compare Again",
+                       "errors":  {
+                                      "failed":  "Failed to compare PDFs"
+                                  },
+                       "success":  {
+                                       "complete":  "Comparison complete"
+                                   }
+                   },
+    "batchProcess":  {
+                         "badge":  "Batch Processing",
+                         "title":  "Process Multiple Files",
+                         "subtitle":  "Upload multiple PDFs and apply the same action to all of them at once",
+                         "filesCount":  "Files ({{count}})",
+                         "clearAll":  "Clear All",
+                         "dropzone":  "Click or drop PDF files here",
+                         "multipleFiles":  "Multiple files supported",
+                         "addMore":  "+ Add more files",
+                         "processing":  "Processing...",
+                         "downloadAll":  "Download All",
+                         "action":  "Action",
+                         "actions":  {
+                                         "compress":  "Compress All",
+                                         "merge":  "Merge Into One",
+                                         "pageNumbers":  "Add Page Numbers",
+                                         "rotateCW":  "Rotate 90° CW",
+                                         "rotateCCW":  "Rotate 90° CCW"
+                                     },
+                         "processCount":  "Process {{count}} Files",
+                         "cost":  "Cost",
+                         "costUnit":  "credits",
+                         "costMerge":  "Flat fee for merging",
+                         "costPerFile":  "2 credits per file",
+                         "errors":  {
+                                        "onlyPdf":  "Only PDF files accepted. {{count}} files skipped.",
+                                        "unknownAction":  "Unknown action",
+                                        "failed":  "Batch processing failed"
+                                    },
+                         "success":  {
+                                         "complete":  "Batch processing complete"
+                                     }
+                     },
+    "aiSummarize":  {
+                        "badge":  "AI-Powered • 50 Credits",
+                        "title":  "AI Summarize",
+                        "subtitle":  "Upload a PDF and get an instant AI-generated summary",
+                        "extracting":  "Extracting text...",
+                        "modes":  {
+                                      "brief":  {
+                                                    "title":  "Brief Summary",
+                                                    "desc":  "2-3 sentence overview"
+                                                },
+                                      "detailed":  {
+                                                       "title":  "Detailed Summary",
+                                                       "desc":  "Full paragraph summary"
+                                                   },
+                                      "keyPoints":  {
+                                                        "title":  "Key Points",
+                                                        "desc":  "Bullet point list"
+                                                    },
+                                      "executive":  {
+                                                        "title":  "Executive Summary",
+                                                        "desc":  "Professional brief"
+                                                    }
+                                  },
+                        "summaryType":  "Summary Type",
+                        "generating":  "Generating...",
+                        "generate":  "Generate Summary",
+                        "cost":  "Cost",
+                        "costUnit":  "credits",
+                        "summary":  "Summary",
+                        "copied":  "Copied to clipboard",
+                        "analyzing":  "AI is analyzing your document...",
+                        "selectType":  "Select a summary type and click Generate",
+                        "errors":  {
+                                       "aiNotConfigured":  "AI not configured. Set VITE_GEMINI_API_KEY.",
+                                       "failedExtract":  "Failed to extract text",
+                                       "failedGenerate":  "Failed to generate summary"
+                                   },
+                        "success":  {
+                                        "textExtracted":  "PDF text extracted",
+                                        "generated":  "Summary generated"
+                                    }
+                    },
+    "contractAnalyzer":  {
+                             "badge":  "AI-Powered • 100 Credits",
+                             "title":  "Contract Analyzer",
+                             "subtitle":  "Upload a contract PDF and get AI-powered analysis of all critical terms, risks, and obligations",
+                             "extracting":  "Extracting text...",
+                             "analysisTitle":  "Contract Analysis",
+                             "runAnalysis":  "Run Full Analysis",
+                             "analysisInfo":  "100 credits • Analyzes 6 critical areas",
+                             "exportReport":  "Export Report",
+                             "analyzing":  "Analyzing... ({{current}}/{{total}} sections complete)",
+                             "emptyState":  "Click sections on the left to view results",
+                             "sections":  {
+                                              "overview":  "Contract Overview",
+                                              "obligations":  "Key Obligations",
+                                              "financial":  "Financial Terms",
+                                              "risks":  "Risk Assessment",
+                                              "deadlines":  "Deadlines \u0026 Duration",
+                                              "termination":  "Termination Clauses"
+                                          },
+                             "errors":  {
+                                            "aiNotConfigured":  "AI not configured. Set VITE_GEMINI_API_KEY.",
+                                            "failedExtract":  "Failed to extract text",
+                                            "failedSection":  "Failed to analyze this section.",
+                                            "failed":  "Analysis failed"
+                                        },
+                             "success":  {
+                                             "loaded":  "Contract loaded",
+                                             "complete":  "Analysis complete",
+                                             "copied":  "Copied"
+                                         }
+                         },
+    "admin":  {
+                  "badge":  "Admin Area",
+                  "title":  "System Control Panel",
+                  "description":  "Manage your global application settings from one secured location.",
+                  "fields":  {
+                                 "phone":  "Phone Number",
+                                 "whatsapp":  "WhatsApp Number",
+                                 "email":  "Email Address",
+                                 "location":  "Location",
+                                 "telegram":  "Telegram Username",
+                                 "tiktok":  "TikTok Username",
+                                 "instagram":  "Instagram Username"
+                             },
+                  "placeholder":  "Enter {{field}}...",
+                  "success":  "Setting updated successfully",
+                  "error":  "Failed to update setting"
+              },
+    "convertEditor":  {
+                          "fileTooLarge":  "File too large (Max 50MB)",
+                          "fileEmpty":  "File is empty",
+                          "noImages":  "No valid images found",
+                          "failedLoadPdf":  "Failed to load PDF file",
+                          "noSlides":  "No slides found",
+                          "emptyResponse":  "Empty response",
+                          "accessDenied":  "Access Denied",
+                          "notFound":  "404 Not Found",
+                          "noProxies":  "No proxies",
+                          "allProxiesFailed":  "All proxies failed",
+                          "authPages":  "Cannot convert authenticated pages (like Office 365). Try a public URL.",
+                          "noTextFound":  "Warning: No text found. This looks like a scanned file. Please enable OCR.",
+                          "noContent":  "No content found to convert",
+                          "iframeFailed":  "Iframe creation failed",
+                          "downloadPage": "Download this page",
+                          "defaultNames":  {
+                                               "newHtml":  "New HTML Conversion",
+                                               "html":  "HTML Conversion",
+                                               "conversion":  "Conversion"
+                                           }
+                      },
+    "fileUpload":  {
+                       "singleOnly":  "Only one file is allowed",
+                       "tooLarge":  "File too large (max {{size}}MB)",
+                       "maxFiles":  "Maximum {{count}} files allowed",
+                       "fileTooLarge":  "\"{{name}}\" is too large (max {{size}}MB)",
+                       "duplicate":  "\"{{name}}\" is already in the queue",
+                       "allDuplicate":  "All selected files are already in the queue",
+                       "maxSize":  "100MB MAX"
+                   },
+    "signEditor":  {
+                       "guestUser":  "Guest User",
+                       "addSignature":  "Add Signature",
+                       "manageSigners":  "Manage Signers",
+                       "exportResult":  "Export Result",
+                       "doubleClickEdit":  "Double click to edit"
+                   },
+    "visualEditor":  {
+                         "startTyping":  "Start Typing..."
+                     },
+    "watermarkEditor":  {
+                            "defaultText":  "ONE PDF"
+                        },
+    "adminLayout":  {
+                        "verifying":  "Verifying Access...",
+                        "accessDenied":  "Access Denied",
+                        "noPermission":  "You don\u0027t have permission to access this area. Admin access only.",
+                        "returnHome":  "Return Home"
+                    },
+    "protectedRoute":  {
+                           "loading":  "Loading..."
+                       },
+    "contactPage":  {
+                        "whatsappLabel":  "*New Contact Request*",
+                        "nameLabel":  "*Name:*",
+                        "emailLabel":  "*Email:*",
+                        "subjectLabel":  "*Subject:*",
+                        "messageLabel":  "*Message:*"
+                    },
+    "loginPage":  {
+                      "firebaseNotConfigured":  "Firebase is not configured. Please check environment variables.",
+                      "invalidCredentials":  "Invalid email or password",
+                      "tooManyAttempts":  "Too many attempts. Please try again later.",
+                      "connectionFailed":  "Unable to connect to server."
+                  },
+    "signupPage":  {
+                       "firebaseNotConfigured":  "Firebase is not configured. Please check environment variables.",
+                       "passwordTooShort":  "Password must be at least 6 characters",
+                       "emailExists":  "An account with this email already exists",
+                       "passwordWeak":  "Password is too weak",
+                       "connectionFailed":  "Unable to connect to server."
+                   },
+    "results":  {
+                    "titlePrefix":  "Title: ",
+                    "datePrefix":  "Date: ",
+                    "difficultyPrefix":  "Difficulty: ",
+                    "answerPrefix":  "   Answer: ",
+                    "explanationPrefix":  "   Explanation: ",
+                    "noData":  "No question data found for this exam."
                 }
-            },
-            "howItWorks": {
-                "title": "How It Works"
-            },
-            "steps": {
-                "one": {
-                    "title": "Upload Content",
-                    "desc": "Upload your study materials or paste text"
-                },
-                "two": {
-                    "title": "Configure Exam",
-                    "desc": "Choose question types and difficulty level"
-                },
-                "three": {
-                    "title": "Generate & Download",
-                    "desc": "Get your exam ready as PDF with answer key"
-                }
-            },
-            "cta": {
-                "title": "Ready to Create Your First Exam?",
-                "subtitle": "Join thousands of educators using AI to save time",
-                "button": "Start Free Trial"
-            }
-        },
-        "errors": {
-            "selectType": "Select at least one question type.",
-            "fileTooLarge": "File exceeds 50MB limit.",
-            "quotaExceeded": "Usage limit reached. Please check your OpenAI plan or try again later."
-        }
-    },
-    "profile": {
-        "title": "Member Profile",
-        "personalInfo": "Personal Information",
-        "securityTab": "Security",
-        "settingsTab": "Settings",
-        "email": "Digital Identity (Email)",
-        "joined": "Activation Date",
-        "accountAge": "Account Age",
-        "stats": "Activity Metrics",
-        "filesProcessed": "Files Optimized",
-        "aiInteractions": "Neural Queries",
-        "accountStatus": "Account Status",
-        "verified": "Verified",
-        "unverified": "Pending Verification",
-        "active": "Active",
-        "encrypted": "Encrypted",
-        "editProfile": "Edit Profile",
-        "saveChanges": "Save Changes",
-        "cancel": "Cancel",
-        "logout": "Sign Out",
-        "fullName": "Full Name",
-        "phoneLabel": "Phone Number",
-        "phonePlaceholder": "+1 (555) 123-4567",
-        "bioLabel": "Bio",
-        "bioPlaceholder": "Tell us about yourself...",
-        "notSet": "Not set",
-        "updateSuccess": "Profile updated successfully",
-        "nameRequired": "Name must be at least 2 characters",
-        "rateLimit": "Too many updates. Please wait a moment.",
-        "avatarUpdated": "Avatar updated successfully",
-        "avatarRemoved": "Avatar removed",
-        "avatarTooLarge": "Image must be less than 2MB",
-        "avatarInvalidType": "Only JPEG, PNG, WebP, and GIF images are allowed",
-        "quickStats": "Quick Stats",
-        "lastLogin": "Last Login",
-        "totalLogins": "Total Logins",
-        "language": "Language",
-        "billing": "Billing & Subscription",
-        "paymentMethod": "Payment Method",
-        "plan": "Current Plan",
-        "proPlan": "Pro Engineering Suite",
-        "freePlan": "Standard Access",
-        "upgrade": "Upgrade to Pro",
-        "manageBilling": "Manage Subscription",
-        "cardNumber": "Card ending in",
-        "expiry": "Expires",
-        "addPayment": "Add Payment Method",
-        "avatar": "Profile Avatar",
-        "paymentSuccess": "Payment method secured",
-        "changePassword": "Change Password",
-        "changePasswordDesc": "Update your password regularly for better security",
-        "currentPassword": "Current Password",
-        "newPassword": "New Password",
-        "confirmNewPassword": "Confirm New Password",
-        "passwordMismatch": "Passwords do not match",
-        "passwordsMatch": "Passwords match",
-        "weakPassword": "Password is too weak. Follow the strength guidelines.",
-        "samePassword": "New password must be different from current password",
-        "passwordChanged": "Password changed successfully",
-        "wrongCurrentPassword": "Current password is incorrect",
-        "wrongPassword": "Password is incorrect",
-        "fillAllFields": "Please fill in all fields",
-        "updating": "Updating...",
-        "passwordRateLimit": "Too many password change attempts. Please wait 5 minutes.",
-        "securityOverview": "Security Overview",
-        "securityOverviewDesc": "Your account protection status",
-        "encryption": "End-to-End Encryption",
-        "encryptionDesc": "All data is encrypted in transit and at rest",
-        "authProtection": "Firebase Authentication",
-        "authProtectionDesc": "Enterprise-grade identity verification",
-        "onDeviceProcessing": "On-Device Processing",
-        "onDeviceProcessingDesc": "Files never leave your browser",
-        "secureSessions": "Secure Sessions",
-        "secureSessionsDesc": "Sessions protected with Firebase tokens",
-        "deleteAccount": "Delete Account",
-        "deleteAccountDesc": "Permanently delete your account and all data",
-        "deleteAccountWarning": "This action is irreversible. All your data, profile information, and account history will be permanently deleted. You will not be able to recover your account.",
-        "typeDeleteConfirm": "Type DELETE to confirm",
-        "typeDelete": "Please type DELETE to confirm account deletion",
-        "enterPassword": "Enter your password",
-        "enterPasswordToDelete": "Please enter your password to delete",
-        "confirmDelete": "Permanently Delete Account",
-        "accountDeleted": "Account deleted successfully",
-        "deleteRateLimit": "Too many delete attempts. Please try again later.",
-        "notifications": "Notification Preferences",
-        "notificationsDesc": "Manage how you receive notifications",
-        "pushNotifications": "Push Notifications",
-        "pushNotificationsDesc": "Receive alerts about account activity",
-        "emailNotifications": "Email Notifications",
-        "emailNotificationsDesc": "Receive email updates about your account",
-        "languageDesc": "Choose your preferred language",
-        "appInfo": "Application Info",
-        "appInfoDesc": "System and version details",
-        "version": "Version",
-        "securityProtocol": "Security Protocol",
-        "dataProcessing": "Data Processing",
-        "onDevice": "Client-Side Only",
-        "saveSettings": "Save Settings",
-        "settingsSaved": "Settings saved successfully"
-    },
-    "common": {
-        "loading": "Loading...",
-        "error": "An error occurred",
-        "success": "Success!",
-        "openTool": "Open Tool"
-    }
 }

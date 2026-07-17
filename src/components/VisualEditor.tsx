@@ -455,6 +455,7 @@ function EditorPage({ pageNum, pdf, zoom, items, activeId, editingId, onSelect, 
 }
 
 function DraggableItem({ item, zoom, active, isEditing, onSelect, updatePos, onEditFinish }: any) {
+    const { t } = useTranslation();
     const [isDragging, setIsDragging] = useState(false);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -529,7 +530,7 @@ function DraggableItem({ item, zoom, active, isEditing, onSelect, updatePos, onE
                         }}
                         className="font-bold whitespace-nowrap px-2"
                     >
-                        {item.content || 'Start Typing...'}
+                        {item.content || t('visualEditor.startTyping')}
                     </span>
                 )
             )}

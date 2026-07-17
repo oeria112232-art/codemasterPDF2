@@ -21,13 +21,13 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
     setError(null);
 
     if (!multiple && newFiles.length > 1) {
-      setError('Only one file is allowed');
+      setError(t('fileUpload.singleOnly'));
       return;
     }
 
     if (!multiple) {
       if (newFiles[0].size > MAX_FILE_SIZE) {
-        setError(`File too large (max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+        setError(t('fileUpload.tooLarge', { size: MAX_FILE_SIZE / 1024 / 1024 }));
         return;
       }
       onFilesChange([newFiles[0]]);
@@ -36,7 +36,7 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
 
     const totalFiles = files.length + newFiles.length;
     if (totalFiles > MAX_FILES) {
-      setError(`Maximum ${MAX_FILES} files allowed`);
+      setError(t('fileUpload.maxFiles', { count: MAX_FILES }));
       return;
     }
 
@@ -45,11 +45,11 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
 
     for (const f of newFiles) {
       if (f.size > MAX_FILE_SIZE) {
-        setError(`"${f.name}" is too large (max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+        setError(t('fileUpload.fileTooLarge', { name: f.name, size: MAX_FILE_SIZE / 1024 / 1024 }));
         return;
       }
       if (existingNames.has(f.name)) {
-        setError(`"${f.name}" is already in the queue`);
+        setError(t('fileUpload.duplicate', { name: f.name }));
         continue;
       }
       existingNames.add(f.name);
@@ -57,7 +57,7 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
     }
 
     if (validFiles.length === 0 && newFiles.length > 0) {
-      setError('All selected files are already in the queue');
+      setError(t('fileUpload.allDuplicate'));
       return;
     }
 
@@ -140,7 +140,7 @@ export function FileUploadZone({ files, onFilesChange, accept = ".pdf", multiple
             <div className="w-[1px] h-3 bg-slate-400" />
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span className="text-[9px] font-black uppercase tracking-widest">{MAX_FILE_SIZE / 1024 / 1024}MB MAX</span>
+              <span className="text-[9px] font-black uppercase tracking-widest">{t('fileUpload.maxSize', { size: MAX_FILE_SIZE / 1024 / 1024 })}</span>
             </div>
           </div>
         </div>

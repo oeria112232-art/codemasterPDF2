@@ -10,7 +10,7 @@ export function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'Enterprise Integration',
+    subject: t('contact.enterpriseOption'),
     message: ''
   });
 
@@ -18,7 +18,7 @@ export function ContactPage() {
     e.preventDefault();
     setLoading(true);
 
-    const whatsappMessage = `*New Contact Request*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n*Subject:* ${formData.subject}\n*Message:* ${formData.message}`;
+    const whatsappMessage = `${t('contactPage.whatsappLabel')}\n\n${t('contactPage.nameLabel')} ${formData.name}\n${t('contactPage.emailLabel')} ${formData.email}\n${t('contactPage.subjectLabel')} ${formData.subject}\n${t('contactPage.messageLabel')} ${formData.message}`;
     const whatsappUrl = `https://wa.me/9647771632241?text=${encodeURIComponent(whatsappMessage)}`;
 
     window.open(whatsappUrl, '_blank');
@@ -26,7 +26,7 @@ export function ContactPage() {
     setTimeout(() => {
       setLoading(false);
       showToast(t('contact.success'), 'success');
-      setFormData({ name: '', email: '', subject: 'Enterprise Integration', message: '' });
+      setFormData({ name: '', email: '', subject: t('contact.enterpriseOption'), message: '' });
     }, 1000);
   };
 

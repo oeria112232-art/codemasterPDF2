@@ -25,7 +25,7 @@ interface JobResult {
 }
 
 export function BatchProcessPage() {
-  useTranslation();
+  const { t } = useTranslation();
   const { showToast } = useToast();
   const { user } = useAuth();
   const { spendCredits } = useCredits();
@@ -39,10 +39,10 @@ export function BatchProcessPage() {
   const handleFiles = useCallback((newFiles: File[]) => {
     const pdfs = newFiles.filter(f => f.type === 'application/pdf');
     if (pdfs.length !== newFiles.length) {
-      showToast(`Only PDF files accepted. ${newFiles.length - pdfs.length} files skipped.`, 'error');
+      showToast(t('batchProcess.errors.onlyPdf', { count: newFiles.length - pdfs.length }), 'error');
     }
     setFiles(prev => [...prev, ...pdfs]);
-  }, [showToast]);
+  }, [showToast, t]);
 
   const removeFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
@@ -146,15 +146,15 @@ export function BatchProcessPage() {
             case 'add-page-numbers': result = await addPageNumbersSingle(files[i]); break;
             case 'rotate-cw': result = await rotateSingle(files[i], true); break;
             case 'rotate-ccw': result = await rotateSingle(files[i], false); break;
-            default: result = { name: files[i].name, status: 'error', error: 'Unknown action' };
+            default: result = { name: files[i].name, status: 'error', error: t('batchProcess.errors.unknownAction') };
           }
           batchResults.push(result);
           setResults([...batchResults]);
         }
       }
-      showToast('Batch processing complete', 'success');
+      showToast(t('batchProcess.success.complete'), 'success');
     } catch (err: any) {
-      showToast('Batch processing failed', 'error');
+      showToast(t('batchProcess.errors.failed'), 'error');
     } finally {
       setProcessing(false);
     }
@@ -169,11 +169,11 @@ export function BatchProcessPage() {
   };
 
   const ACTIONS: { id: BatchAction; label: string; perFile: boolean }[] = [
-    { id: 'compress', label: 'Compress All', perFile: true },
-    { id: 'merge', label: 'Merge Into One', perFile: false },
-    { id: 'add-page-numbers', label: 'Add Page Numbers', perFile: true },
-    { id: 'rotate-cw', label: 'Rotate 90° CW', perFile: true },
-    { id: 'rotate-ccw', label: 'Rotate 90° CCW', perFile: true },
+    { id: 'compress', label: t('batchProcess.actions.compress'), perFile: true },
+    { id: 'merge', label: t('batchProcess.actions.merge'), perFile: false },
+    { id: 'add-page-numbers', label: t('batchProcess.actions.pageNumbers'), perFile: true },
+    { id: 'rotate-cw', label: t('batchProcess.actions.rotateCW'), perFile: true },
+    { id: 'rotate-ccw', label: t('batchProcess.actions.rotateCCW'), perFile: true },
   ];
 
   return (
@@ -182,13 +182,13 @@ export function BatchProcessPage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 text-amber-600 rounded-full mb-6">
             <Sparkles className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-[2px]">Batch Processing</span>
+            <span className="text-[10px] font-black uppercase tracking-[2px]">{t('batchProcess.badge')}</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
-            Process Multiple Files
+            {t('batchProcess.title')}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 font-medium text-lg max-w-2xl mx-auto">
-            Upload multiple PDFs and apply the same action to all of them at once
+            {t('batchProcess.subtitle')}
           </p>
         </div>
 
@@ -197,10 +197,10 @@ export function BatchProcessPage() {
             <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden">
               <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <h3 className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white">
-                  Files ({files.length})
+                  {t('batchProcess.filesCount', { count: files.length })}
                 </h3>
                 {files.length > 0 && (
-                  <button onClick={clearFiles} className="text-xs font-bold text-red-500 hover:text-red-600">Clear All</button>
+                  <button onClick={clearFiles} className="text-xs font-bold text-red-500 hover:text-red-600">{t('batchProcess.clearAll')}</button>
                 )}
               </div>
               <div className="p-6">
@@ -216,8 +216,8 @@ export function BatchProcessPage() {
                     />
                     <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl p-12 hover:border-amber-500/50 transition-colors text-center">
                       <Upload className="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                      <p className="text-sm font-bold text-slate-400">Click or drop PDF files here</p>
-                      <p className="text-[10px] text-slate-300 mt-1">Multiple files supported</p>
+                      <p className="text-sm font-bold text-slate-400">{t('batchProcess.dropzone')}</p>
+                      <p className="text-[10px] text-slate-300 mt-1">{t('batchProcess.multipleFiles')}</p>
                     </div>
                   </label>
                 ) : (
@@ -225,7 +225,7 @@ export function BatchProcessPage() {
                     <label className="cursor-pointer block border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-3 hover:border-amber-500/50 transition-colors text-center mb-3">
                       <input type="file" accept=".pdf" multiple className="hidden"
                         onChange={e => e.target.files && handleFiles(Array.from(e.target.files))} />
-                      <span className="text-xs font-bold text-slate-400">+ Add more files</span>
+                      <span className="text-xs font-bold text-slate-400">{t('batchProcess.addMore')}</span>
                     </label>
                     {files.map((file, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl group">
@@ -247,7 +247,7 @@ export function BatchProcessPage() {
                 {processing && (
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-bold text-slate-600 dark:text-slate-300">Processing...</span>
+                      <span className="text-sm font-bold text-slate-600 dark:text-slate-300">{t('batchProcess.processing')}</span>
                       <span className="text-xs font-black text-amber-500">{progress.current}/{progress.total}</span>
                     </div>
                     <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
@@ -280,7 +280,7 @@ export function BatchProcessPage() {
                 {results.length > 0 && !processing && (
                   <button onClick={downloadAll}
                     className="mt-4 w-full py-3 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                    <Download className="w-4 h-4" /> Download All
+                    <Download className="w-4 h-4" /> {t('batchProcess.downloadAll')}
                   </button>
                 )}
               </div>
@@ -291,7 +291,7 @@ export function BatchProcessPage() {
             <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Settings2 className="w-4 h-4 text-amber-500" />
-                <h3 className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white">Action</h3>
+                <h3 className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white">{t('batchProcess.action')}</h3>
               </div>
               <div className="space-y-2">
                 {ACTIONS.map(a => (
@@ -303,7 +303,7 @@ export function BatchProcessPage() {
                     }`}>
                     {a.label}
                     {a.perFile && files.length > 1 && (
-                      <span className="text-[10px] opacity-70 ml-2">({files.length} files × 2 credits)</span>
+                      <span className="text-[10px] opacity-70 ml-2">({t('batchProcess.costPerFile', { count: files.length })})</span>
                     )}
                   </button>
                 ))}
@@ -314,17 +314,17 @@ export function BatchProcessPage() {
               disabled={files.length === 0 || processing}
               className="w-full py-4 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-amber-500/20 flex items-center justify-center gap-2">
               {processing
-                ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</>
-                : <><Layers className="w-4 h-4" /> Process {files.length} File{files.length !== 1 ? 's' : ''}</>}
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('batchProcess.processing')}</>
+                : <><Layers className="w-4 h-4" /> {t('batchProcess.processCount', { count: files.length })}</>}
             </button>
 
             <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-6">
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Cost</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">{t('batchProcess.cost')}</h4>
               <p className="text-2xl font-black text-slate-900 dark:text-white">
-                {action === 'merge' ? '2' : files.length * 2} <span className="text-sm text-slate-400">credits</span>
+                {action === 'merge' ? '2' : files.length * 2} <span className="text-sm text-slate-400">{t('batchProcess.costUnit')}</span>
               </p>
               <p className="text-[10px] text-slate-400 mt-1">
-                {action === 'merge' ? 'Flat fee for merging' : '2 credits per file'}
+                {action === 'merge' ? t('batchProcess.costMerge') : t('batchProcess.costPerFile')}
               </p>
             </div>
           </div>

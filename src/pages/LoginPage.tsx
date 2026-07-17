@@ -19,7 +19,7 @@ export function LoginPage() {
         e.preventDefault();
 
         if (!isFirebaseConfigured) {
-            showToast('Firebase is not configured. Please check environment variables.', 'error');
+            showToast(t('loginPage.firebaseNotConfigured'), 'error');
             return;
         }
 
@@ -33,11 +33,11 @@ export function LoginPage() {
             console.error('Login error:', err);
             let message = err.message || t('auth.error');
             if (message.includes('invalid-credential') || message.includes('wrong-password') || message.includes('user-not-found')) {
-                message = t('auth.invalidCredentials') || 'Invalid email or password';
+                message = t('loginPage.invalidCredentials');
             } else if (message.includes('too-many-requests')) {
-                message = t('auth.tooManyAttempts') || 'Too many attempts. Please try again later.';
+                message = t('loginPage.tooManyAttempts');
             } else if (message.includes('network-request-failed')) {
-                message = t('auth.networkError') || 'Unable to connect to server.';
+                message = t('loginPage.connectionFailed');
             }
             showToast(message, 'error');
         } finally {
