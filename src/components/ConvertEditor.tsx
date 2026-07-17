@@ -8,6 +8,7 @@ import { PDFDocument, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
+import { cloudConvert, pdfCoConvert } from '../lib/external-apis';
 
 // Lazy-loaded heavy dependencies — loaded on demand to keep initial chunk small
 const lazyMammoth = async () => (await import('mammoth')).default;
@@ -582,6 +583,16 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToWord = async () => {
         if (!pdfProxy) return;
+
+        // Try CloudConvert first for higher quality
+        const externalResult = await cloudConvert(initialFiles[0], 'docx', setProgress);
+        if (externalResult) {
+            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.docx`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
+        // Fallback: local conversion
         const { Document: DocxDocument, Packer, Paragraph, TextRun, PageBreak, ImageRun } = await lazyDocx();
         const paragraphs: InstanceType<typeof Paragraph>[] = [];
         let totalTextFound = false;
@@ -816,6 +827,16 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToExcel = async () => {
         if (!pdfProxy) return;
+
+        // Try PDF.co first for higher quality
+        const externalResult = await pdfCoConvert(initialFiles[0], 'excel', setProgress);
+        if (externalResult) {
+            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.xlsx`);
+            showToast(t('convertEditor.pdfCoSuccess'), 'success');
+            return;
+        }
+
+        // Fallback: local conversion
         const XLSX = await lazyXlsx();
         const workbook = XLSX.utils.book_new();
 
@@ -900,6 +921,16 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processPdfToPowerPoint = async () => {
         if (!pdfProxy) throw new Error('PDF not loaded');
+
+        // Try CloudConvert first for higher quality
+        const externalResult = await cloudConvert(initialFiles[0], 'pptx', setProgress);
+        if (externalResult) {
+            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.pptx`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
+        // Fallback: local conversion
         const PptxGenJS = await lazyPptxGenJS();
         const pptx = new PptxGenJS();
 

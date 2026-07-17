@@ -5,6 +5,7 @@ import { useCredits } from '../contexts/CreditsContext';
 import { useAuth } from '../contexts/AuthContext';
 import * as pdfjsLib from 'pdfjs-dist';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { groqChat } from '../lib/external-apis';
 import {
   MessageSquare, Send, Bot, User, FileText,
   Loader2, Sparkles, Trash2, Copy
@@ -82,6 +83,34 @@ export function PdfChatPage() {
     setLoading(true);
 
     try {
+      // Groq has 70K context — use more of the document
+      const contextText = pdfText.length > 60000 ? pdfText.substring(0, 60000) + '\n...(truncated)' : pdfText;
+
+      // Try Groq first (fastest, free, larger context)
+      if (import.meta.env.VITE_GROQ_API_KEY) {
+        try {
+          const groqMessages = [
+            {
+              role: 'system',
+              content: `You are a helpful PDF assistant. Answer questions about the document below concisely and accurately. Use markdown formatting. Cite page numbers when possible [Page X].\n\nDocument:\n${contextText}`,
+            },
+            ...messages.slice(-10).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+            { role: 'user', content: input.trim() },
+          ];
+
+          const response = await groqChat(groqMessages, { maxTokens: 2048, temperature: 0.3 });
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: response,
+            timestamp: new Date(),
+          }]);
+          return;
+        } catch (groqErr) {
+          console.warn('Groq failed, falling back to Gemini:', groqErr);
+        }
+      }
+
+      // Fallback: Gemini
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) {
         setMessages(prev => [...prev, {
@@ -94,14 +123,13 @@ export function PdfChatPage() {
 
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-      const contextText = pdfText.length > 30000 ? pdfText.substring(0, 30000) + '\n...(truncated)' : pdfText;
+      const geminiContext = pdfText.length > 30000 ? pdfText.substring(0, 30000) + '\n...(truncated)' : pdfText;
 
       const chat = model.startChat({
         history: [
           {
             role: 'user',
-            parts: [{ text: `You are a helpful PDF assistant. Here is the document content:\n\n${contextText}\n\nAnswer questions about this document. Be concise and accurate. Use markdown formatting.` }],
+            parts: [{ text: `You are a helpful PDF assistant. Here is the document content:\n\n${geminiContext}\n\nAnswer questions about this document. Be concise and accurate. Use markdown formatting.` }],
           },
           {
             role: 'model',

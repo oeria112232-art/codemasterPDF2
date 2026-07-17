@@ -4,6 +4,7 @@ import { useToast } from '../contexts/ToastContext';
 import { useCredits } from '../contexts/CreditsContext';
 import * as pdfjsLib from 'pdfjs-dist';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { groqChat } from '../lib/external-apis';
 import {
   ShieldAlert, FileText, Loader2, Copy, Download,
   AlertTriangle, CheckCircle, Clock, Scale, Users, DollarSign
@@ -73,6 +74,74 @@ export function ContractAnalyzerPage() {
     setLoading(true);
     setSections([]);
     try {
+      const contextText = pdfText.length > 40000 ? pdfText.substring(0, 40000) + '\n...(truncated)' : pdfText;
+
+      // Try Groq first — single structured call instead of 6 sequential ones
+      if (import.meta.env.VITE_GROQ_API_KEY) {
+        try {
+          const analysisPrompt = `Analyze this contract and provide a structured analysis in EXACTLY these 6 sections, separated by "## SECTION:" markers:
+
+## SECTION: Contract Overview
+## SECTION: Key Obligations
+## SECTION: Financial Terms
+## SECTION: Risk Assessment
+## SECTION: Deadlines & Duration
+## SECTION: Termination Clauses
+
+For each section, provide detailed analysis. Be thorough and specific.
+
+Document:
+${contextText}`;
+
+          const result = await groqChat(
+            [{ role: 'user', content: analysisPrompt }],
+            { maxTokens: 8192, temperature: 0.2 }
+          );
+
+          // Parse the structured response
+          const sectionParts = result.split(/## SECTION:\s*/);
+          const parsedSections: AnalysisSection[] = [];
+          const colors = ['blue', 'amber', 'emerald', 'red', 'purple', 'slate'];
+
+          for (let i = 1; i < sectionParts.length && i <= 6; i++) {
+            const title = ANALYSIS_SECTIONS[i - 1].title;
+            parsedSections.push({
+              title,
+              icon: ANALYSIS_SECTIONS[i - 1].icon,
+              content: sectionParts[i].trim(),
+              color: colors[i - 1] as any,
+            });
+          }
+
+          // If we got fewer than 6 sections, fill the rest from sequential calls
+          if (parsedSections.length < 6) {
+            const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            for (let i = parsedSections.length; i < 6; i++) {
+              try {
+                const sec = ANALYSIS_SECTIONS[i];
+                const r = await model.generateContent(`${sec.prompt}\n\nDocument:\n\n${contextText}`);
+                parsedSections.push({
+                  title: sec.title, icon: sec.icon, content: r.response.text(), color: colors[i] as any,
+                });
+              } catch {
+                parsedSections.push({
+                  title: ANALYSIS_SECTIONS[i].title, icon: ANALYSIS_SECTIONS[i].icon,
+                  content: t('contractAnalyzer.errors.failedSection'), color: colors[i] as any,
+                });
+              }
+            }
+          }
+
+          setSections(parsedSections);
+          showToast(t('contractAnalyzer.success.complete'), 'success');
+          return;
+        } catch (groqErr) {
+          console.warn('Groq failed, falling back to Gemini:', groqErr);
+        }
+      }
+
+      // Fallback: Gemini with 6 sequential calls
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) {
         showToast(t('contractAnalyzer.errors.aiNotConfigured'), 'error');
@@ -81,28 +150,19 @@ export function ContractAnalyzerPage() {
 
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-      const contextText = pdfText.length > 40000 ? pdfText.substring(0, 40000) + '\n...(truncated)' : pdfText;
 
       const results: AnalysisSection[] = [];
-
       for (const sec of ANALYSIS_SECTIONS) {
         try {
           const result = await model.generateContent(
             `${sec.prompt}\n\nDocument:\n\n${contextText}`
           );
-          results.push({
-            title: sec.title,
-            icon: sec.icon,
-            content: result.response.text(),
-            color: sec.color,
-          });
+          results.push({ title: sec.title, icon: sec.icon, content: result.response.text(), color: sec.color });
           setSections([...results]);
         } catch {
           results.push({
-            title: sec.title,
-            icon: sec.icon,
-            content: t('contractAnalyzer.errors.failedSection'),
-            color: sec.color,
+            title: sec.title, icon: sec.icon,
+            content: t('contractAnalyzer.errors.failedSection'), color: sec.color,
           });
         }
       }

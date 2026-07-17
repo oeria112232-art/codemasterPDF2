@@ -1073,6 +1073,8 @@
                           "noContent":  "No content found to convert",
                           "iframeFailed":  "Iframe creation failed",
                           "downloadPage": "Download this page",
+                          "cloudConvertSuccess": "Converted with CloudConvert (enhanced quality)",
+                          "pdfCoSuccess": "Converted with PDF.co (enhanced quality)",
                           "defaultNames":  {
                                                "newHtml":  "New HTML Conversion",
                                                "html":  "HTML Conversion",

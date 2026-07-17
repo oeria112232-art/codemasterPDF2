@@ -1081,9 +1081,11 @@
         "allProxiesFailed": "فشلت جميع البروكسي",
         "authPages": "لا يمكن تحويل الصفحات المصادق عليها (مثل Office 365). جرّب رابط عام.",
         "noTextFound": "تحذير: لم يتم العثور على نص. يبدو أن هذا ملف ممسوح. يرجى تفعيل OCR.",
-        "noContent": "لم يتم العثور على محتوى للتحويل",
+                          "noContent":  "لم يتم العثور على محتوى للتحويل",
                           "iframeFailed":  "فشل إنشاء الإطار",
                           "downloadPage": "تحميل هذه الصفحة",
+                          "cloudConvertSuccess": "تم التحويل عبر CloudConvert (جودة محسّنة)",
+                          "pdfCoSuccess": "تم التحويل عبر PDF.co (جودة محسّنة)",
         "defaultNames": {
             "newHtml": "تحويل HTML جديد",
             "html": "تحويل HTML",

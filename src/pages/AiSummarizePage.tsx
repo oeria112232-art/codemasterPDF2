@@ -4,9 +4,10 @@ import { useToast } from '../contexts/ToastContext';
 import { useCredits } from '../contexts/CreditsContext';
 import * as pdfjsLib from 'pdfjs-dist';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { groqChat } from '../lib/external-apis';
 import {
   Sparkles, FileText, Loader2, Copy, Download,
-  List, AlignLeft, BookOpen, MessageSquare
+  List, AlignLeft, BookOpen, MessageSquare, Zap
 } from 'lucide-react';
 import { ToolPage } from '../components/ToolPage';
 
@@ -66,6 +67,48 @@ export function AiSummarizePage() {
     setLoading(true);
     setSummary('');
     try {
+      const modeConfig = MODES.find(m => m.id === mode)!;
+
+      // Try Groq first (faster, free)
+      if (import.meta.env.VITE_GROQ_API_KEY) {
+        try {
+          // Chunk large documents (15K chars per chunk for Groq)
+          const MAX_CHUNK = 15000;
+          if (pdfText.length > MAX_CHUNK) {
+            const chunks: string[] = [];
+            for (let i = 0; i < pdfText.length; i += MAX_CHUNK) {
+              chunks.push(pdfText.substring(i, i + MAX_CHUNK));
+            }
+            // Summarize each chunk, then combine
+            let combined = '';
+            for (let i = 0; i < chunks.length; i++) {
+              const chunkSummary = await groqChat([
+                { role: 'user', content: `${modeConfig.prompt}\n\nDocument (part ${i + 1}/${chunks.length}):\n\n${chunks[i]}` }
+              ]);
+              combined += chunkSummary + '\n\n';
+            }
+            if (chunks.length > 1) {
+              const finalSummary = await groqChat([
+                { role: 'user', content: `Combine these summaries into one cohesive summary:\n\n${combined}` }
+              ]);
+              setSummary(finalSummary);
+            } else {
+              setSummary(combined.trim());
+            }
+          } else {
+            const result = await groqChat([
+              { role: 'user', content: `${modeConfig.prompt}\n\nDocument content:\n\n${pdfText}` }
+            ]);
+            setSummary(result);
+          }
+          showToast(t('aiSummarize.success.generated'), 'success');
+          return;
+        } catch (groqErr) {
+          console.warn('Groq failed, falling back to Gemini:', groqErr);
+        }
+      }
+
+      // Fallback: Gemini
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) {
         showToast(t('aiSummarize.errors.aiNotConfigured'), 'error');
@@ -75,7 +118,6 @@ export function AiSummarizePage() {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       const contextText = pdfText.length > 40000 ? pdfText.substring(0, 40000) + '\n...(truncated)' : pdfText;
-      const modeConfig = MODES.find(m => m.id === mode)!;
 
       const result = await model.generateContent(
         `${modeConfig.prompt}\n\nDocument content:\n\n${contextText}`
