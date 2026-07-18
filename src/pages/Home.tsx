@@ -6,7 +6,8 @@ import {
   Edit3, Crop, LifeBuoy, ShieldAlert, Sparkles, Zap, ShieldCheck, Globe,
   FileText, FileSpreadsheet, Presentation, FileType,
   MessageSquare, GitCompareArrows, Layers, ArrowRight, Star,
-  ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users
+  ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users,
+  ScanText, FormInput, Trash2, FileEdit
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
@@ -114,6 +115,18 @@ export function Home() {
         { icon: Layers, title: t('home.intelligenceTools.batchProcess.title'), description: t('home.intelligenceTools.batchProcess.desc'), path: '/batch-process', color: 'bg-amber-500' },
         { icon: Sparkles, title: t('home.intelligenceTools.aiSummarize.title'), description: t('home.intelligenceTools.aiSummarize.desc'), path: '/ai-summarize', color: 'bg-violet-500' },
         { icon: ShieldAlert, title: t('home.intelligenceTools.contractAnalyzer.title'), description: t('home.intelligenceTools.contractAnalyzer.desc'), path: '/contract-analyzer', color: 'bg-red-500' },
+      ]
+    },
+    {
+      id: "professional",
+      title: t('home.professionalSuite.title', 'Professional Tools'),
+      description: t('home.professionalSuite.subtitle', 'Advanced PDF processing without AI'),
+      tools: [
+        { icon: FileEdit, title: t('metadataEditor.title'), description: t('metadataEditor.description'), path: '/metadata-editor', color: 'bg-rose-500' },
+        { icon: Layers, title: t('flattenPdf.title'), description: t('flattenPdf.description'), path: '/flatten-pdf', color: 'bg-rose-500' },
+        { icon: ScanText, title: t('ocrPdf.title'), description: t('ocrPdf.description'), path: '/ocr-pdf', color: 'bg-indigo-500' },
+        { icon: FormInput, title: t('fillForms.title'), description: t('fillForms.description'), path: '/fill-forms', color: 'bg-rose-500' },
+        { icon: Trash2, title: t('deletePages.title'), description: t('deletePages.description'), path: '/delete-pages', color: 'bg-rose-500' },
       ]
     }
   ];

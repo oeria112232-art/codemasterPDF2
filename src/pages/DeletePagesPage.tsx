@@ -36,7 +36,7 @@ export function DeletePagesPage() {
       canvas.width = vp.width;
       canvas.height = vp.height;
       const ctx = canvas.getContext('2d')!;
-      await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+      await page.render({ canvasContext: ctx, viewport: vp, canvas }).promise;
       thumbs.push(canvas.toDataURL());
     }
     setThumbnails(thumbs);

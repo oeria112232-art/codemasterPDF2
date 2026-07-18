@@ -8,7 +8,8 @@ import {
   Combine, Scissors, Minimize2, Edit3,
   RotateCw, Crop, Lock, Unlock,
   FileBadge, FileSignature, FileImage, Image,
-  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert
+  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert,
+  ScanText, FormInput, Trash2, FileEdit
 } from 'lucide-react';
 
 export function Header() {
@@ -73,6 +74,16 @@ export function Header() {
         { icon: Sparkles, label: "AI Summarize", path: '/ai-summarize' },
         { icon: ShieldAlert, label: "Contract Analyzer", path: '/contract-analyzer' },
       ]
+    },
+    {
+      title: t('app.categories.professional.title', 'Professional'),
+      tools: [
+        { icon: FileEdit, label: t('metadataEditor.title'), path: '/metadata-editor' },
+        { icon: Layers, label: t('flattenPdf.title'), path: '/flatten-pdf' },
+        { icon: ScanText, label: t('ocrPdf.title'), path: '/ocr-pdf' },
+        { icon: FormInput, label: t('fillForms.title'), path: '/fill-forms' },
+        { icon: Trash2, label: t('deletePages.title'), path: '/delete-pages' },
+      ]
     }
   ];
 
@@ -117,11 +128,11 @@ export function Header() {
                 rounded-xl shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 p-6 transition-all duration-200 
                 ${menuOpen ? 'opacity-100 visible translate-y-2' : 'opacity-0 invisible translate-y-1'}
               `}>
-                <div className="grid grid-cols-5 gap-6">
+                <div className="grid grid-cols-6 gap-6">
                   {categories.map((cat, i) => (
                     <div key={i} className="space-y-3">
                       <Link
-                        to={`/tools/${['optimize', 'security', 'edit', 'convert', 'intelligence'][i]}`}
+                        to={`/tools/${['optimize', 'security', 'edit', 'convert', 'intelligence', 'professional'][i]}`}
                         className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                       >
                         {cat.title}

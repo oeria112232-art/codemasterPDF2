@@ -811,10 +811,14 @@
                                                                "title":  "AI Summarize",
                                                                "desc":  "Summarize any PDF with AI"
                                                            },
-                                           "contractAnalyzer":  {
-                                                                    "title":  "Contract Analyzer",
-                                                                    "desc":  "Analyze contracts with AI"
-                                                                }
+                                            "contractAnalyzer":  {
+                                                                     "title":  "Contract Analyzer",
+                                                                     "desc":  "Analyze contracts with AI"
+                                                                 }
+                                        },
+                 "professionalSuite":  {
+                                           "title":  "Professional Tools",
+                                           "subtitle":  "Advanced PDF processing without AI"
                                        }
              },
     "pricing":  {

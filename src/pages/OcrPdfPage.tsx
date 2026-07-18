@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { ScanText, Loader2, Copy, Download, RotateCcw } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { createWorker } from 'tesseract.js';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+
+const lazyTesseract = async () => (await import('tesseract.js')).createWorker;
 
 export function OcrPdfPage() {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ export function OcrPdfPage() {
       const totalPages = pdf.numPages;
       setProgress({ current: 0, total: totalPages });
 
+      const createWorker = await lazyTesseract();
       const worker = await createWorker(ocrLang);
       let fullText = '';
 
