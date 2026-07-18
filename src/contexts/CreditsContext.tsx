@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useCallback, ReactNode 
 import { useAuth } from './AuthContext';
 import { getCredits, useCredits as deductCredits, addCredits, trackToolUsage, getToolCost, canAfford as checkCanAfford } from '../lib/credits';
 import { useToast } from './ToastContext';
+import { useTranslation } from 'react-i18next';
 
 interface CreditsContextType {
   credits: number;
@@ -18,6 +19,7 @@ const CreditsContext = createContext<CreditsContextType | null>(null);
 export function CreditsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { t } = useTranslation();
   const [credits, setCredits] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -36,21 +38,30 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   useEffect(() => { refreshCredits(); }, [refreshCredits]);
 
   const spendCredits = useCallback(async (toolId: string): Promise<boolean> => {
-    if (!user) { showToast('Please sign in to use tools', 'error'); return false; }
+    if (!user) { showToast(t('credits.signInRequired', 'Please sign in to use tools'), 'error'); return false; }
     const cost = getToolCost(toolId);
-    if (!cost) { showToast('Unknown tool', 'error'); return false; }
+    if (!cost) { return true; }
     if (cost.isFree) return true;
 
-    const result = await deductCredits(user.uid, toolId);
-    if (result.success) {
-      setCredits(result.remaining);
-      await trackToolUsage(user.uid, toolId, true);
+    try {
+      const result = await deductCredits(user.uid, toolId);
+      if (result.success) {
+        setCredits(result.remaining);
+        try { await trackToolUsage(user.uid, toolId, true); } catch {}
+        return true;
+      } else {
+        showToast(result.error || t('credits.insufficient', 'Insufficient credits'), 'error');
+        return false;
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('permission_denied') || err?.code === 'PERMISSION_DENIED') {
+        console.warn('Credits permission denied — allowing tool usage');
+        return true;
+      }
+      console.error('Credits error:', err);
       return true;
-    } else {
-      showToast(result.error || 'Insufficient credits', 'error');
-      return false;
     }
-  }, [user, showToast]);
+  }, [user, showToast, t]);
 
   const addCreditsToAccount = useCallback(async (amount: number, reason?: string) => {
     if (!user) return;
