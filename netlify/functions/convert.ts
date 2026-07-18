@@ -1,8 +1,59 @@
-const CORS_HEADERS = {
+const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+const MIME_MAP: Record<string, string> = {
+  pdf: 'application/pdf',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  doc: 'application/msword',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  xls: 'application/vnd.ms-excel',
+  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  ppt: 'application/vnd.ms-powerpoint',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+  svg: 'image/svg+xml',
+  tiff: 'image/tiff',
+  bmp: 'image/bmp',
+  gif: 'image/gif',
+  html: 'text/html',
+  htm: 'text/html',
+  txt: 'text/plain',
+  rtf: 'application/rtf',
+  csv: 'text/csv',
+  odt: 'application/vnd.oasis.opendocument.text',
+  ods: 'application/vnd.oasis.opendocument.spreadsheet',
+  epub: 'application/epub+zip',
+  json: 'application/json',
+  xml: 'application/xml',
+  mp3: 'audio/mpeg',
+  wav: 'audio/wav',
+  mp4: 'video/mp4',
+  webm: 'video/webm',
+  avi: 'video/x-msvideo',
+  mov: 'video/quicktime',
+  ttf: 'font/ttf',
+  otf: 'font/otf',
+  woff: 'font/woff',
+  woff2: 'font/woff2',
+};
+
+function getMimeFromExt(filename: string): string {
+  const ext = filename.split('.').pop()?.toLowerCase() || '';
+  return MIME_MAP[ext] || 'application/octet-stream';
+}
+
+function getExtFromFormat(format: string): string {
+  const map: Record<string, string> = {
+    jpeg: 'jpg', word: 'docx', excel: 'xlsx', powerpoint: 'pptx',
+    powerpointpresentation: 'pptx', spreadsheet: 'xlsx', document: 'docx',
+  };
+  return map[format.toLowerCase()] || format.toLowerCase();
+}
 
 export const handler = async (event: any) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -25,13 +76,16 @@ export const handler = async (event: any) => {
       };
     }
 
-    const pdfBuffer = Buffer.from(fileBase64, 'base64');
+    const fileBuffer = Buffer.from(fileBase64, 'base64');
+    const sourceMime = getMimeFromExt(fileName || 'file.pdf');
+    const outputExt = getExtFromFormat(targetFormat);
+    const baseName = (fileName || 'document').replace(/\.[^.]+$/, '');
 
-    // Priority 1: ConvertFleet API (free, no registration, pdf2docx backend)
+    // ─── Priority 1: ConvertFleet API (free, no registration) ───
     try {
       const formData = new FormData();
-      formData.append('file', new Blob([pdfBuffer], { type: 'application/pdf' }), fileName || 'document.pdf');
-      formData.append('to', targetFormat);
+      formData.append('file', new Blob([fileBuffer], { type: sourceMime }), fileName || 'file.pdf');
+      formData.append('to', outputExt);
 
       const apiKey = process.env.CONVERTFLEET_API_KEY;
       const headers: Record<string, string> = {};
@@ -52,42 +106,22 @@ export const handler = async (event: any) => {
           if (data.download_url) {
             const downloadRes = await fetch(data.download_url);
             const arrayBuf = await downloadRes.arrayBuffer();
-            return {
-              statusCode: 200,
-              headers: {
-                ...CORS_HEADERS,
-                'Content-Type': 'application/octet-stream',
-                'Content-Disposition': `attachment; filename="${(fileName || 'document').replace(/\.pdf$/i, '')}.${targetFormat}"`,
-                'X-Conversion-Service': 'convertfleet',
-              },
-              body: Buffer.from(arrayBuf).toString('base64'),
-              isBase64Encoded: true,
-            };
+            return successResponse(arrayBuf, baseName, outputExt, 'convertfleet');
           }
         }
         // Direct binary response
         const arrayBuf = await res.arrayBuffer();
-        return {
-          statusCode: 200,
-          headers: {
-            ...CORS_HEADERS,
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': `attachment; filename="${(fileName || 'document').replace(/\.pdf$/i, '')}.${targetFormat}"`,
-            'X-Conversion-Service': 'convertfleet',
-          },
-          body: Buffer.from(arrayBuf).toString('base64'),
-          isBase64Encoded: true,
-        };
+        return successResponse(arrayBuf, baseName, outputExt, 'convertfleet');
       }
+      console.warn(`ConvertFleet returned ${res.status}: ${await res.text()}`);
     } catch (e: any) {
       console.warn('ConvertFleet failed:', e.message);
     }
 
-    // Priority 2: CloudConvert (needs API key)
+    // ─── Priority 2: CloudConvert (needs API key) ──────────────
     const ccKey = process.env.CLOUDCONVERT_API_KEY;
-    if (ccKey && ['docx', 'pptx'].includes(targetFormat)) {
+    if (ccKey) {
       try {
-        // Create job
         const jobRes = await fetch('https://api.cloudconvert.com/v2/jobs', {
           method: 'POST',
           headers: {
@@ -96,8 +130,8 @@ export const handler = async (event: any) => {
           },
           body: JSON.stringify({
             tasks: {
-              'import-file': { operation: 'import/base64', file: pdfBuffer.toString('base64'), filename: fileName || 'document.pdf' },
-              'convert-file': { operation: 'convert', input: 'import-file', output_format: targetFormat },
+              'import-file': { operation: 'import/base64', file: fileBuffer.toString('base64'), filename: fileName || 'file.pdf' },
+              'convert-file': { operation: 'convert', input: 'import-file', output_format: outputExt },
               'export-file': { operation: 'export/url', input: 'convert-file' },
             },
           }),
@@ -107,7 +141,6 @@ export const handler = async (event: any) => {
           const job = await jobRes.json() as any;
           const taskId = job.data?.id;
 
-          // Poll for completion
           for (let attempt = 0; attempt < 30; attempt++) {
             await new Promise(r => setTimeout(r, 2000));
             const statusRes = await fetch(`https://api.cloudconvert.com/v2/jobs/${taskId}`, {
@@ -119,17 +152,7 @@ export const handler = async (event: any) => {
               if (exportTask?.result?.files?.[0]?.url) {
                 const fileRes = await fetch(exportTask.result.files[0].url);
                 const arrayBuf = await fileRes.arrayBuffer();
-                return {
-                  statusCode: 200,
-                  headers: {
-                    ...CORS_HEADERS,
-                    'Content-Type': 'application/octet-stream',
-                    'Content-Disposition': `attachment; filename="${(fileName || 'document').replace(/\.pdf$/i, '')}.${targetFormat}"`,
-                    'X-Conversion-Service': 'cloudconvert',
-                  },
-                  body: Buffer.from(arrayBuf).toString('base64'),
-                  isBase64Encoded: true,
-                };
+                return successResponse(arrayBuf, baseName, outputExt, 'cloudconvert');
               }
             }
             if (status.data?.status === 'error') break;
@@ -144,7 +167,7 @@ export const handler = async (event: any) => {
     return {
       statusCode: 502,
       headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'All conversion services failed. Try again later.' }),
+      body: JSON.stringify({ error: 'All conversion services failed. Try again later.', service: 'none' }),
     };
   } catch (e: any) {
     return {
@@ -154,3 +177,17 @@ export const handler = async (event: any) => {
     };
   }
 };
+
+function successResponse(data: ArrayBuffer, baseName: string, ext: string, service: string) {
+  return {
+    statusCode: 200,
+    headers: {
+      ...CORS_HEADERS,
+      'Content-Type': 'application/octet-stream',
+      'Content-Disposition': `attachment; filename="${baseName}.${ext}"`,
+      'X-Conversion-Service': service,
+    },
+    body: Buffer.from(data).toString('base64'),
+    isBase64Encoded: true,
+  };
+}

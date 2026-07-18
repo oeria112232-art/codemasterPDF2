@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 import { cloudConvert, pdfCoConvert, convertFleet, serverConvert } from '../lib/external-apis';
+import { generateId } from '../lib/security';
 
 // Lazy-loaded heavy dependencies — loaded on demand to keep initial chunk small
 const lazyMammoth = async () => (await import('mammoth')).default;
@@ -191,7 +192,7 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                         // validate image type?
                         if (f.type.startsWith('image/')) {
                             loadedImages.push({
-                                id: Math.random().toString(36).substr(2, 9),
+                                id: generateId(),
                                 file: f,
                                 preview: URL.createObjectURL(f)
                             });
@@ -1054,6 +1055,22 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
     const processOfficeToPdf = async () => {
         const file = initialFiles[0];
+
+        const outputExt = toolType === 'powerpoint-to-pdf' ? 'pdf' : 'pdf';
+        const serverResult = await serverConvert(file, outputExt, setProgress);
+        if (serverResult) {
+            saveAs(serverResult.blob, `${file.name.replace(/\.[^/.]+$/, '')}.pdf`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
+        const cfResult = await convertFleet(file, 'pdf', setProgress);
+        if (cfResult) {
+            saveAs(cfResult, `${file.name.replace(/\.[^/.]+$/, '')}.pdf`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
         const buffer = await file.arrayBuffer();
         const pdfDoc = await PDFDocument.create();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
