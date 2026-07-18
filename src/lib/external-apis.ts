@@ -5,6 +5,67 @@
 
 const PROXY_BASE = '/.netlify/functions/proxy';
 
+// ─── ConvertFleet (Best free option — no registration needed) ────
+// Free: 200 credits, then $15/mo for 1500 credits
+// No API key required for basic use!
+// Sign up (optional): https://convertfleet.com/signup
+
+export async function convertFleet(
+  file: File,
+  outputFormat: string,
+  onProgress?: (pct: number) => void
+): Promise<Blob | null> {
+  try {
+    onProgress?.(10);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('to', outputFormat);
+
+    // Try with API key first (higher limits), then without
+    const apiKey = import.meta.env.VITE_CONVERTFLEET_API_KEY;
+    const headers: Record<string, string> = {};
+    if (apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+    }
+
+    onProgress?.(30);
+    const res = await fetch('https://api.convertfleet.com/v1/convert', {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+
+    onProgress?.(70);
+    if (!res.ok) {
+      console.warn(`ConvertFleet error: ${res.status}`);
+      return null;
+    }
+
+    // Response can be JSON with download_url or direct binary
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      if (data.download_url) {
+        onProgress?.(90);
+        const downloadRes = await fetch(data.download_url);
+        const blob = await downloadRes.blob();
+        onProgress?.(100);
+        return blob;
+      }
+      return null;
+    }
+
+    // Direct binary response
+    const blob = await res.blob();
+    onProgress?.(100);
+    return blob;
+  } catch (e) {
+    console.warn('ConvertFleet failed:', e);
+    return null;
+  }
+}
+
 // ─── CloudConvert (PDF→Word, PDF→PPT) ────────────────────────────
 // Free: 5 conversions/day, 100MB limit
 // Sign up: https://cloudconvert.com/ → API Settings
@@ -302,13 +363,17 @@ export async function autoConvert(
   targetFormat: string,
   onProgress?: (pct: number) => void
 ): Promise<{ provider: string; blob: Blob } | null> {
-  // Try CloudConvert for Word/PPT
+  // 1. Try ConvertFleet first (free, no registration, 177+ formats)
+  const cfResult = await convertFleet(file, targetFormat, onProgress);
+  if (cfResult) return { provider: 'convertfleet', blob: cfResult };
+
+  // 2. Try CloudConvert for Word/PPT (higher quality, needs API key)
   if (['docx', 'pptx'].includes(targetFormat)) {
     const result = await cloudConvert(file, targetFormat, onProgress);
     if (result) return { provider: 'cloudconvert', blob: result };
   }
 
-  // Try PDF.co for Excel
+  // 3. Try PDF.co for Excel (needs API key)
   if (targetFormat === 'xlsx') {
     const result = await pdfCoConvert(file, 'excel', onProgress);
     if (result) return { provider: 'pdfco', blob: result };
@@ -320,6 +385,7 @@ export async function autoConvert(
 // ─── Check which services are configured ─────────────────────────
 export function getAvailableServices() {
   return {
+    convertfleet: true, // No API key required
     cloudconvert: !!import.meta.env.VITE_CLOUDCONVERT_API_KEY,
     pdfco: !!import.meta.env.VITE_PDFCO_API_KEY,
     groq: !!import.meta.env.VITE_GROQ_API_KEY,

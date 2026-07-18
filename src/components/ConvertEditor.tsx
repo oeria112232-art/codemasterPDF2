@@ -8,7 +8,7 @@ import { PDFDocument, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
-import { cloudConvert, pdfCoConvert } from '../lib/external-apis';
+import { cloudConvert, pdfCoConvert, convertFleet } from '../lib/external-apis';
 
 // Lazy-loaded heavy dependencies — loaded on demand to keep initial chunk small
 const lazyMammoth = async () => (await import('mammoth')).default;
@@ -584,10 +584,18 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
     const processPdfToWord = async () => {
         if (!pdfProxy) return;
 
-        // Try CloudConvert first for higher quality
-        const externalResult = await cloudConvert(initialFiles[0], 'docx', setProgress);
-        if (externalResult) {
-            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.docx`);
+        // Try ConvertFleet first (free, no registration)
+        const cfResult = await convertFleet(initialFiles[0], 'docx', setProgress);
+        if (cfResult) {
+            saveAs(cfResult, `${initialFiles[0].name.replace('.pdf', '')}.docx`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
+        // Try CloudConvert next (needs API key)
+        const ccResult = await cloudConvert(initialFiles[0], 'docx', setProgress);
+        if (ccResult) {
+            saveAs(ccResult, `${initialFiles[0].name.replace('.pdf', '')}.docx`);
             showToast(t('convertEditor.cloudConvertSuccess'), 'success');
             return;
         }
@@ -828,10 +836,18 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
     const processPdfToExcel = async () => {
         if (!pdfProxy) return;
 
-        // Try PDF.co first for higher quality
-        const externalResult = await pdfCoConvert(initialFiles[0], 'excel', setProgress);
-        if (externalResult) {
-            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.xlsx`);
+        // Try ConvertFleet first (free, no registration)
+        const cfResult = await convertFleet(initialFiles[0], 'xlsx', setProgress);
+        if (cfResult) {
+            saveAs(cfResult, `${initialFiles[0].name.replace('.pdf', '')}.xlsx`);
+            showToast(t('convertEditor.pdfCoSuccess'), 'success');
+            return;
+        }
+
+        // Try PDF.co next (needs API key)
+        const pcResult = await pdfCoConvert(initialFiles[0], 'excel', setProgress);
+        if (pcResult) {
+            saveAs(pcResult, `${initialFiles[0].name.replace('.pdf', '')}.xlsx`);
             showToast(t('convertEditor.pdfCoSuccess'), 'success');
             return;
         }
@@ -922,10 +938,18 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
     const processPdfToPowerPoint = async () => {
         if (!pdfProxy) throw new Error('PDF not loaded');
 
-        // Try CloudConvert first for higher quality
-        const externalResult = await cloudConvert(initialFiles[0], 'pptx', setProgress);
-        if (externalResult) {
-            saveAs(externalResult, `${initialFiles[0].name.replace('.pdf', '')}.pptx`);
+        // Try ConvertFleet first (free, no registration)
+        const cfResult = await convertFleet(initialFiles[0], 'pptx', setProgress);
+        if (cfResult) {
+            saveAs(cfResult, `${initialFiles[0].name.replace('.pdf', '')}.pptx`);
+            showToast(t('convertEditor.cloudConvertSuccess'), 'success');
+            return;
+        }
+
+        // Try CloudConvert next (needs API key)
+        const ccResult = await cloudConvert(initialFiles[0], 'pptx', setProgress);
+        if (ccResult) {
+            saveAs(ccResult, `${initialFiles[0].name.replace('.pdf', '')}.pptx`);
             showToast(t('convertEditor.cloudConvertSuccess'), 'success');
             return;
         }
