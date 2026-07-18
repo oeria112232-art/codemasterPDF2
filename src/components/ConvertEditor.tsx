@@ -1132,7 +1132,15 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
 
         if (toolType === 'word-to-pdf') {
             mammothLib = mammothLib || await lazyMammoth();
-            const result = await mammothLib.convertToHtml({ arrayBuffer: buffer });
+            let result;
+            try {
+                result = await mammothLib.convertToHtml({ arrayBuffer: buffer });
+            } catch {
+                throw new Error(t('convertEditor.invalidDocx', 'File is not a valid DOCX. Please upload a .docx file.'));
+            }
+            if (!result.value || result.value.trim() === '<html><head></head><body></body></html>') {
+                throw new Error(t('convertEditor.emptyDocument', 'Document appears empty or unsupported.'));
+            }
             const parser = new DOMParser();
             const doc = parser.parseFromString(result.value, 'text/html');
 
