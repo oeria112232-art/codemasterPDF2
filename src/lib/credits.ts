@@ -55,6 +55,11 @@ export const TOOL_COSTS: ToolCost[] = [
   { toolId: 'ai-summarize', name: 'AI Summarize', credits: 50, isFree: false, description: 'Summarize PDF with AI' },
   { toolId: 'contract-analyzer', name: 'Contract Analyzer', credits: 100, isFree: false, description: 'Analyze contracts with AI' },
   { toolId: 'batch-process', name: 'Batch Process', credits: 2, isFree: false, description: 'Process multiple files at once (per file)' },
+  { toolId: 'metadata-editor', name: 'Metadata Editor', credits: 3, isFree: false, description: 'Edit PDF title, author, keywords' },
+  { toolId: 'flatten-pdf', name: 'Flatten PDF', credits: 5, isFree: false, description: 'Remove interactive form fields' },
+  { toolId: 'ocr-pdf', name: 'OCR PDF', credits: 15, isFree: false, description: 'Extract text from scanned PDFs' },
+  { toolId: 'fill-forms', name: 'Fill PDF Forms', credits: 10, isFree: false, description: 'Fill interactive PDF form fields' },
+  { toolId: 'delete-pages', name: 'Delete Pages', credits: 5, isFree: false, description: 'Remove pages from PDF' },
 ];
 
 export function getToolCost(toolId: string): ToolCost | undefined {

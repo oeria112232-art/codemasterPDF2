@@ -1176,5 +1176,70 @@
         "answerPrefix": "   الإجابة: ",
         "explanationPrefix": "   التفسير: ",
         "noData": "لم يتم العثور على بيانات أسئلة لهذا الامتحان."
+    },
+    "metadataEditor": {
+        "badge": "خصائص PDF",
+        "title": "تعديل بيانات PDF الوصفية",
+        "description": "تغيير العنوان والمؤلف والكلمات المفتاحية وخصائص PDF الأخرى",
+        "titleLabel": "العنوان",
+        "authorLabel": "المؤلف",
+        "subjectLabel": "الموضوع",
+        "keywordsLabel": "الكلمات المفتاحية (مفصولة بفاصلة)",
+        "creatorLabel": "المُنشئ",
+        "producerLabel": "المُنتج"
+    },
+    "flattenPdf": {
+        "badge": "نماذج PDF",
+        "title": "تسطيح PDF",
+        "description": "إزالة حقول النموذج التفاعلية ودمج المحتوى في الصفحات نهائياً",
+        "flattening": "جاري تسطيح حقول النموذج...",
+        "success": "تم تسطيح حقول النموذج بنجاح",
+        "complete": "اكتمل",
+        "fieldsFlattened": "تم تسطيح حقول النموذج ودمجها في محتوى الصفحة",
+        "noFieldsFound": "لم يتم العثور على حقول نموذج تفاعلية — تم حفظ PDF نظيف",
+        "noFields": "لم يتم العثور على حقول نموذج — تم حفظ نسخة نظيفة",
+        "processAnother": "معالجة ملف آخر"
+    },
+    "ocrPdf": {
+        "badge": "التعرف على النص",
+        "title": "OCR لـ PDF",
+        "description": "استخراج النص من ملفات PDF الممسوحة والصور باستخدام التعرف الضوئي على الأحرف",
+        "processing": "جاري معالجة OCR...",
+        "complete": "تم استخراج النص",
+        "copyText": "نسخ النص",
+        "downloadText": "تحميل كملف نصي",
+        "charCount": "حرف مستخرج",
+        "processingPage": "جاري معالجة الصفحة {{current}} من {{total}}...",
+        "selectLanguage": "لغة OCR",
+        "english": "الإنجليزية",
+        "arabic": "العربية",
+        "french": "الفرنسية",
+        "spanish": "الإسبانية",
+        "german": "الألمانية",
+        "processAnother": "معالجة ملف آخر"
+    },
+    "fillForms": {
+        "badge": "نماذج PDF",
+        "title": "تعبئة نماذج PDF",
+        "description": "تعبئة حقول نماذج PDF التفاعلية بسهولة",
+        "noFields": "لم يتم اكتشاف حقول نموذج في ملف PDF هذا",
+        "filling": "جاري حفظ النموذج المملوء...",
+        "complete": "تم تعبئة النموذج",
+        "fieldsFound": "حقول نموذج تم العثور عليها",
+        "downloadFilled": "تحميل PDF المملوء",
+        "processAnother": "معالجة ملف آخر"
+    },
+    "deletePages": {
+        "badge": "إدارة الصفحات",
+        "title": "حذف صفحات PDF",
+        "description": "إزالة الصفحات غير المرغوب فيها من مستند PDF الخاص بك",
+        "selectPages": "انقر على الصفحات لحذفها",
+        "selected": "محددة",
+        "clearSelection": "مسح التحديد",
+        "deleteSelected": "حذف المحدد",
+        "complete": "اكتمل",
+        "pagesDeleted": "صفحات تم حذفها",
+        "processAnother": "معالجة ملف آخر",
+        "cannotDeleteAll": "لا يمكن حذف جميع الصفحات"
     }
 }

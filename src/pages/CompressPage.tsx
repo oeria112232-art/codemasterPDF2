@@ -53,7 +53,10 @@ export function CompressPage() {
         compressedDoc = await compressBasic(sourceDoc);
       }
 
-      const pdfBytes = await compressedDoc.save({ useObjectStreams: true });
+      const saveOptions = compressionLevel === 'basic'
+        ? { useObjectStreams: true }
+        : { useObjectStreams: true };
+      const pdfBytes = await compressedDoc.save(saveOptions);
       const compressedSize = pdfBytes.length;
       setStats({ original: originalSize, compressed: compressedSize });
 
@@ -104,7 +107,7 @@ export function CompressPage() {
           const canvas = new OffscreenCanvas(vp.width, vp.height);
           const ctx = canvas.getContext('2d')!;
           await jsPage.render({ canvasContext: ctx as any, viewport: vp }).promise;
-          const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.3 });
+          const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.25 });
           const buf = await blob.arrayBuffer();
           const img = await compressedDoc.embedJpg(new Uint8Array(buf));
           const { width, height } = page.getSize();
@@ -119,7 +122,9 @@ export function CompressPage() {
   const compressRecommended = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
     const compressedDoc = await PDFDocument.create();
     compressedDoc.setTitle(sourceDoc.getTitle() || '');
-    compressedDoc.setAuthor('');
+    compressedDoc.setAuthor(sourceDoc.getAuthor() || '');
+    compressedDoc.setSubject(sourceDoc.getSubject() || '');
+    compressedDoc.setKeywords(sourceDoc.getKeywords() || []);
     compressedDoc.setProducer('CodeMaster PDF Optimizer');
     compressedDoc.setCreator('CodeMaster');
 
@@ -138,7 +143,7 @@ export function CompressPage() {
           (fn: number) => fn === pdfjsLib.OPS.paintImageXObject
         );
         if (hasImages) {
-          const vp = jsPage.getViewport({ scale: 0.75 });
+          const vp = jsPage.getViewport({ scale: 1.0 });
           const canvas = new OffscreenCanvas(vp.width, vp.height);
           const ctx = canvas.getContext('2d')!;
           await jsPage.render({ canvasContext: ctx as any, viewport: vp }).promise;
@@ -158,6 +163,8 @@ export function CompressPage() {
     const compressedDoc = await PDFDocument.create();
     compressedDoc.setTitle(sourceDoc.getTitle() || '');
     compressedDoc.setAuthor(sourceDoc.getAuthor() || '');
+    compressedDoc.setSubject(sourceDoc.getSubject() || '');
+    compressedDoc.setKeywords(sourceDoc.getKeywords() || []);
     compressedDoc.setProducer('CodeMaster PDF Optimizer');
     compressedDoc.setCreator('CodeMaster');
 

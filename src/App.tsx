@@ -46,6 +46,11 @@ const CropToolPage = lazy(() => import('./pages/CropToolPage').then(module => ({
 const RedactToolPage = lazy(() => import('./pages/RedactToolPage').then(module => ({ default: module.RedactToolPage })));
 const SignToolPage = lazy(() => import('./pages/SignToolPage').then(module => ({ default: module.SignToolPage })));
 const WatermarkToolPage = lazy(() => import('./pages/WatermarkToolPage').then(module => ({ default: module.WatermarkToolPage })));
+const MetadataEditorPage = lazy(() => import('./pages/MetadataEditorPage').then(module => ({ default: module.MetadataEditorPage })));
+const FlattenPdfPage = lazy(() => import('./pages/FlattenPdfPage').then(module => ({ default: module.FlattenPdfPage })));
+const OcrPdfPage = lazy(() => import('./pages/OcrPdfPage').then(module => ({ default: module.OcrPdfPage })));
+const FillFormsPage = lazy(() => import('./pages/FillFormsPage').then(module => ({ default: module.FillFormsPage })));
+const DeletePagesPage = lazy(() => import('./pages/DeletePagesPage').then(module => ({ default: module.DeletePagesPage })));
 import { AdminLayout } from './components/AdminLayout';
 
 function PageLoader() {
@@ -121,6 +126,13 @@ function App() {
                     <Route path="/batch-process" element={<BatchProcessPage />} />
                     <Route path="/ai-summarize" element={<AiSummarizePage />} />
                     <Route path="/contract-analyzer" element={<ContractAnalyzerPage />} />
+
+                    {/* New Professional Tools */}
+                    <Route path="/metadata-editor" element={<MetadataEditorPage />} />
+                    <Route path="/flatten-pdf" element={<FlattenPdfPage />} />
+                    <Route path="/ocr-pdf" element={<OcrPdfPage />} />
+                    <Route path="/fill-forms" element={<FillFormsPage />} />
+                    <Route path="/delete-pages" element={<DeletePagesPage />} />
                   </Route>
 
                   <Route path="/exam-generator" element={<ExamLanding />} />
