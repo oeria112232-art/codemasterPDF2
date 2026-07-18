@@ -19,15 +19,15 @@ export function ConvertPage() {
   const [urlMode, setUrlMode] = useState(false);
 
   const toolConfig: Record<string, any> = {
-    'pdf-to-jpg': { icon: FileImage, translationKey: 'pdfToJpg', color: 'bg-amber-500' },
-    'jpg-to-pdf': { icon: Image, translationKey: 'jpgToPdf', color: 'bg-rose-500' },
-    'html-to-pdf': { icon: Globe, translationKey: 'htmlToPdf', color: 'bg-slate-700' },
-    'pdf-to-word': { icon: FileText, translationKey: 'pdfToWord', color: 'bg-blue-600', experimental: true },
-    'word-to-pdf': { icon: FileType, translationKey: 'wordToPdf', color: 'bg-indigo-600', experimental: true },
-    'pdf-to-excel': { icon: FileSpreadsheet, translationKey: 'pdfToExcel', color: 'bg-emerald-600', experimental: true },
-    'excel-to-pdf': { icon: FileSpreadsheet, translationKey: 'excelToPdf', color: 'bg-emerald-700', experimental: true },
-    'pdf-to-powerpoint': { icon: Presentation, translationKey: 'pdfToPowerPoint', color: 'bg-orange-600', experimental: true },
-    'powerpoint-to-pdf': { icon: Presentation, translationKey: 'powerPointToPdf', color: 'bg-orange-700', experimental: true },
+    'pdf-to-jpg': { icon: FileImage, translationKey: 'pdfToJpg', color: 'bg-amber-500', accept: '.pdf' },
+    'jpg-to-pdf': { icon: Image, translationKey: 'jpgToPdf', color: 'bg-rose-500', accept: '.jpg,.jpeg,.png' },
+    'html-to-pdf': { icon: Globe, translationKey: 'htmlToPdf', color: 'bg-slate-700', accept: '.html,.htm' },
+    'pdf-to-word': { icon: FileText, translationKey: 'pdfToWord', color: 'bg-blue-600', experimental: true, accept: '.pdf' },
+    'word-to-pdf': { icon: FileType, translationKey: 'wordToPdf', color: 'bg-indigo-600', experimental: true, accept: '.doc,.docx' },
+    'pdf-to-excel': { icon: FileSpreadsheet, translationKey: 'pdfToExcel', color: 'bg-emerald-600', experimental: true, accept: '.pdf' },
+    'excel-to-pdf': { icon: FileSpreadsheet, translationKey: 'excelToPdf', color: 'bg-emerald-700', experimental: true, accept: '.xls,.xlsx,.csv' },
+    'pdf-to-powerpoint': { icon: Presentation, translationKey: 'pdfToPowerPoint', color: 'bg-orange-600', experimental: true, accept: '.pdf' },
+    'powerpoint-to-pdf': { icon: Presentation, translationKey: 'powerPointToPdf', color: 'bg-orange-700', experimental: true, accept: '.ppt,.pptx' },
   };
 
   const config = toolConfig[path] || toolConfig['pdf-to-jpg'];
@@ -78,6 +78,7 @@ export function ConvertPage() {
         color={config.color}
         onProcess={handleProcess}
         customZone={htmlToPdfZone}
+        accept={config.accept}
       />
 
       {config.experimental && (

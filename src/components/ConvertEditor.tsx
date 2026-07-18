@@ -229,23 +229,27 @@ export function ConvertEditor({ files: initialFiles, toolType, onClose, defaultU
                     if (initialFiles.length > 0) {
                         const buffer = await initialFiles[0].arrayBuffer();
                         if (toolType === 'word-to-pdf') {
-                            const mammoth = await lazyMammoth();
-                            const res = await mammoth.convertToHtml({ arrayBuffer: buffer });
-                            const isArabic = /[\u0600-\u06FF]/.test(res.value);
-                            setHtmlContent(`
-                                <!DOCTYPE html>
-                                <html dir="${isArabic ? 'rtl' : 'ltr'}">
-                                <body style="font-family: ${isArabic ? 'Arial, sans-serif' : 'system-ui, sans-serif'}; padding: 25px; line-height: 1.6; color: #333;">
-                                    <style>
-                                        img { max-width: 100%; height: auto; display: block; margin: 10px 0; border-radius: 4px; }
-                                        table { width: 100%; border-collapse: collapse; margin: 1em 0; }
-                                        td, th { border: 1px solid #e2e8f0; padding: 8px; text-align: ${isArabic ? 'right' : 'left'}; }
-                                        p { margin-bottom: 0.8em; }
-                                    </style>
-                                    ${res.value}
-                                </body>
-                                </html>
-                            `);
+                            try {
+                                const mammoth = await lazyMammoth();
+                                const res = await mammoth.convertToHtml({ arrayBuffer: buffer });
+                                const isArabic = /[\u0600-\u06FF]/.test(res.value);
+                                setHtmlContent(`
+                                    <!DOCTYPE html>
+                                    <html dir="${isArabic ? 'rtl' : 'ltr'}">
+                                    <body style="font-family: ${isArabic ? 'Arial, sans-serif' : 'system-ui, sans-serif'}; padding: 25px; line-height: 1.6; color: #333;">
+                                        <style>
+                                            img { max-width: 100%; height: auto; display: block; margin: 10px 0; border-radius: 4px; }
+                                            table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+                                            td, th { border: 1px solid #e2e8f0; padding: 8px; text-align: ${isArabic ? 'right' : 'left'}; }
+                                            p { margin-bottom: 0.8em; }
+                                        </style>
+                                        ${res.value}
+                                    </body>
+                                    </html>
+                                `);
+                            } catch {
+                                throw new Error(t('convertEditor.invalidDocx', 'File is not a valid DOCX. Please upload a .docx file.'));
+                            }
                         } else if (toolType === 'powerpoint-to-pdf') {
                             try {
                                 const JSZip = await lazyJszip();
