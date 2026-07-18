@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { FormInput, Loader2, Download, CheckCircle, RotateCcw } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
+
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
 
 interface FieldInfo {
   name: string;
@@ -31,6 +36,7 @@ export function FillFormsPage() {
     setPdfBytes(buf);
 
     try {
+      const { PDFDocument } = await loadPdfLib();
       const doc = await PDFDocument.load(buf, { ignoreEncryption: true } as any);
       const form = doc.getForm();
       const pdfFields = form.getFields();
@@ -64,6 +70,7 @@ export function FillFormsPage() {
     if (!pdfBytes) return;
     try {
       setLoading(true);
+      const { PDFDocument } = await loadPdfLib();
       const doc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true } as any);
       const form = doc.getForm();
 

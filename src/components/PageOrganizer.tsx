@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
 import {
     X, Loader2, GripVertical, Trash2,
     RotateCw, RotateCcw, ZoomIn, ZoomOut, CheckCircle2
 } from 'lucide-react';
-import { PDFDocument, degrees } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
+
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface PageOrganizerProps {
     file: File;
@@ -33,6 +46,7 @@ export function PageOrganizer({ file, toolType, onClose }: PageOrganizerProps) {
     useEffect(() => {
         const loadThumbnails = async () => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                 const thumbs: PageData[] = [];
@@ -94,6 +108,7 @@ export function PageOrganizer({ file, toolType, onClose }: PageOrganizerProps) {
     const handleSave = async () => {
         try {
             setIsSaving(true);
+            const { PDFDocument, degrees } = await loadPdfLib();
             const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
             const newPdf = await PDFDocument.create();
 

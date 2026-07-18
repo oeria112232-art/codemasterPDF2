@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import {
     X, Type, Crop as CropIcon,
     ShieldAlert, Loader2, Trash2, Check,
@@ -7,14 +7,25 @@ import {
     Sparkles, Layers,
     Maximize2, Settings2
 } from 'lucide-react';
-import { PDFDocument, rgb, StandardFonts } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 import { generateId } from '../lib/security';
 
-// Setup worker - use .js copy to avoid MIME type issues on hosting
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface VisualEditorProps {
     file: File;
@@ -41,7 +52,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
     const { t } = useTranslation();
     const { showToast } = useToast();
     const [loading, setLoading] = useState(true);
-    const [pdfProxy, setPdfProxy] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+    const [pdfProxy, setPdfProxy] = useState<PDFDocumentProxy | null>(null);
     const [items, setItems] = useState<PageItem[]>([]);
     const [history, setHistory] = useState<PageItem[][]>([]);
     const [redoStack, setRedoStack] = useState<PageItem[][]>([]);
@@ -80,6 +91,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
     useEffect(() => {
         const loadPdf = async () => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                 setPdfProxy(pdf);
@@ -154,6 +166,7 @@ export function VisualEditor({ file, toolType, onClose }: VisualEditorProps) {
     const handleSave = async () => {
         try {
             setIsSaving(true);
+            const { PDFDocument, rgb, StandardFonts } = await loadPdfLib();
             const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
             const pages = pdfDoc.getPages();
             const standardFont = await pdfDoc.embedFont(StandardFonts.Helvetica);

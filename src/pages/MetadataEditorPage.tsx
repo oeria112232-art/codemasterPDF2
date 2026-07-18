@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { FileSignature, Loader2, Save, RotateCcw } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
+
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
 
 export function MetadataEditorPage() {
   const { t } = useTranslation();
@@ -23,6 +28,7 @@ export function MetadataEditorPage() {
     setFileName(files[0].name);
     const buf = await files[0].arrayBuffer();
     setPdfBytes(buf);
+    const { PDFDocument } = await loadPdfLib();
     const doc = await PDFDocument.load(buf, { ignoreEncryption: true } as any);
     setMetadata({
       title: doc.getTitle() || '',
@@ -39,6 +45,7 @@ export function MetadataEditorPage() {
     if (!pdfBytes || !metadata) return;
     try {
       setLoading(true);
+      const { PDFDocument } = await loadPdfLib();
       const doc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true } as any);
       doc.setTitle(metadata.title);
       doc.setAuthor(metadata.author);

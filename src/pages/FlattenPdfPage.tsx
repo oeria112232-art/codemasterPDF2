@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { Layers, Loader2, CheckCircle, RotateCcw } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
+
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
 
 export function FlattenPdfPage() {
   const { t } = useTranslation();
@@ -18,6 +23,7 @@ export function FlattenPdfPage() {
     setResult(null);
     try {
       const buf = await files[0].arrayBuffer();
+      const { PDFDocument } = await loadPdfLib();
       const doc = await PDFDocument.load(buf, { ignoreEncryption: true } as any);
       const form = doc.getForm();
       const fields = form.getFields();

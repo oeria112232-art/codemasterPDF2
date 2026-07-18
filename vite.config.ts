@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
+import { compression } from 'vite-plugin-compression2';
 
 function pdfWorkerCopy(): import('vite').Plugin {
   return {
@@ -17,7 +18,7 @@ function pdfWorkerCopy(): import('vite').Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), pdfWorkerCopy()],
+  plugins: [react(), pdfWorkerCopy(), compression()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -28,5 +29,15 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1100,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'pdf-lib': ['@cantoo/pdf-lib'],
+          'pdfjs': ['pdfjs-dist'],
+          'xlsx-chunk': ['xlsx'],
+          'pptx-chunk': ['pptxgenjs'],
+        },
+      },
+    },
   },
 });

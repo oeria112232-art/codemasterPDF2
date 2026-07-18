@@ -1,18 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
 import {
     X, Loader2, Save,
     ImageIcon, Bold, Italic,
     Grid3X3, RotateCw, Plus,
     Type as FontIcon, ZoomIn, Droplets
 } from 'lucide-react';
-import { PDFDocument, rgb, StandardFonts, degrees } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 
-// Setup worker - use .js copy to avoid MIME type issues on hosting
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface WatermarkEditorProps {
     file: File;
@@ -50,6 +60,7 @@ export function WatermarkEditor({ file, onClose }: WatermarkEditorProps) {
     useEffect(() => {
         const loadPdf = async () => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
 
@@ -87,6 +98,7 @@ export function WatermarkEditor({ file, onClose }: WatermarkEditorProps) {
     const handleApply = async () => {
         try {
             setIsSaving(true);
+            const { PDFDocument, rgb, StandardFonts, degrees } = await loadPdfLib();
             const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
             const pages = pdfDoc.getPages();
             const font = await pdfDoc.embedFont(isBold ? StandardFonts.HelveticaBold : StandardFonts.Helvetica);

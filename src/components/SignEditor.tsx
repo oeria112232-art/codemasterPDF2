@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import {
     X, Type, Loader2, Trash2, Undo2,
     ZoomIn, ZoomOut, Move, Settings2,
@@ -7,14 +7,26 @@ import {
     Save, Download, FileBadge, RotateCcw, PenTool, Upload as UploadIcon,
     ChevronLeft, Check
 } from 'lucide-react';
-import { PDFDocument, rgb, StandardFonts, degrees } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { generateId } from '../lib/security';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface PageItem {
     id: string;
@@ -53,7 +65,7 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
     const isRtl = i18n.language === 'ar';
 
     const [loading, setLoading] = useState(true);
-    const [pdfProxy, setPdfProxy] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+    const [pdfProxy, setPdfProxy] = useState<PDFDocumentProxy | null>(null);
     const [numPages, setNumPages] = useState(0);
     const [items, setItems] = useState<PageItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
@@ -72,6 +84,7 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
     useEffect(() => {
         const loadPdf = async () => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                 setPdfProxy(pdf);
@@ -182,6 +195,7 @@ export function SignEditor({ file, onClose }: SignEditorProps) {
     const handleSave = async () => {
         try {
             setIsSaving(true);
+            const { PDFDocument, rgb, StandardFonts, degrees } = await loadPdfLib();
             const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
             const pages = pdfDoc.getPages();
             const standardFont = await pdfDoc.embedFont(StandardFonts.Helvetica);

@@ -9,13 +9,25 @@ import {
   Gauge,
   Sparkles
 } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
+import type { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
-import * as pdfjsLib from 'pdfjs-dist';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 export function CompressPage() {
   const { t } = useTranslation();
@@ -40,6 +52,7 @@ export function CompressPage() {
     const originalSize = file.size;
 
     try {
+      const { PDFDocument } = await loadPdfLib();
       const arrayBuffer = await file.arrayBuffer();
       const sourceDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true } as any);
 
@@ -80,6 +93,7 @@ export function CompressPage() {
   };
 
   const compressExtreme = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const { PDFDocument } = await loadPdfLib();
     const compressedDoc = await PDFDocument.create();
     compressedDoc.setTitle('');
     compressedDoc.setAuthor('');
@@ -93,6 +107,7 @@ export function CompressPage() {
     copiedPages.forEach(page => compressedDoc.addPage(page));
 
     try {
+      const pdfjsLib = await loadPdfjs();
       const arrayBuffer = await sourceDoc.save();
       const pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
       for (let i = 0; i < compressedDoc.getPageCount(); i++) {
@@ -120,6 +135,7 @@ export function CompressPage() {
   };
 
   const compressRecommended = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const { PDFDocument } = await loadPdfLib();
     const compressedDoc = await PDFDocument.create();
     compressedDoc.setTitle(sourceDoc.getTitle() || '');
     compressedDoc.setAuthor(sourceDoc.getAuthor() || '');
@@ -133,6 +149,7 @@ export function CompressPage() {
     copiedPages.forEach(page => compressedDoc.addPage(page));
 
     try {
+      const pdfjsLib = await loadPdfjs();
       const arrayBuffer = await sourceDoc.save();
       const pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
       for (let i = 0; i < compressedDoc.getPageCount(); i++) {
@@ -160,6 +177,7 @@ export function CompressPage() {
   };
 
   const compressBasic = async (sourceDoc: PDFDocument): Promise<PDFDocument> => {
+    const { PDFDocument } = await loadPdfLib();
     const compressedDoc = await PDFDocument.create();
     compressedDoc.setTitle(sourceDoc.getTitle() || '');
     compressedDoc.setAuthor(sourceDoc.getAuthor() || '');

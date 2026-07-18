@@ -1,19 +1,34 @@
 import { useEffect, useState, useCallback } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import {
     X, Loader2,
     Rows, LayoutGrid, Maximize2,
     Plus, Trash2,
     Scissors, CheckCircle2, Circle
 } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
-import JSZip from 'jszip';
+let _jszip: typeof import('jszip') | null = null;
+async function loadJSZip() {
+  if (!_jszip) _jszip = await import('jszip');
+  return _jszip.default;
+}
 
-// Setup worker - use .js copy to avoid MIME type issues on hosting
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface SplitRange {
     id: string;
@@ -33,7 +48,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
 
     const [loading, setLoading] = useState(true);
     const [numPages, setNumPages] = useState(0);
-    const [pdfProxy, setPdfProxy] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+    const [pdfProxy, setPdfProxy] = useState<PDFDocumentProxy | null>(null);
     const [thumbnails, setThumbnails] = useState<Record<number, string>>({});
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -49,6 +64,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
     useEffect(() => {
         const loadPdf = async () => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                 setPdfProxy(pdf);
@@ -135,6 +151,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
     const handleSplit = async () => {
         try {
             setIsProcessing(true);
+            const { PDFDocument } = await loadPdfLib();
             const originalBuffer = await file.arrayBuffer();
             const srcDoc = await PDFDocument.load(originalBuffer);
 
@@ -161,7 +178,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
                     const blob = new Blob([await mainPdf.save() as any]);
                     saveAs(blob, `split_merged_${file.name}`);
                 } else {
-                    const zip = new JSZip();
+                    const zip = new (await loadJSZip())();
                     for (let i = 0; i < actualRanges.length; i++) {
                         const range = actualRanges[i];
                         const newPdf = await PDFDocument.create();
@@ -188,7 +205,7 @@ export function SplitEditor({ file, onClose }: SplitEditorProps) {
                     const blob = new Blob([await mainPdf.save() as any]);
                     saveAs(blob, `extracted_pages_${file.name}`);
                 } else {
-                    const zip = new JSZip();
+                    const zip = new (await loadJSZip())();
                     // Export each page as separate PDF
                     for (const p of selectedPages) {
                         const newPdf = await PDFDocument.create();

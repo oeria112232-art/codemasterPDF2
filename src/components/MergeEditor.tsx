@@ -1,16 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
 import {
     X, Loader2, ArrowRight, Plus, Trash2, RotateCw,
     GripVertical, FileText, Combine, ArrowUp, ArrowDown
 } from 'lucide-react';
-import { PDFDocument, degrees } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useToast } from '../contexts/ToastContext';
 import { useTranslation } from 'react-i18next';
 
-// Setup worker - use .js copy to avoid MIME type issues on hosting
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 interface MergeFile {
     id: string;
@@ -50,6 +60,7 @@ export function MergeEditor({ files: initialFiles, onClose }: MergeEditorProps) 
             // Process thumbnails in background
             newFiles.forEach(async (mf) => {
                 try {
+                    const pdfjsLib = await loadPdfjs();
                     const buffer = await mf.file.arrayBuffer();
                     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                     const page = await pdf.getPage(1);
@@ -88,6 +99,7 @@ export function MergeEditor({ files: initialFiles, onClose }: MergeEditorProps) 
         // Process thumbnails
         newMergeFiles.forEach(async (mf) => {
             try {
+                const pdfjsLib = await loadPdfjs();
                 const buffer = await mf.file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
                 const page = await pdf.getPage(1);
@@ -115,6 +127,7 @@ export function MergeEditor({ files: initialFiles, onClose }: MergeEditorProps) 
 
         try {
             setProcessing(true);
+            const { PDFDocument, degrees } = await loadPdfLib();
             const mergedPdf = await PDFDocument.create();
 
             for (const mf of files) {

@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { Trash2, Loader2, CheckCircle, RotateCcw, X } from 'lucide-react';
-import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
-import * as pdfjsLib from 'pdfjs-dist';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+let _pdfLib: typeof import('@cantoo/pdf-lib') | null = null;
+async function loadPdfLib() {
+  if (!_pdfLib) _pdfLib = await import('@cantoo/pdf-lib');
+  return _pdfLib;
+}
+
+let _pdfjsLib: typeof import('pdfjs-dist') | null = null;
+async function loadPdfjs() {
+  if (!_pdfjsLib) {
+    _pdfjsLib = await import('pdfjs-dist');
+    _pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+  }
+  return _pdfjsLib;
+}
 
 export function DeletePagesPage() {
   const { t } = useTranslation();
@@ -26,6 +37,7 @@ export function DeletePagesPage() {
     setFileName(files[0].name);
     const buf = await files[0].arrayBuffer();
     setPdfBytes(buf);
+    const pdfjsLib = await loadPdfjs();
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
     setNumPages(pdf.numPages);
     const thumbs: string[] = [];
@@ -60,6 +72,7 @@ export function DeletePagesPage() {
     }
     setLoading(true);
     try {
+      const { PDFDocument } = await loadPdfLib();
       const doc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true } as any);
       const indices = Array.from(selected).sort((a, b) => b - a);
       for (const idx of indices) {
