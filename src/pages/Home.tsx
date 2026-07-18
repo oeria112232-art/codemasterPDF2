@@ -7,7 +7,7 @@ import {
   FileText, FileSpreadsheet, Presentation, FileType,
   MessageSquare, GitCompareArrows, Layers, ArrowRight, Star,
   ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users,
-  ScanText, FormInput, Trash2, FileEdit
+  ScanText, FormInput, Trash2, FileEdit, Minimize2
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
@@ -106,22 +106,11 @@ export function Home() {
       ]
     },
     {
-      id: "intelligence",
-      title: t('home.intelligenceSuite.title'),
-      description: t('home.intelligenceSuite.subtitle'),
-      tools: [
-        { icon: MessageSquare, title: t('home.intelligenceTools.pdfChat.title'), description: t('home.intelligenceTools.pdfChat.desc'), path: '/pdf-to-chat', color: 'bg-blue-500' },
-        { icon: GitCompareArrows, title: t('home.intelligenceTools.pdfCompare.title'), description: t('home.intelligenceTools.pdfCompare.desc'), path: '/pdf-to-compare', color: 'bg-purple-500' },
-        { icon: Layers, title: t('home.intelligenceTools.batchProcess.title'), description: t('home.intelligenceTools.batchProcess.desc'), path: '/batch-process', color: 'bg-amber-500' },
-        { icon: Sparkles, title: t('home.intelligenceTools.aiSummarize.title'), description: t('home.intelligenceTools.aiSummarize.desc'), path: '/ai-summarize', color: 'bg-violet-500' },
-        { icon: ShieldAlert, title: t('home.intelligenceTools.contractAnalyzer.title'), description: t('home.intelligenceTools.contractAnalyzer.desc'), path: '/contract-analyzer', color: 'bg-red-500' },
-      ]
-    },
-    {
       id: "professional",
       title: t('home.professionalSuite.title', 'Professional Tools'),
       description: t('home.professionalSuite.subtitle', 'Advanced PDF processing without AI'),
       tools: [
+        { icon: Layers, title: 'Batch Process', description: t('home.intelligenceTools.batchProcess.desc'), path: '/batch-process', color: 'bg-amber-500' },
         { icon: FileEdit, title: t('metadataEditor.title'), description: t('metadataEditor.description'), path: '/metadata-editor', color: 'bg-rose-500' },
         { icon: Layers, title: t('flattenPdf.title'), description: t('flattenPdf.description'), path: '/flatten-pdf', color: 'bg-rose-500' },
         { icon: ScanText, title: t('ocrPdf.title'), description: t('ocrPdf.description'), path: '/ocr-pdf', color: 'bg-indigo-500' },
@@ -195,11 +184,6 @@ export function Home() {
                 <p className="text-indigo-600 dark:text-indigo-400 font-semibold text-xs uppercase tracking-wider mb-2">{cat.title}</p>
                 <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{cat.description}</h2>
               </div>
-              {cat.id === 'intelligence' && (
-                <Link to="/dashboard" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1 transition-colors">
-                  {t('home.viewAll')} <ArrowRight className="w-4 h-4" />
-                </Link>
-              )}
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">

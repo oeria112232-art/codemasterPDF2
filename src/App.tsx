@@ -25,13 +25,9 @@ const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then(module =
 const ExamLanding = lazy(() => import('./pages/ExamGenerator/Home'));
 const ExamDashboard = lazy(() => import('./pages/ExamGenerator/Dashboard'));
 const ExamResults = lazy(() => import('./pages/ExamGenerator/Results'));
-const PdfChatPage = lazy(() => import('./pages/PdfChatPage').then(module => ({ default: module.PdfChatPage })));
-const PdfComparePage = lazy(() => import('./pages/PdfComparePage').then(module => ({ default: module.PdfComparePage })));
 const PricingPage = lazy(() => import('./pages/PricingPage').then(module => ({ default: module.PricingPage })));
 const DashboardPage = lazy(() => import('./pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
 const BatchProcessPage = lazy(() => import('./pages/BatchProcessPage').then(module => ({ default: module.BatchProcessPage })));
-const AiSummarizePage = lazy(() => import('./pages/AiSummarizePage').then(module => ({ default: module.AiSummarizePage })));
-const ContractAnalyzerPage = lazy(() => import('./pages/ContractAnalyzerPage').then(module => ({ default: module.ContractAnalyzerPage })));
 
 const MergeToolPage = lazy(() => import('./pages/MergeToolPage').then(module => ({ default: module.MergeToolPage })));
 const SplitToolPage = lazy(() => import('./pages/SplitToolPage').then(module => ({ default: module.SplitToolPage })));
@@ -121,11 +117,7 @@ function App() {
                     <Route path="/powerpoint-to-pdf" element={<ConvertPage />} />
 
                     {/* Intelligence Tools */}
-                    <Route path="/pdf-to-chat" element={<PdfChatPage />} />
-                    <Route path="/pdf-to-compare" element={<PdfComparePage />} />
                     <Route path="/batch-process" element={<BatchProcessPage />} />
-                    <Route path="/ai-summarize" element={<AiSummarizePage />} />
-                    <Route path="/contract-analyzer" element={<ContractAnalyzerPage />} />
 
                     {/* New Professional Tools */}
                     <Route path="/metadata-editor" element={<MetadataEditorPage />} />

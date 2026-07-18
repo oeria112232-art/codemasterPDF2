@@ -14,9 +14,10 @@ interface ToolPageProps {
   hideContent?: boolean;
   customZone?: ReactNode;
   accept?: string;
+  multiple?: boolean;
 }
 
-export function ToolPage({ icon: Icon, title, description, color, onProcess, hideContent = false, customZone, accept }: ToolPageProps) {
+export function ToolPage({ icon: Icon, title, description, color, onProcess, hideContent = false, customZone, accept, multiple }: ToolPageProps) {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const [files, setFiles] = useState<File[]>([]);
@@ -77,7 +78,7 @@ export function ToolPage({ icon: Icon, title, description, color, onProcess, hid
         <div className={`relative group ${hideContent ? "" : "mb-16"}`}>
           {!hideContent && <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-sky-600 rounded-[4rem] blur opacity-10 group-hover:opacity-20 transition duration-1000" />}
           <div className={`relative bg-white dark:bg-slate-900/50 rounded-[3.5rem] ${hideContent ? "" : "shadow-2xl border border-slate-100 dark:border-slate-800 p-4"}`}>
-            {customZone ? customZone : <FileUploadZone files={files} onFilesChange={setFiles} accept={accept} />}
+            {customZone ? customZone : <FileUploadZone files={files} onFilesChange={setFiles} accept={accept} multiple={multiple} />}
           </div>
         </div>
 

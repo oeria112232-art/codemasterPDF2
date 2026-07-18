@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ToolPage } from '../components/ToolPage';
 import { FormInput, Loader2, Download, CheckCircle, RotateCcw } from 'lucide-react';
 import { PDFDocument } from '@cantoo/pdf-lib';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../contexts/ToastContext';
-import * as pdfjsLib from 'pdfjs-dist';
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 interface FieldInfo {
   name: string;
@@ -104,13 +101,13 @@ export function FillFormsPage() {
 
   if (saved) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-500/20">
             <CheckCircle className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900 mb-2 uppercase">{t('fillForms.complete')}</h2>
-          <p className="text-slate-500 mb-8">{fields.length} {t('fillForms.fieldsFound')}</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 uppercase">{t('fillForms.complete')}</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-8">{fields.length} {t('fillForms.fieldsFound')}</p>
           <button onClick={() => { setFields([]); setValues({}); setPdfBytes(null); setSaved(false); setFileName(''); }}
             className="px-8 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 mx-auto">
             <RotateCcw className="w-4 h-4" /> {t('fillForms.processAnother')}
@@ -122,13 +119,11 @@ export function FillFormsPage() {
 
   if (fields.length > 0) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-slate-900 mb-2">{t('fillForms.title')}</h1>
-            <p className="text-slate-500 text-sm">{fileName} — {fields.length} {t('fillForms.fieldsFound')}</p>
-          </div>
-          <div className="bg-white rounded-[2rem] p-8 shadow-xl border border-slate-100 space-y-4">
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter text-center">{t('fillForms.title')}</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-center mb-8">{fileName} — {fields.length} {t('fillForms.fieldsFound')}</p>
+          <div className="bg-white dark:bg-slate-900/50 rounded-[3.5rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-8 space-y-4">
             {fields.map((field, i) => (
               <div key={i}>
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">
@@ -136,20 +131,20 @@ export function FillFormsPage() {
                 </label>
                 {field.type === 'checkbox' ? (
                   <select value={values[field.name] || ''} onChange={(e) => setValues(prev => ({ ...prev, [field.name]: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all">
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all">
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                   </select>
                 ) : (
                   <input type="text" value={values[field.name] || ''}
                     onChange={(e) => setValues(prev => ({ ...prev, [field.name]: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all" />
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all" />
                 )}
               </div>
             ))}
             <div className="flex gap-4 pt-4">
               <button onClick={() => { setFields([]); setValues({}); setPdfBytes(null); setFileName(''); }}
-                className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center justify-center gap-2">
+                className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center justify-center gap-2">
                 <RotateCcw className="w-4 h-4" /> {t('common.cancel', 'Back')}
               </button>
               <button onClick={handleSave} disabled={loading}
@@ -166,7 +161,7 @@ export function FillFormsPage() {
 
   if (loading) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <Loader2 className="w-12 h-12 text-rose-500 animate-spin mx-auto mb-4" />
           <p className="text-sm text-slate-400 font-bold">{t('fillForms.filling')}</p>
@@ -176,20 +171,6 @@ export function FillFormsPage() {
   }
 
   return (
-    <div className="bg-slate-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-500/10 text-rose-600 rounded-full mb-6">
-            <FormInput className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-[2px]">{t('fillForms.badge')}</span>
-          </div>
-          <h1 className="text-4xl lg:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t('fillForms.title')}</h1>
-          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">{t('fillForms.description')}</p>
-        </div>
-        <div className="bg-white rounded-[3rem] p-1 shadow-2xl shadow-slate-200/50 border border-slate-100">
-          <ToolPage icon={FormInput} title="" description="" color="bg-rose-500" onProcess={handleFile} hideContent={true} />
-        </div>
-      </div>
-    </div>
+    <ToolPage icon={FormInput} title={t('fillForms.title')} description={t('fillForms.description')} color="bg-rose-500" onProcess={handleFile} accept=".pdf" />
   );
 }

@@ -58,13 +58,11 @@ export function MetadataEditorPage() {
 
   if (metadata) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-slate-900 mb-2">{t('metadataEditor.title')}</h1>
-            <p className="text-slate-500 text-sm">{fileName}</p>
-          </div>
-          <div className="bg-white rounded-[2rem] p-8 shadow-xl border border-slate-100 space-y-5">
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter text-center">{t('metadataEditor.title')}</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-center mb-8">{fileName}</p>
+          <div className="bg-white dark:bg-slate-900/50 rounded-[3.5rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-8 space-y-5">
             {([
               ['title', t('metadataEditor.titleLabel')],
               ['author', t('metadataEditor.authorLabel')],
@@ -79,13 +77,13 @@ export function MetadataEditorPage() {
                   type="text"
                   value={(metadata as any)[key]}
                   onChange={(e) => setMetadata(prev => prev ? { ...prev, [key]: e.target.value } : null)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
                 />
               </div>
             ))}
             <div className="flex gap-4 pt-4">
               <button onClick={() => { setMetadata(null); setPdfBytes(null); setFileName(''); }}
-                className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center justify-center gap-2">
+                className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center justify-center gap-2">
                 <RotateCcw className="w-4 h-4" /> {t('common.cancel', 'Back')}
               </button>
               <button onClick={handleSave} disabled={loading}
@@ -102,7 +100,7 @@ export function MetadataEditorPage() {
 
   if (loading) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <Loader2 className="w-12 h-12 text-rose-500 animate-spin mx-auto mb-4" />
           <p className="text-sm text-slate-400 font-bold">{t('common.loading', 'Loading...')}</p>
@@ -112,20 +110,6 @@ export function MetadataEditorPage() {
   }
 
   return (
-    <div className="bg-slate-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-500/10 text-rose-600 rounded-full mb-6">
-            <FileSignature className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-[2px]">{t('metadataEditor.badge')}</span>
-          </div>
-          <h1 className="text-4xl lg:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t('metadataEditor.title')}</h1>
-          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">{t('metadataEditor.description')}</p>
-        </div>
-        <div className="bg-white rounded-[3rem] p-1 shadow-2xl shadow-slate-200/50 border border-slate-100">
-          <ToolPage icon={FileSignature} title="" description="" color="bg-rose-500" onProcess={handleFile} hideContent={true} />
-        </div>
-      </div>
-    </div>
+    <ToolPage icon={FileSignature} title={t('metadataEditor.title')} description={t('metadataEditor.description')} color="bg-rose-500" onProcess={handleFile} accept=".pdf" />
   );
 }

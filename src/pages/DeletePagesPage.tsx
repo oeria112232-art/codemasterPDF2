@@ -79,13 +79,13 @@ export function DeletePagesPage() {
 
   if (done) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-500/20">
             <CheckCircle className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900 mb-2 uppercase">{t('deletePages.complete', 'Complete')}</h2>
-          <p className="text-slate-500 mb-8">{selected.size} {t('deletePages.pagesDeleted', 'pages deleted')}</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 uppercase">{t('deletePages.complete', 'Complete')}</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-8">{selected.size} {t('deletePages.pagesDeleted', 'pages deleted')}</p>
           <button onClick={() => { setSelected(new Set()); setThumbnails([]); setPdfBytes(null); setDone(false); setNumPages(0); setFileName(''); }}
             className="px-8 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 mx-auto">
             <RotateCcw className="w-4 h-4" /> {t('deletePages.processAnother', 'Process Another')}
@@ -97,12 +97,10 @@ export function DeletePagesPage() {
 
   if (thumbnails.length > 0) {
     return (
-      <div className="bg-slate-50 py-12 px-4">
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-slate-900 mb-2">{t('deletePages.title')}</h1>
-            <p className="text-slate-500 text-sm">{fileName} — {t('deletePages.selectPages', 'Click pages to delete')}</p>
-          </div>
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter text-center">{t('deletePages.title')}</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-center mb-8">{fileName} — {t('deletePages.selectPages', 'Click pages to delete')}</p>
 
           <div className="flex items-center justify-center gap-4 mb-6">
             <span className="text-xs font-bold text-slate-500">{selected.size} / {numPages} {t('deletePages.selected', 'selected')}</span>
@@ -116,7 +114,7 @@ export function DeletePagesPage() {
           <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 mb-8">
             {thumbnails.map((src, i) => (
               <div key={i} onClick={() => togglePage(i)}
-                className={`relative cursor-pointer rounded-xl overflow-hidden shadow-sm transition-all border-3 ${
+                className={`relative cursor-pointer rounded-xl overflow-hidden shadow-sm transition-all ${
                   selected.has(i) ? 'border-4 border-rose-500 shadow-lg shadow-rose-200 ring-2 ring-rose-300' : 'border-2 border-transparent hover:border-slate-300'
                 }`}>
                 <img src={src} className="w-full h-auto" alt={`Page ${i + 1}`} />
@@ -134,7 +132,7 @@ export function DeletePagesPage() {
 
           <div className="flex justify-center gap-4">
             <button onClick={() => { setSelected(new Set()); setThumbnails([]); setPdfBytes(null); setNumPages(0); setFileName(''); }}
-              className="px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center gap-2">
+              className="px-6 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 transition-all flex items-center gap-2">
               <X className="w-4 h-4" /> {t('common.cancel', 'Cancel')}
             </button>
             <button onClick={handleDelete} disabled={selected.size === 0 || loading}
@@ -148,28 +146,18 @@ export function DeletePagesPage() {
     );
   }
 
-  return (
-    <div className="bg-slate-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-500/10 text-rose-600 rounded-full mb-6">
-            <Trash2 className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-[2px]">{t('deletePages.badge', 'Page Management')}</span>
-          </div>
-          <h1 className="text-4xl lg:text-5xl font-black text-slate-900 mb-4 tracking-tight">{t('deletePages.title', 'Delete PDF Pages')}</h1>
-          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">{t('deletePages.description', 'Remove unwanted pages from your PDF document')}</p>
-        </div>
-        <div className="bg-white rounded-[3rem] p-1 shadow-2xl shadow-slate-200/50 border border-slate-100">
-          {loading ? (
-            <div className="p-20 flex flex-col items-center justify-center">
-              <Loader2 className="w-12 h-12 text-rose-500 animate-spin mb-4" />
-              <p className="text-sm text-slate-400 font-bold">{t('common.loading', 'Loading...')}</p>
-            </div>
-          ) : (
-            <ToolPage icon={Trash2} title="" description="" color="bg-rose-500" onProcess={handleFile} hideContent={true} />
-          )}
+  if (loading) {
+    return (
+      <div className="bg-slate-50 dark:bg-[#020617] py-12 px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <Loader2 className="w-12 h-12 text-rose-500 animate-spin mb-4 mx-auto" />
+          <p className="text-sm text-slate-400 font-bold">{t('common.loading', 'Loading...')}</p>
         </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <ToolPage icon={Trash2} title={t('deletePages.title', 'Delete PDF Pages')} description={t('deletePages.description', 'Remove unwanted pages from your PDF document')} color="bg-rose-500" onProcess={handleFile} accept=".pdf" />
   );
 }

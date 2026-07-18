@@ -8,7 +8,7 @@ import {
   Combine, Scissors, Minimize2, Edit3,
   RotateCw, Crop, Lock, Unlock,
   FileBadge, FileSignature, FileImage, Image,
-  FileSpreadsheet, Presentation, MessageSquare, GitCompareArrows, Layers, Sparkles, ShieldAlert,
+  FileSpreadsheet, Presentation, Layers,
   ScanText, FormInput, Trash2, FileEdit
 } from 'lucide-react';
 
@@ -66,18 +66,9 @@ export function Header() {
       ]
     },
     {
-      title: "Intelligence",
-      tools: [
-        { icon: MessageSquare, label: "PDF Chat", path: '/pdf-to-chat' },
-        { icon: GitCompareArrows, label: "PDF Compare", path: '/pdf-to-compare' },
-        { icon: Layers, label: "Batch Process", path: '/batch-process' },
-        { icon: Sparkles, label: "AI Summarize", path: '/ai-summarize' },
-        { icon: ShieldAlert, label: "Contract Analyzer", path: '/contract-analyzer' },
-      ]
-    },
-    {
       title: t('app.categories.professional.title', 'Professional'),
       tools: [
+        { icon: Layers, label: "Batch Process", path: '/batch-process' },
         { icon: FileEdit, label: t('metadataEditor.title'), path: '/metadata-editor' },
         { icon: Layers, label: t('flattenPdf.title'), path: '/flatten-pdf' },
         { icon: ScanText, label: t('ocrPdf.title'), path: '/ocr-pdf' },
@@ -128,11 +119,11 @@ export function Header() {
                 rounded-xl shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 p-6 transition-all duration-200 
                 ${menuOpen ? 'opacity-100 visible translate-y-2' : 'opacity-0 invisible translate-y-1'}
               `}>
-                <div className="grid grid-cols-6 gap-6">
+                <div className="grid grid-cols-5 gap-6">
                   {categories.map((cat, i) => (
                     <div key={i} className="space-y-3">
                       <Link
-                        to={`/tools/${['optimize', 'security', 'edit', 'convert', 'intelligence', 'professional'][i]}`}
+                        to={`/tools/${['optimize', 'security', 'edit', 'convert', 'professional'][i]}`}
                         className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                       >
                         {cat.title}
