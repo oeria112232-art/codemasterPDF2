@@ -10,6 +10,8 @@ import { ToastProvider } from './contexts/ToastContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Loader2 } from 'lucide-react';
 
+const DesertPage = lazy(() => import('./pages/DesertPage').then(module => ({ default: module.DesertPage })));
+
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
 const CompressPage = lazy(() => import('./pages/CompressPage').then(module => ({ default: module.CompressPage })));
 const ConvertPage = lazy(() => import('./pages/ConvertPage').then(module => ({ default: module.ConvertPage })));
@@ -68,9 +70,10 @@ function App() {
           <BrowserRouter>
             <LanguageHandler />
             <ScrollToTop />
-            <Layout>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/desert" element={<DesertPage />} />
+                <Route element={<Layout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/login" element={<LoginPage />} />
@@ -116,10 +119,8 @@ function App() {
                     <Route path="/excel-to-pdf" element={<ConvertPage />} />
                     <Route path="/powerpoint-to-pdf" element={<ConvertPage />} />
 
-                    {/* Intelligence Tools */}
+                    {/* Batch & Professional Tools */}
                     <Route path="/batch-process" element={<BatchProcessPage />} />
-
-                    {/* New Professional Tools */}
                     <Route path="/metadata-editor" element={<MetadataEditorPage />} />
                     <Route path="/flatten-pdf" element={<FlattenPdfPage />} />
                     <Route path="/ocr-pdf" element={<OcrPdfPage />} />
@@ -134,9 +135,9 @@ function App() {
                   <Route element={<AdminLayout />}>
                     <Route path="/admin" element={<AdminDashboard />} />
                   </Route>
-                </Routes>
-              </Suspense>
-            </Layout>
+                </Route>
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </CreditsProvider>
       </AuthProvider>
