@@ -4,6 +4,51 @@
  */
 
 const PROXY_BASE = '/.netlify/functions/proxy';
+const CONVERT_BASE = '/.netlify/functions/convert';
+
+// ─── Server-Side Conversion (highest quality — bypasses CORS) ──
+// Uses Netlify Function that calls ConvertFleet/CloudConvert server-side
+// This is the preferred conversion method for PDF→Word/Excel/PPT
+
+export async function serverConvert(
+  file: File,
+  targetFormat: string,
+  onProgress?: (pct: number) => void
+): Promise<{ blob: Blob; service: string } | null> {
+  try {
+    onProgress?.(10);
+
+    const arrayBuf = await file.arrayBuffer();
+    const base64 = btoa(
+      new Uint8Array(arrayBuf).reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
+
+    onProgress?.(40);
+    const res = await fetch(CONVERT_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fileBase64: base64,
+        fileName: file.name,
+        targetFormat,
+      }),
+    });
+
+    onProgress?.(80);
+    if (!res.ok) {
+      console.warn(`Server convert failed: ${res.status}`);
+      return null;
+    }
+
+    const service = res.headers.get('X-Conversion-Service') || 'unknown';
+    const blob = await res.blob();
+    onProgress?.(100);
+    return { blob, service };
+  } catch (e) {
+    console.warn('Server convert failed:', e);
+    return null;
+  }
+}
 
 // ─── ConvertFleet (Best free option — no registration needed) ────
 // Free: 200 credits, then $15/mo for 1500 credits
@@ -363,17 +408,21 @@ export async function autoConvert(
   targetFormat: string,
   onProgress?: (pct: number) => void
 ): Promise<{ provider: string; blob: Blob } | null> {
-  // 1. Try ConvertFleet first (free, no registration, 177+ formats)
+  // 1. Try server-side conversion first (highest quality, bypasses CORS)
+  const serverResult = await serverConvert(file, targetFormat, onProgress);
+  if (serverResult) return { provider: serverResult.service, blob: serverResult.blob };
+
+  // 2. Try ConvertFleet client-side (free, no registration)
   const cfResult = await convertFleet(file, targetFormat, onProgress);
   if (cfResult) return { provider: 'convertfleet', blob: cfResult };
 
-  // 2. Try CloudConvert for Word/PPT (higher quality, needs API key)
+  // 3. Try CloudConvert (needs API key)
   if (['docx', 'pptx'].includes(targetFormat)) {
     const result = await cloudConvert(file, targetFormat, onProgress);
     if (result) return { provider: 'cloudconvert', blob: result };
   }
 
-  // 3. Try PDF.co for Excel (needs API key)
+  // 4. Try PDF.co for Excel (needs API key)
   if (targetFormat === 'xlsx') {
     const result = await pdfCoConvert(file, 'excel', onProgress);
     if (result) return { provider: 'pdfco', blob: result };
