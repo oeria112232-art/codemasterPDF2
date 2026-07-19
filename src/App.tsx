@@ -25,8 +25,6 @@ const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then(module =
 const ExamLanding = lazy(() => import('./pages/ExamGenerator/Home'));
 const ExamDashboard = lazy(() => import('./pages/ExamGenerator/Dashboard'));
 const ExamResults = lazy(() => import('./pages/ExamGenerator/Results'));
-const PricingPage = lazy(() => import('./pages/PricingPage').then(module => ({ default: module.PricingPage })));
-const DashboardPage = lazy(() => import('./pages/DashboardPage').then(module => ({ default: module.DashboardPage })));
 const BatchProcessPage = lazy(() => import('./pages/BatchProcessPage').then(module => ({ default: module.BatchProcessPage })));
 
 const MergeToolPage = lazy(() => import('./pages/MergeToolPage').then(module => ({ default: module.MergeToolPage })));
@@ -79,8 +77,6 @@ function App() {
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/terms" element={<TermsPage />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
-                  <Route path="/pricing" element={<PricingPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
 
                   <Route element={<ProtectedRoute />}>
                     <Route path="/tools/:id" element={<CategoryPage />} />

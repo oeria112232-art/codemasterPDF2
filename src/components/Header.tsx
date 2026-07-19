@@ -149,8 +149,6 @@ export function Header() {
             </div>
             <NavLink to="/about" label={t('app.nav.about')} />
             <NavLink to="/contact" label={t('app.nav.contact')} />
-            <NavLink to="/pricing" label="Pricing" />
-            {user && <NavLink to="/dashboard" label="Dashboard" />}
           </nav>
 
           <div className="lg:hidden flex items-center gap-3">
