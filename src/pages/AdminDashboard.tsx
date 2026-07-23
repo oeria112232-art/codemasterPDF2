@@ -4,7 +4,7 @@ import { useSettings } from '../hooks/useSettings';
 import { useToast } from '../contexts/ToastContext';
 import { ref, get, set, remove } from 'firebase/database';
 import { database } from '../lib/firebase';
-import { TOOL_COSTS, CREDIT_PLANS } from '../lib/credits';
+import { TOOL_COSTS } from '../lib/credits';
 import { useAuth } from '../contexts/AuthContext';
 import {
   ShieldAlert, Users, CreditCard, Activity, Settings, Clock,
@@ -18,7 +18,6 @@ interface UserProfile {
   full_name: string | null;
   phone: string | null;
   bio: string | null;
-  subscription_tier: string;
   is_admin: boolean;
   created_at: string;
   last_login: string;
@@ -85,7 +84,7 @@ export function AdminDashboard() {
         const d = profSnap.value.val();
         setUsers(Object.entries(d).map(([uid, p]: [string, any]) => ({
           uid, full_name: p.full_name || null, phone: p.phone || null,
-          bio: p.bio || null, subscription_tier: p.subscription_tier || 'free',
+          bio: p.bio || null,
           is_admin: p.is_admin || false, created_at: p.created_at || '',
           last_login: p.last_login || '', login_count: p.login_count || 0,
           language_pref: p.language_pref || 'en', two_factor_enabled: p.two_factor_enabled ?? false,
@@ -114,7 +113,6 @@ export function AdminDashboard() {
   const stats = useMemo(() => {
     const total = users.length;
     const totalCreds = Object.values(credits).reduce((a, b) => a + b, 0);
-    const pro = users.filter(u => u.subscription_tier === 'pro').length;
     const admins = users.filter(u => u.is_admin).length;
     const tfa = users.filter(u => u.two_factor_enabled).length;
     const totalLogins = users.reduce((a, u) => a + u.login_count, 0);
@@ -130,7 +128,7 @@ export function AdminDashboard() {
     const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
     const todayN = users.filter(u => u.last_login && new Date(u.last_login) >= today).length;
     const weekN = users.filter(u => u.last_login && new Date(u.last_login) >= weekAgo).length;
-    return { total, totalCreds, pro, admins, tfa, totalLogins, totalUses, sortedTools, todayN, weekN, toolAgg };
+    return { total, totalCreds, admins, tfa, totalLogins, totalUses, sortedTools, todayN, weekN, toolAgg };
   }, [users, credits, usage]);
 
   const filtered = useMemo(() => {
@@ -279,7 +277,7 @@ export function AdminDashboard() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-200 dark:border-slate-800">
-                      {[['full_name', 'الاسم'], ['uid', 'المعرّف'], ['credits', 'الكريديت'], ['subscription_tier', 'الاشتراك'], ['login_count', 'الدخول'], ['last_login', 'آخر دخول'], ['created_at', 'تاريخ الإنشاء']].map(([k, l]) => (
+                      {[['full_name', 'الاسم'], ['uid', 'المعرّف'], ['credits', 'الكريديت'], ['login_count', 'الدخول'], ['last_login', 'آخر دخول'], ['created_at', 'تاريخ الإنشاء']].map(([k, l]) => (
                         <th key={k} onClick={() => toggleSort(k)} className="px-4 py-3 text-right text-xs font-bold text-slate-400 tracking-wider cursor-pointer hover:text-indigo-600 transition-colors whitespace-nowrap">
                           <span className="flex items-center gap-1 justify-end">{l} <SortIcon k={k} /></span>
                         </th>
@@ -299,7 +297,6 @@ export function AdminDashboard() {
                               {showCreds[u.uid] ? (credits[u.uid] || 0).toLocaleString() : '***'} <EyeOff className="w-3 h-3" />
                             </button>
                           </td>
-                          <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded-full text-xs font-bold ${u.subscription_tier === 'pro' ? 'bg-indigo-500/10 text-indigo-600' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>{u.subscription_tier === 'pro' ? 'محترف' : 'مجاني'}</span></td>
                           <td className="px-4 py-3 text-sm text-slate-600 dark:text-slate-300">{u.login_count}</td>
                           <td className="px-4 py-3 text-xs text-slate-500">{fmt(u.last_login)}</td>
                           <td className="px-4 py-3 text-xs text-slate-500">{fmt(u.created_at)}</td>
@@ -405,19 +402,6 @@ export function AdminDashboard() {
               <StatCard icon={Users} label="متوسط كريديت/مستخدم" value={stats.total > 0 ? Math.round(stats.totalCreds / stats.total) : 0} color="bg-indigo-500/10 text-indigo-600" />
               <StatCard icon={AlertTriangle} label="بدون كريديت" value={users.filter(u => (credits[u.uid] || 0) === 0).length} color="bg-rose-500/10 text-rose-600" />
               <StatCard icon={Zap} label="أكثر من 1000" value={users.filter(u => (credits[u.uid] || 0) >= 1000).length} color="bg-emerald-500/10 text-emerald-600" />
-            </div>
-            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-              <h3 className="text-sm font-bold text-slate-400 tracking-wider mb-4">خطط الأسعار</h3>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                {CREDIT_PLANS.map(p => (
-                  <div key={p.id} className={`p-4 rounded-xl border ${p.badge ? 'border-indigo-500 bg-indigo-500/5' : 'border-slate-200 dark:border-slate-800'}`}>
-                    {p.badge && <span className="text-xs font-bold text-indigo-600 bg-indigo-500/10 px-2 py-0.5 rounded-full">{p.badge === 'Popular' ? 'رائج' : p.badge === 'Best Value' ? 'أفضل قيمة' : p.badge}</span>}
-                    <h4 className="font-black text-lg text-slate-900 dark:text-white mt-2">{p.name}</h4>
-                    <p className="text-2xl font-black text-indigo-600">${p.price}</p>
-                    <p className="text-xs text-slate-500">{p.credits.toLocaleString()} نقطة</p>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
               <h3 className="text-sm font-bold text-slate-400 tracking-wider mb-4">توزيع الكريديت</h3>

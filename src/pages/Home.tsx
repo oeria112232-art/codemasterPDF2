@@ -5,8 +5,8 @@ import {
   RotateCw, Image, FileBadge, FilePlus2, FileSignature, Divide,
   Edit3, Crop, LifeBuoy, ShieldAlert, Sparkles, Zap, ShieldCheck, Globe,
   FileText, FileSpreadsheet, Presentation, FileType,
-  MessageSquare, GitCompareArrows, Layers, ArrowRight, Star,
-  ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users,
+  Layers, ArrowRight, Star,
+  ChevronRight, CheckCircle2, TrendingUp, Users,
   ScanText, FormInput, Trash2, FileEdit
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -27,16 +27,6 @@ export function Home() {
     { name: t('home.testimonials.items.0.name'), role: t('home.testimonials.items.0.role'), text: t('home.testimonials.items.0.text'), rating: 5 },
     { name: t('home.testimonials.items.1.name'), role: t('home.testimonials.items.1.role'), text: t('home.testimonials.items.1.text'), rating: 5 },
     { name: t('home.testimonials.items.2.name'), role: t('home.testimonials.items.2.role'), text: t('home.testimonials.items.2.text'), rating: 5 },
-  ];
-
-  const COMPARISON = [
-    { feature: t('home.comparison.features.pdfProcessing'), codemaster: true, adobe: true, smallpdf: true },
-    { feature: t('home.comparison.features.aiChat'), codemaster: true, adobe: false, smallpdf: false },
-    { feature: t('home.comparison.features.contractAnalysis'), codemaster: true, adobe: false, smallpdf: false },
-    { feature: t('home.comparison.features.batchProcessing'), codemaster: true, adobe: true, smallpdf: true },
-    { feature: t('home.comparison.features.clientSide'), codemaster: true, adobe: false, smallpdf: false },
-    { feature: t('home.comparison.features.freeTier'), codemaster: true, adobe: false, smallpdf: true },
-    { feature: t('home.comparison.features.openSource'), codemaster: true, adobe: false, smallpdf: false },
   ];
 
   useEffect(() => {
@@ -213,38 +203,6 @@ export function Home() {
             <FeatureItem icon={Zap} title={t('app.features.fast')} desc={t('app.features.fastDesc')} />
             <FeatureItem icon={ShieldCheck} title={t('app.features.secure')} desc={t('app.features.secureDesc')} />
             <FeatureItem icon={Globe} title={t('app.features.cloud')} desc={t('app.features.cloudDesc')} />
-          </div>
-        </div>
-      </section>
-
-      {/* COMPARISON TABLE */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">{t('home.comparison.title')}</h2>
-            <p className="text-slate-500 dark:text-slate-400">{t('home.comparison.subtitle')}</p>
-          </div>
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-xl">
-            <div className="grid grid-cols-4 text-xs font-black uppercase tracking-widest">
-              <div className="p-4 text-slate-400">{t('home.comparison.headers.feature')}</div>
-              <div className="p-4 text-center text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10">{t('home.comparison.headers.codemaster')}</div>
-              <div className="p-4 text-center text-slate-400">{t('home.comparison.headers.adobe')}</div>
-              <div className="p-4 text-center text-slate-400">{t('home.comparison.headers.smallpdf')}</div>
-            </div>
-            {COMPARISON.map((row, i) => (
-              <div key={i} className={`grid grid-cols-4 text-sm border-t border-slate-100 dark:border-slate-800 ${i % 2 === 0 ? 'bg-slate-50/50 dark:bg-slate-800/20' : ''}`}>
-                <div className="p-4 font-medium text-slate-700 dark:text-slate-300">{row.feature}</div>
-                <div className="p-4 text-center bg-indigo-50/50 dark:bg-indigo-900/5">
-                  {row.codemaster ? <CheckCircle2 className="w-5 h-5 text-indigo-500 mx-auto" /> : <span className="text-slate-300">-</span>}
-                </div>
-                <div className="p-4 text-center">
-                  {row.adobe ? <CheckCircle2 className="w-5 h-5 text-slate-300 mx-auto" /> : <span className="text-slate-300">-</span>}
-                </div>
-                <div className="p-4 text-center">
-                  {row.smallpdf ? <CheckCircle2 className="w-5 h-5 text-slate-300 mx-auto" /> : <span className="text-slate-300">-</span>}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

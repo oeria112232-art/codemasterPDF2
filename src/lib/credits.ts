@@ -1,23 +1,6 @@
 import { ref, get, set, runTransaction } from 'firebase/database';
 import { database } from './firebase';
 
-export interface CreditPlan {
-  id: string;
-  name: string;
-  credits: number;
-  price: number;
-  currency: string;
-  badge?: string;
-}
-
-export const CREDIT_PLANS: CreditPlan[] = [
-  { id: 'free', name: 'Free', credits: 100, price: 0, currency: 'USD' },
-  { id: 'basic', name: 'Basic', credits: 500, price: 4.99, currency: 'USD', badge: 'Popular' },
-  { id: 'pro', name: 'Pro', credits: 2000, price: 14.99, currency: 'USD', badge: 'Best Value' },
-  { id: 'business', name: 'Business', credits: 10000, price: 49.99, currency: 'USD' },
-  { id: 'enterprise', name: 'Enterprise', credits: 999999, price: 99.99, currency: 'USD', badge: 'Unlimited' },
-];
-
 export interface ToolCost {
   toolId: string;
   name: string;

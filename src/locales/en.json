@@ -669,13 +669,7 @@
                     "lastLogin":  "Last Login",
                     "totalLogins":  "Total Logins",
                     "language":  "Language",
-                    "billing":  "Billing \u0026 Subscription",
-                    "paymentMethod":  "Payment Method",
-                    "plan":  "Current Plan",
-                    "proPlan":  "Pro Engineering Suite",
-                    "freePlan":  "Standard Access",
-                    "upgrade":  "Upgrade to Pro",
-                    "manageBilling":  "Manage Subscription",
+                     "paymentMethod":  "Payment Method",
                     "cardNumber":  "Card ending in",
                     "expiry":  "Expires",
                     "addPayment":  "Add Payment Method",
@@ -766,25 +760,7 @@
                                                     }
                                                 ]
                                   },
-                 "comparison":  {
-                                    "title":  "How We Compare",
-                                    "subtitle":  "See why professionals choose CodeMaster",
-                                    "headers":  {
-                                                    "feature":  "Feature",
-                                                    "codemaster":  "CodeMaster",
-                                                    "adobe":  "Adobe",
-                                                    "smallpdf":  "Smallpdf"
-                                                },
-                                    "features":  {
-                                                     "pdfProcessing":  "PDF Processing",
-                                                     "aiChat":  "AI Chat with PDF",
-                                                     "contractAnalysis":  "Contract Analysis",
-                                                     "batchProcessing":  "Batch Processing",
-                                                     "clientSide":  "Client-side Processing",
-                                                     "freeTier":  "Free Tier Available",
-                                                     "openSource":  "Open Source Backend"
-                                                 }
-                                },
+
                  "whyCodeMaster":  {
                                        "title":  "Why CodeMaster?",
                                        "subtitle":  "Everything you need for professional PDF management, powered by AI"
@@ -821,52 +797,6 @@
                                            "subtitle":  "Advanced PDF processing without AI"
                                        }
              },
-    "pricing":  {
-                    "badge":  "Pay Per Use",
-                    "title":  "Simple, Transparent Pricing",
-                    "subtitle":  "Buy credits and use only what you need. No subscriptions, no hidden fees.",
-                    "balance":  "Your balance",
-                    "credits":  "credits",
-                    "plans":  {
-                                  "free":  {
-                                               "price":  "Free",
-                                               "credits":  "100 credits",
-                                               "creditDesc":  "Unlimited credits",
-                                               "feature1":  "All tools unlimited",
-                                               "feature2":  "All PDF tools",
-                                               "feature3":  "AI features",
-                                               "feature4":  "Priority support"
-                                           },
-                                  "currentPlan":  "Current Plan",
-                                  "processing":  "Processing...",
-                                  "buyNow":  "Buy Now"
-                              },
-                    "howItWorks":  {
-                                       "title":  "How Credits Work",
-                                       "steps":  {
-                                                     "buy":  {
-                                                                 "title":  "Buy Credits",
-                                                                 "desc":  "Choose a plan that fits your needs"
-                                                             },
-                                                     "use":  {
-                                                                 "title":  "Use Tools",
-                                                                 "desc":  "Each tool costs a specific number of credits"
-                                                             },
-                                                     "pay":  {
-                                                                 "title":  "Pay Only for What You Use",
-                                                                 "desc":  "No recurring charges, buy more when needed"
-                                                             }
-                                                 }
-                                   },
-                    "errors":  {
-                                   "signInRequired":  "Please sign in to purchase credits",
-                                   "purchaseFailed":  "Purchase failed. Please try again."
-                               },
-                    "success":  {
-                                    "purchased":  "Purchased {{planId}} plan",
-                                    "creditsAdded":  "Successfully purchased {{amount}} credits!"
-                                }
-                },
     "dashboard":  {
                       "greeting":  "Hello, {{name}}!",
                       "subtitle":  "Manage your account and tools",
@@ -881,7 +811,6 @@
                                    "buyCredits":  "Buy Credits"
                                },
                       "freeTools":  "Free Tools",
-                      "paidTools":  "Popular Paid Tools",
                       "free":  "Free",
   "buyMoreCredits": "Buy More Credits",
   "youHaveCredits": "You have {{credits}} credits"

@@ -25,7 +25,6 @@ export interface Profile {
     avatar_url: string | null;
     phone: string | null;
     bio: string | null;
-    subscription_tier: 'free' | 'pro';
     is_admin?: boolean;
     created_at?: string;
     last_login?: string;
@@ -82,7 +81,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 const data = snapshot.val();
                 setProfile({
                     ...data,
-                    subscription_tier: data.subscription_tier || 'free',
                 });
             } else {
                 const currentUser = auth.currentUser;
@@ -91,7 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     avatar_url: currentUser?.photoURL || null,
                     phone: null,
                     bio: null,
-                    subscription_tier: 'free',
+
                     is_admin: false,
                     created_at: new Date().toISOString(),
                     last_login: new Date().toISOString(),

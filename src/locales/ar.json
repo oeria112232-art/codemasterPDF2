@@ -692,13 +692,7 @@
         "lastLogin": "آخر دخول",
         "totalLogins": "إجمالي الدخول",
         "language": "اللغة",
-        "billing": "الفواتير والاشتراكات",
         "paymentMethod": "طريقة الدفع",
-        "plan": "الخطة الحالية",
-        "proPlan": "الحزمة الهندسية الاحترافية",
-        "freePlan": "الوصول القياسي",
-        "upgrade": "الترقية للمستوى الاحترافي",
-        "manageBilling": "إدارة الاشتراك",
         "cardNumber": "بطاقة تنتهي بـ",
         "expiry": "تاريخ الانتهاء",
         "addPayment": "إضافة طريقة دفع",
@@ -789,25 +783,7 @@
                 }
             ]
         },
-        "comparison": {
-            "title": "كيف نقارن",
-            "subtitle": "اكتشف لماذا يختار المهنيون CodeMaster",
-            "headers": {
-                "feature": "الميزة",
-                "codemaster": "CodeMaster",
-                "adobe": "Adobe",
-                "smallpdf": "Smallpdf"
-            },
-            "features": {
-                "pdfProcessing": "معالجة PDF",
-                "aiChat": "دردشة بالذكاء الاصطناعي مع PDF",
-                "contractAnalysis": "تحليل العقود",
-                "batchProcessing": "معالجة جماعية",
-                "clientSide": "معالجة من جانب العميل",
-                "freeTier": "مجاني متاح",
-                "openSource": "مفتوح المصدر"
-            }
-        },
+
         "whyCodeMaster": {
             "title": "لماذا CodeMaster؟",
             "subtitle": "كل ما تحتاجه لإدارة PDF احترافية، مدعوم بالذكاء الاصطناعي"
@@ -844,52 +820,6 @@
             "subtitle": "معالجة متقدمة لملفات PDF بدون ذكاء ااصطناعي"
         }
     },
-    "pricing": {
-        "badge": "ادفع حسب الاستخدام",
-        "title": "أسعار بسيطة وشفافة",
-        "subtitle": "اشترِ رموزاً واستخدم ما تحتاجه فقط. بدون اشتراكات، بدون رسوم خفية.",
-        "balance": "رصيدك",
-        "credits": "رموز",
-        "plans": {
-            "free": {
-                "price": "مجاني",
-                "credits": "100 رمز",
-                "creditDesc": "رموز غير محدودة",
-                "feature1": "جميع الأدوات غير محدودة",
-                "feature2": "جميع أدوات PDF",
-                "feature3": "ميزات الذكاء الاصطناعي",
-                "feature4": "دعم ذو أولوية"
-            },
-            "currentPlan": "الخطة الحالية",
-            "processing": "جارٍ المعالجة...",
-            "buyNow": "اشترِ الآن"
-        },
-        "howItWorks": {
-            "title": "كيف تعمل الرموز",
-            "steps": {
-                "buy": {
-                    "title": "اشترِ رموزاً",
-                    "desc": "اختر الخطة المناسبة لاحتياجاتك"
-                },
-                "use": {
-                    "title": "استخدم الأدوات",
-                    "desc": "كل أداة تكلف رموزاً محددة"
-                },
-                "pay": {
-                    "title": "ادفع فقط لما تستخدمه",
-                    "desc": "بدون رسوم دورية، اشترِ المزيد عند الحاجة"
-                }
-            }
-        },
-        "errors": {
-            "signInRequired": "يرجى تسجيل الدخول لشراء الرموز",
-            "purchaseFailed": "فشل الشراء. يرجى المحاولة مرة أخرى."
-        },
-        "success": {
-            "purchased": "تم شراء خطة {{planId}}",
-            "creditsAdded": "تم شراء {{amount}} رمز بنجاح!"
-        }
-    },
     "dashboard": {
         "greeting": "مرحباً، {{name}}!",
         "subtitle": "إدارة حسابك وأدواتك",
@@ -904,7 +834,6 @@
             "buyCredits": "شراء رموز"
         },
         "freeTools": "أدوات مجانية",
-        "paidTools": "أدوات مدفوعة شائعة",
         "free": "مجاني",
         "buyMoreCredits": "شراء المزيد من الرموز",
   "youHaveCredits": "لديك {{credits}} رمز"
