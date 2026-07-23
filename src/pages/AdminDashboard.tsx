@@ -72,6 +72,8 @@ export function AdminDashboard() {
   const [newSettingKey, setNewSettingKey] = useState('');
   const [newSettingVal, setNewSettingVal] = useState('');
   const [showCreds, setShowCreds] = useState<Record<string, boolean>>({});
+  const [userPage, setUserPage] = useState(0);
+  const USERS_PER_PAGE = 50;
 
   const fetchData = useCallback(async () => {
     try {
@@ -142,6 +144,13 @@ export function AdminDashboard() {
     });
     return r;
   }, [users, search, sortKey, sortAsc, credits]);
+
+  const pagedUsers = useMemo(() => {
+    const start = userPage * USERS_PER_PAGE;
+    return filtered.slice(start, start + USERS_PER_PAGE);
+  }, [filtered, userPage]);
+
+  const totalPages = Math.ceil(filtered.length / USERS_PER_PAGE);
 
   const toggleSort = (k: string) => { if (sortKey === k) setSortAsc(!sortAsc); else { setSortKey(k); setSortAsc(false); } };
   const SortIcon = ({ k }: { k: string }) => sortKey === k ? (sortAsc ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />) : null;
@@ -258,13 +267,13 @@ export function AdminDashboard() {
             <div className="flex items-center gap-3">
               <div className="flex-1 relative">
                 <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input dir="ltr" value={search} onChange={e => setSearch(e.target.value)} placeholder="بحث بالاسم أو المعرّف..." className="w-full pr-9 pl-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-left" />
+                <input dir="ltr" value={search} onChange={e => { setSearch(e.target.value); setUserPage(0); }} placeholder="بحث بالاسم أو المعرّف..." className="w-full pr-9 pl-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-left" />
               </div>
               <button onClick={exportUsers} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-600 hover:text-indigo-600 transition-all">
                 <Download className="w-4 h-4" /> تصدير
               </button>
             </div>
-            <p className="text-xs text-slate-400">{filtered.length} مستخدم</p>
+            <p className="text-xs text-slate-400">{filtered.length} مستخدم {totalPages > 1 && `(صفحة ${userPage + 1} / ${totalPages})`}</p>
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
@@ -280,7 +289,7 @@ export function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filtered.map(u => (
+                    {pagedUsers.map(u => (
                       <>
                         <tr key={u.uid} onClick={() => setExpanded(expanded === u.uid ? null : u.uid)} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
                           <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{u.full_name || '—'}</td>
@@ -331,6 +340,16 @@ export function AdminDashboard() {
                 </table>
               </div>
             </div>
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-4">
+                <button onClick={() => setUserPage(p => Math.max(0, p - 1))} disabled={userPage === 0} className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold disabled:opacity-30 transition-all">السابق</button>
+                {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+                  const p = totalPages <= 7 ? i : Math.max(0, Math.min(userPage - 3, totalPages - 7)) + i;
+                  return <button key={p} onClick={() => setUserPage(p)} className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${userPage === p ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-indigo-600'}`}>{p + 1}</button>;
+                })}
+                <button onClick={() => setUserPage(p => Math.min(totalPages - 1, p + 1))} disabled={userPage >= totalPages - 1} className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold disabled:opacity-30 transition-all">التالي</button>
+              </div>
+            )}
           </div>
         )}
 

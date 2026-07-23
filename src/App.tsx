@@ -8,6 +8,7 @@ import { CreditsProvider } from './contexts/CreditsContext';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ToastProvider } from './contexts/ToastContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Loader2 } from 'lucide-react';
 
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
@@ -67,6 +68,7 @@ function App() {
             <LanguageHandler />
             <ScrollToTop />
             <Layout>
+              <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Home />} />
@@ -132,6 +134,7 @@ function App() {
                   </Route>
                 </Routes>
               </Suspense>
+              </ErrorBoundary>
             </Layout>
           </BrowserRouter>
         </CreditsProvider>
