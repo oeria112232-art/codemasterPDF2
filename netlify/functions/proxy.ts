@@ -1,12 +1,18 @@
-export const handler = async (event: any) => {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+const CORS_HEADERS: Record<string, string> = {
+  'Access-Control-Allow-Origin': 'https://allpdf.cloud',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
 
+function isPrivateIP(hostname: string): boolean {
+  if (/^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|169\.254\.|0\.|localhost)/.test(hostname)) return true;
+  if (hostname === '::1' || hostname === '::') return true;
+  return false;
+}
+
+export const handler = async (event: any) => {
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: corsHeaders, body: '' };
+    return { statusCode: 204, headers: CORS_HEADERS, body: '' };
   }
 
   try {
@@ -16,7 +22,7 @@ export const handler = async (event: any) => {
     if (!target) {
       return {
         statusCode: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
         body: JSON.stringify({ error: 'Missing url parameter' }),
       };
     }
@@ -25,8 +31,16 @@ export const handler = async (event: any) => {
     if (!['http:', 'https:'].includes(parsed.protocol)) {
       return {
         statusCode: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
         body: JSON.stringify({ error: 'Only http/https allowed' }),
+      };
+    }
+
+    if (isPrivateIP(parsed.hostname)) {
+      return {
+        statusCode: 403,
+        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Private/internal URLs are not allowed' }),
       };
     }
 
@@ -50,7 +64,7 @@ export const handler = async (event: any) => {
     return {
       statusCode: res.status,
       headers: {
-        ...corsHeaders,
+        ...CORS_HEADERS,
         'Content-Type': contentType,
       },
       body: body,
@@ -58,7 +72,7 @@ export const handler = async (event: any) => {
   } catch (e: any) {
     return {
       statusCode: 502,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: e.message || 'Proxy failed' }),
     };
   }

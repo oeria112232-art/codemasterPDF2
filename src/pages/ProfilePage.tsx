@@ -6,9 +6,9 @@ import {
     FileText, Clock, Globe, Bell, BellOff,
     Trash2, Key, Eye, EyeOff, AlertTriangle,
     CheckCircle2, Info, ChevronRight, Lock,
-    Smartphone, Activity, Shield, UserX
+    Smartphone, Activity, Shield, UserX, ShieldAlert
 } from 'lucide-react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from '../contexts/ToastContext';
 import { validatePasswordStrength, sanitizeDisplayName, formatDate, getAccountAge, checkRateLimit } from '../lib/security';
@@ -19,6 +19,8 @@ export function ProfilePage() {
     const { user, profile, signOut, loading, updateProfile, uploadAvatar, removeAvatar, changePassword, deleteAccount } = useAuth();
     const { t } = useTranslation();
     const { showToast } = useToast();
+    const navigate = useNavigate();
+    const isAdminEmail = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map((e: string) => e.trim().toLowerCase()).includes((user?.email || '').toLowerCase());
 
     const [activeTab, setActiveTab] = useState<TabId>('profile');
     const [isEditing, setIsEditing] = useState(false);
@@ -178,13 +180,24 @@ export function ProfilePage() {
                             </div>
                         </div>
 
+                        <div className="flex items-center gap-3 shrink-0">
+                        {isAdminEmail && (
+                            <button
+                                onClick={() => navigate('/admin')}
+                                className="flex items-center gap-2 px-4 py-3 bg-amber-500/10 hover:bg-amber-500 text-amber-600 hover:text-white rounded-2xl font-black transition-all group/admin"
+                            >
+                                <ShieldAlert className="w-5 h-5 group-hover/admin:scale-110 transition-transform" />
+                                <span className="text-xs uppercase tracking-widest hidden sm:inline">Admin</span>
+                            </button>
+                        )}
                         <button
                             onClick={signOut}
-                            className="flex items-center gap-3 px-6 py-3 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white rounded-2xl font-black transition-all group/logout shrink-0"
+                            className="flex items-center gap-3 px-6 py-3 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white rounded-2xl font-black transition-all group/logout"
                         >
                             <LogOut className="w-5 h-5 group-hover/logout:-translate-x-1 transition-transform" />
                             <span className="text-xs uppercase tracking-widest hidden sm:inline">{t('profile.logout')}</span>
                         </button>
+                        </div>
                     </div>
                 </div>
 

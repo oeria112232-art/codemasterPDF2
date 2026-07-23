@@ -139,11 +139,9 @@ export async function trackToolUsage(userId: string, toolId: string, success: bo
   if (!userId) return;
   try {
     const usageRef = ref(database, `users/${userId}/usage/${toolId}`);
-    const snapshot = await get(usageRef);
-    const current = snapshot.val() || { count: 0, lastUsed: null };
-    await set(usageRef, {
-      count: current.count + (success ? 1 : 0),
-      lastUsed: new Date().toISOString(),
+    await runTransaction(usageRef, (current: any) => {
+      const data = current || { count: 0, lastUsed: null };
+      return { count: data.count + (success ? 1 : 0), lastUsed: new Date().toISOString() };
     });
   } catch {}
 }

@@ -1,8 +1,10 @@
 const CORS_HEADERS: Record<string, string> = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://allpdf.cloud',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
 const MIME_MAP: Record<string, string> = {
   pdf: 'application/pdf',
@@ -77,9 +79,12 @@ export const handler = async (event: any) => {
     }
 
     const fileBuffer = Buffer.from(fileBase64, 'base64');
+    if (fileBuffer.length > MAX_FILE_SIZE) {
+      return { statusCode: 413, headers: CORS_HEADERS, body: JSON.stringify({ error: 'File too large (max 25MB)' }) };
+    }
     const sourceMime = getMimeFromExt(fileName || 'file.pdf');
     const outputExt = getExtFromFormat(targetFormat);
-    const baseName = (fileName || 'document').replace(/\.[^.]+$/, '');
+    const baseName = (fileName || 'document').replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_\- ]/g, '_').substring(0, 100);
 
     // ─── Priority 1: ConvertFleet API (free, no registration) ───
     try {

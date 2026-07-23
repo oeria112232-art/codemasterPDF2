@@ -7,7 +7,7 @@ import {
   FileText, FileSpreadsheet, Presentation, FileType,
   MessageSquare, GitCompareArrows, Layers, ArrowRight, Star,
   ChevronRight, Play, CheckCircle2, Infinity, TrendingUp, Users,
-  ScanText, FormInput, Trash2, FileEdit, Minimize2
+  ScanText, FormInput, Trash2, FileEdit
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ToolCard } from '../components/ToolCard';
